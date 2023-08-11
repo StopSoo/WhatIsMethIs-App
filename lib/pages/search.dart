@@ -82,9 +82,9 @@ class _SearchState extends State<Search> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back_ios_new,
-                  color: Colors.black.withOpacity(0.9),
+                  color: greenColor,
                   size: 30,
                 ),
               ),

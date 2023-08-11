@@ -15,17 +15,23 @@ class CameraResult extends StatefulWidget {
 }
 
 class _CameraResultState extends State<CameraResult> {
-  String name = "타이레놀8시간이알서방정";
-  String ingredientsAndContent = ''' 1정 중 - 속방층
-Acetaminophen 아세트아미노펜 325mg
-1정 중 - 서방층
-Acetaminophen 아세트아미노펜 325mg''';
-  String usageAndCapacity = ''' 12세 이상의 소아 및 성인: 매 8시간마다 2정씩 복용
-24시간 동안 6정을 초과하지 말 것''';
+  /*
+   e약은요 API 기준 명명
+  */
+  String itemName = "닥터베아제정";
+  String entpName = "(주)대웅제약";
+  String efcyQesitm = ''' 이 약은 소화불량, 식욕감퇴(식욕부진), 과식, 체함, 소화촉진, 소화불량으로 인한 위부팽만감에 사용합니다.''';
+  String useMethodQesitm = "성인 1회 1정을 1일 3회 식후에 복용합니다.";
+  String atpnWarnQesitm =  "";
+  String atpnQesitm = '''만 7세 이하의 소아는 이 약을 복용하지 마십시오.
+이 약을 복용하기 전에 알레르기 체질인 사람, 임부 또는 임신하고 있을 가능성이 있는 여성, 이 약 또는 황색4호에 과민증 환자는 의사 또는 약사와 상담하십시오.
+정해진 용법과 용량을 잘 지키십시오.
+2주 정도 복용하여도 증상의 개선이 없을 경우 즉각 복용을 중지하고 의사 또는 약사와 상담하십시오.''';
+  String intrcQesitm = "";
+  String seQesitm = "";
+  String depositMethodQesitm = '''습기와 빛을 피해 실온에서 보관하십시오.
+어린이의 손이 닿지 않는 곳에 보관하십시오.''';
 
-  String info = ''' 충분한 물과 함께 투여하세요
-정기적으로 술을 마시는 사람은 이 약 투여전 반드시 전문가와 상의하세요
-황달 등 간기능 이상징후가 나타날 경우에는 전문가와 상의하세요''';
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -38,7 +44,7 @@ Acetaminophen 아세트아미노펜 325mg''';
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            cameraResultHeader("식별 결과 보기", context),
+            resultHeader("식별 결과 보기", context),
             CupertinoButton(
               minSize: 0,
               padding: EdgeInsets.all(16.0),
@@ -59,15 +65,25 @@ Acetaminophen 아세트아미노펜 325mg''';
                 ],
               ),
             ),
-            const Divider(thickness: 1, height: 1, color: lightGrayColor,),
+            const Divider(
+              thickness: 1,
+              height: 1,
+              color: lightGrayColor,
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: roundFitWidthImage(width, 'assets/image/test_cat.jpg'),
             ),
-            pillDetailBox("제품명", name),
-            pillDetailBox("성분/함량", ingredientsAndContent),
-            pillDetailBox("용법 · 용량", usageAndCapacity),
-            pillDetailBox("복약 정보", info),
+            pillDetailBox("제품명", itemName),
+            pillDetailBox("업체명", entpName),
+            pillDetailBox("효능", efcyQesitm),
+            pillDetailBox("사용법", useMethodQesitm),
+            pillDetailBox("주의사항경고", atpnWarnQesitm),
+            pillDetailBox("주의사항", atpnQesitm),
+            pillDetailBox("상호작용", intrcQesitm),
+            pillDetailBox("부작용", seQesitm),
+            pillDetailBox("보관법", depositMethodQesitm),
+            
           ],
         ),
       ),
@@ -75,6 +91,10 @@ Acetaminophen 아세트아미노펜 325mg''';
   }
 
   Padding pillDetailBox(String title, String content) {
+    if(content.isEmpty){
+      return Padding(padding: EdgeInsets.zero);
+    }
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
       child: Column(
@@ -134,58 +154,4 @@ Acetaminophen 아세트아미노펜 325mg''';
       ),
     );
   }
-}
-
-Widget cameraResultHeader(String centerText, BuildContext context,
-    [double height = 50.0]) {
-  return Container(
-    color: Colors.white,
-    height: height,
-    child: Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // * Left Icon
-          Center(
-            child: CupertinoButton(
-              minSize: 0,
-              padding: EdgeInsets.all(0),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                color: Colors.black.withOpacity(0.9),
-                size: 30,
-              ),
-            ),
-          ),
-          // * Center Text
-          Center(
-            child: Text(
-              centerText,
-              style: blackTextStyle_Bold(17),
-            ),
-          ),
-          // * Right Icon
-          Center(
-            child: CupertinoButton(
-              minSize: 0,
-              padding: EdgeInsets.all(0),
-              onPressed: () {
-                //Todo: change the Icon
-              },
-              child: Icon(
-                CupertinoIcons.rectangle_stack_badge_plus,
-                color: Colors.black.withOpacity(0.9),
-                size: 28,
-              ),
-            ),
-          )
-        ],
-      ),
-    ),
-  );
 }

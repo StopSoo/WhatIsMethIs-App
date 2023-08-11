@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 const Color mainColor = Color.fromRGBO(208, 245, 190, 1.0);
+const Color greenColor = Color.fromRGBO(47, 201, 85, 1.0);
+
 
 // font
 const String mainFont = 'NotoSansKR-Medium';
