@@ -13,8 +13,9 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+  TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
-  String searchText = "";
+
   List<String> pillNames = [
     "타이레놀6시간이알서방정",
     "타이레놀8시간이알서방정",
@@ -95,7 +96,12 @@ class _SearchState extends State<Search> {
               child: CupertinoSearchTextField(
                 placeholder: "약 이름을 검색하세요",
                 focusNode: focusNode,
+                controller: controller,
                 style: darkGrayTextStyle(15),
+                onSubmitted: (value) => {
+                  //Todo: call searchAPI
+                  controller.clear()
+                },
               ),
             )),
             // * Right Button
@@ -104,8 +110,8 @@ class _SearchState extends State<Search> {
                     child: TextButton(
                       onPressed: () {
                         setState(() {
-                          searchText = "";
                           focusNode.unfocus();
+                          controller.clear();
                         });
                       },
                       child: Text("취소"),
@@ -132,9 +138,7 @@ class _SearchState extends State<Search> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               roundFitWidthImage(width, image),
-              SizedBox(
-                width: 20,
-              ),
+              const SizedBox(width: 20,),
               Text(
                 pillName,
                 style: darkGrayTextStyle(15),
