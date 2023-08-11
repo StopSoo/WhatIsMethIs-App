@@ -178,7 +178,9 @@ class _MedicationInfoState extends State<MedicationInfo> {
               child: CupertinoButton(
                 minSize: 0,
                 padding: EdgeInsets.all(0),
-                onPressed: () {},
+                onPressed: () {
+                  _showActionSheet(context);
+                },
                 child: Icon(
                   CupertinoIcons.ellipsis,
                   color: Colors.black.withOpacity(0.9),
@@ -188,6 +190,46 @@ class _MedicationInfoState extends State<MedicationInfo> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  void _showActionSheet(BuildContext context) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: const Text('Title'),
+        message: const Text('Message'),
+        actions: <CupertinoActionSheetAction>[
+          CupertinoActionSheetAction(
+            onPressed: () {
+              //Todo: Navigate to 복약정보 등록
+              Navigator.pop(context);
+            },
+            child: const Text('복약 정보 등록하기'),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              //Todo: Navigate to 복약정보 수정
+              Navigator.pop(context);
+            },
+            child: const Text('복약 정보 수정하기'),
+          ),
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () {
+              //Todo: Navigate to 복약정보 삭제
+              Navigator.pop(context);
+            },
+            child: const Text('복약 정보 삭제하기'),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('취소')),
       ),
     );
   }
