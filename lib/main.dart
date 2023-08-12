@@ -4,6 +4,7 @@ import 'package:flutter_application/screen/home_screen.dart';
 import 'package:flutter_application/widget/find_med_widget.dart';
 import 'package:flutter_application/widget/todays_med_widget.dart';
 import 'package:flutter_application/widget/before_login_widget.dart';
+import 'package:flutter_application/widget/register_med_info.dart';
 import 'dart:ui';
 
 void main() {
@@ -26,7 +27,7 @@ class _MyAppState extends State<MyApp> {
         primaryColor: white,
         hintColor: black,
       ),
-      home: const MyHomePage_before(title: 'Flutter Demo Home Page'),
+      home: const RegisterMedPage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -53,13 +54,12 @@ class _MyHomePage_afterState extends State<MyHomePage_after> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-      child: Column(
-        children: <Widget>[
-          HomeScreen(),
-          TodaysMed(),
-          SizedBox(height: 56),
-          FindMed(),
+        body: Center(
+      child: Column(children: <Widget>[
+        HomeScreen(),
+        TodaysMed(),
+        SizedBox(height: 56),
+        FindMed(),
       ]),
     ));
   }
@@ -87,12 +87,42 @@ class _MyHomePage_beforeState extends State<MyHomePage_before> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-      child: Column(
-        children: <Widget>[
+        child: Column(children: <Widget>[
           HomeScreen(),
           PleaseLogin(),
           FindMed(),
-      ]),
+        ]),
+      )
+    );
+  }
+}
+
+// 3. 복약 정보 등록하기 화면 - 자동 등록
+class RegisterMedPage extends StatefulWidget {
+  const RegisterMedPage({super.key, required this.title});
+
+  final String title;
+  @override
+  State<RegisterMedPage> createState() => _RegisterMedPageState();
+}
+
+class _RegisterMedPageState extends State<RegisterMedPage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            RegisterMed(),
+        ]),
     ));
   }
 }

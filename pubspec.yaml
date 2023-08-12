@@ -64,10 +64,14 @@ flutter:
     - images/icon_person.png
     - images/icon_arrow_right.png
     - images/icon_arrow_bottom.png
+    - images/icon_arrow_left.png
     - images/icon_todays_med.png
     - images/icon_find_med_pic.png
     - images/icon_find_med_name.png
     - images/icon_find_med_contact.png
+    - images/icon_register_pic.png
+    - images/icon_date_bar.png
+    - images/icon_wave.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
