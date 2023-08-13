@@ -88,9 +88,12 @@ class _MedicationInfoState extends State<MedicationInfo> {
     );
   }
 
-  Padding pillShortInfoBox(
+  CupertinoButton pillShortInfoBox(
       String image, String lunch, String after, String itemName, int cnt) {
-    return Padding(
+    return CupertinoButton(
+      onPressed: () => {
+        //Todo: Navigate to pillDetail
+      },
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
