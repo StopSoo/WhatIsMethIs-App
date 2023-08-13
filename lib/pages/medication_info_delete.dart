@@ -64,7 +64,6 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
     'assets/image/test_cat.jpg'
   ];
   late List<bool> _isChecked;
-  bool check = false;
 
   @override
   void initState() {
@@ -82,33 +81,41 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          medicationInfoHeader("복약 정보 조회하기", context),
+          medicationInfoHeader("복약 정보 삭제하기", context),
           Expanded(
             child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: lunch.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CupertinoCheckbox(
-                        onChanged: (bool? value) => {
-                          setState(() {
-                            _isChecked[index] = value!;
-                          })
-                        },
-                        value: _isChecked[index],
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        activeColor: greenColor,
-                        inactiveColor: greenColor,
-                      ),
-                      pillShortInfoBox(images[index], lunch[index],
-                          after[index], itemName[index], cnt[index]),
-                    ],
-                  );
+                  return medicationDeleteRow(index);
                 }),
           ),
+        ],
+      ),
+    );
+  }
+
+  GestureDetector medicationDeleteRow(int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _isChecked[index] = !_isChecked[index];
+        });
+        print(_isChecked[index]);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          CupertinoCheckbox(
+            onChanged: null,
+            value: _isChecked[index],
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            activeColor: greenColor,
+            inactiveColor: greenColor,
+          ),
+          pillShortInfoBox(images[index], lunch[index], after[index],
+              itemName[index], cnt[index]),
         ],
       ),
     );
@@ -140,26 +147,13 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                lunch + after,
-                style: blackTextStyle_Bold(16),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
+              Text("$lunch $after", style: blackTextStyle_Bold(16),),
+              const SizedBox(height: 5,),
               Row(
                 children: [
-                  Text(
-                    itemName,
-                    style: darkGrayTextStyle(15),
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    "${cnt}정",
-                    style: darkGrayTextStyle(15),
-                  ),
+                  Text(itemName, style: darkGrayTextStyle(15),),
+                  const SizedBox(width: 15,),
+                  Text("${cnt}정", style: darkGrayTextStyle(15),),
                 ],
               )
             ],
@@ -168,7 +162,6 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
       ),
     );
   }
-
 
   Widget medicationInfoHeader(String centerText, BuildContext context,
       [double height = 50.0]) {
