@@ -73,15 +73,26 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return safeAreaPage(
       Colors.white,
       Colors.white,
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          medicationInfoHeader("복약 정보 삭제하기", context),
+          defaultHeader("복약 정보 삭제하기", context, 
+            CupertinoButton(
+                minSize: 0,
+                padding: EdgeInsets.all(0),
+                onPressed: () {
+                  //delete
+                },
+                child: Icon(
+                    CupertinoIcons.trash,
+                    color: Colors.black.withOpacity(0.9),
+                    size: 28,
+                  ),
+              )
+            ),
           Expanded(
             child: ListView.builder(
                 shrinkWrap: true,
@@ -131,7 +142,7 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
         children: [
           // * Left Image
           Container(
-            margin: EdgeInsets.only(right: 25),
+            margin: const EdgeInsets.only(right: 25),
             child: CircleAvatar(
               backgroundColor: mainColor,
               radius: 40,
@@ -147,70 +158,18 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("$lunch $after", style: blackTextStyle_Bold(16),),
-              const SizedBox(height: 5,),
+              Text("$lunch $after", style: blackTextStyle(16)),
+              const SizedBox(height: 5),
               Row(
                 children: [
-                  Text(itemName, style: darkGrayTextStyle(15),),
-                  const SizedBox(width: 15,),
-                  Text("${cnt}정", style: darkGrayTextStyle(15),),
+                  Text(itemName, style: darkGrayTextStyle(15)),
+                  const SizedBox(width: 15),
+                  Text("${cnt}정", style: darkGrayTextStyle(15)),
                 ],
               )
             ],
           )
         ],
-      ),
-    );
-  }
-
-  Widget medicationInfoHeader(String centerText, BuildContext context,
-      [double height = 50.0]) {
-    return Container(
-      color: Colors.white,
-      height: height,
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // * Left Icon
-            Center(
-              child: CupertinoButton(
-                minSize: 0,
-                padding: const EdgeInsets.all(0),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(
-                  Icons.arrow_back_ios_new,
-                  color: greenColor,
-                  size: 30,
-                ),
-              ),
-            ),
-            // * Center Text
-            Center(
-              child: Text(
-                centerText,
-                style: blackTextStyle_Bold(17),
-              ),
-            ),
-            // * Right Icon
-            Center(
-              child: CupertinoButton(
-                minSize: 0,
-                padding: EdgeInsets.all(0),
-                onPressed: () {},
-                child: Icon(
-                  CupertinoIcons.trash,
-                  color: Colors.black.withOpacity(0.9),
-                  size: 28,
-                ),
-              ),
-            )
-          ],
-        ),
       ),
     );
   }

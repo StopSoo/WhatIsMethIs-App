@@ -66,15 +66,26 @@ class _MedicationInfoState extends State<MedicationInfo> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return safeAreaPage(
       Colors.white,
       Colors.white,
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          medicationInfoHeader("복약 정보 조회하기", context),
+          defaultHeader("복약 정보 조회하기", context,
+            CupertinoButton(
+              minSize: 0,
+              padding: EdgeInsets.all(0),
+              onPressed: () {
+                _showActionSheet(context);
+              },
+              child: Icon(
+                CupertinoIcons.ellipsis,
+                color: Colors.black.withOpacity(0.9),
+                size: 28,
+              ),
+            ),
+          ),
           Expanded(
             child: ListView.builder(
                 shrinkWrap: true,
@@ -114,85 +125,18 @@ class _MedicationInfoState extends State<MedicationInfo> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                lunch + after,
-                style: blackTextStyle_Bold(16),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
+              Text("$lunch $after", style: blackTextStyle(16)),
+              const SizedBox(height: 5),
               Row(
                 children: [
-                  Text(
-                    itemName,
-                    style: darkGrayTextStyle(15),
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    "${cnt}정",
-                    style: darkGrayTextStyle(15),
-                  ),
+                  Text(itemName, style: darkGrayTextStyle(15)),
+                  const SizedBox(width: 15),
+                  Text( "${cnt}정", style: darkGrayTextStyle(15)),
                 ],
               )
             ],
           )
         ],
-      ),
-    );
-  }
-
-  Widget medicationInfoHeader(String centerText, BuildContext context,
-      [double height = 50.0]) {
-    return Container(
-      color: Colors.white,
-      height: height,
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // * Left Icon
-            Center(
-              child: CupertinoButton(
-                minSize: 0,
-                padding: const EdgeInsets.all(0),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(
-                  Icons.arrow_back_ios_new,
-                  color: greenColor,
-                  size: 30,
-                ),
-              ),
-            ),
-            // * Center Text
-            Center(
-              child: Text(
-                centerText,
-                style: blackTextStyle_Bold(17),
-              ),
-            ),
-            // * Right Icon
-            Center(
-              child: CupertinoButton(
-                minSize: 0,
-                padding: EdgeInsets.all(0),
-                onPressed: () {
-                  _showActionSheet(context);
-                },
-                child: Icon(
-                  CupertinoIcons.ellipsis,
-                  color: Colors.black.withOpacity(0.9),
-                  size: 28,
-                ),
-              ),
-            )
-          ],
-        ),
       ),
     );
   }
@@ -207,14 +151,14 @@ class _MedicationInfoState extends State<MedicationInfo> {
               //Todo: Navigate to 복약정보 등록
               Navigator.pop(context);
             },
-            child: const Text('복약 정보 등록하기'),
+            child: const Text('복약 정보 등록하기', style: defaultactionSheetTextStyle),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
               //Todo: Navigate to 복약정보 수정
               Navigator.pop(context);
             },
-            child: const Text('복약 정보 수정하기'),
+            child: const Text('복약 정보 수정하기', style: defaultactionSheetTextStyle),
           ),
           CupertinoActionSheetAction(
             isDestructiveAction: true,
@@ -222,7 +166,7 @@ class _MedicationInfoState extends State<MedicationInfo> {
               //Todo: Navigate to 복약정보 삭제
               Navigator.pop(context);
             },
-            child: const Text('복약 정보 삭제하기'),
+            child: const Text('복약 정보 삭제하기', style: defaultactionSheetTextStyle),
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
@@ -230,7 +174,7 @@ class _MedicationInfoState extends State<MedicationInfo> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text('취소')),
+            child: const Text('취소', style: cancelSheetTextStyle)),
       ),
     );
   }

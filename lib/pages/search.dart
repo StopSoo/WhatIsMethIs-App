@@ -42,7 +42,6 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return safeAreaPage(
       Colors.white,
       Colors.white,
@@ -54,7 +53,8 @@ class _SearchState extends State<Search> {
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) =>
                     pillInfoBox(width, pillNames[index], images[index]),
-                separatorBuilder: (BuildContext context, int index) => Divider(
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(
                       height: 1,
                       color: lightGrayColor,
                     ),
@@ -84,7 +84,7 @@ class _SearchState extends State<Search> {
                   Navigator.pop(context);
                 },
                 child: const Icon(
-                  Icons.arrow_back_ios_new,
+                  CupertinoIcons.chevron_back,
                   color: greenColor,
                   size: 30,
                 ),
@@ -114,7 +114,7 @@ class _SearchState extends State<Search> {
                           controller.clear();
                         });
                       },
-                      child: Text("취소"),
+                      child: Text("취소", style: blueTextStyle(17)),
                     ),
                   )
                 : Expanded(
@@ -137,8 +137,10 @@ class _SearchState extends State<Search> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              roundFitWidthImage(width, image),
-              const SizedBox(width: 20,),
+              roundFitWidthImage_Small(width, image),
+              const SizedBox(
+                width: 20,
+              ),
               Text(
                 pillName,
                 style: darkGrayTextStyle(15),
@@ -149,7 +151,7 @@ class _SearchState extends State<Search> {
     );
   }
 
-  Container roundFitWidthImage(double width, String image) {
+  Container roundFitWidthImage_Small(double width, String image) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),

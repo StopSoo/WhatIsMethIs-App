@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../components/colors.dart';
@@ -7,7 +8,7 @@ import '../components/component.dart';
 import '../components/textstyle.dart';
 
 class NameResult extends StatefulWidget {
-  const NameResult({ Key? key }) : super(key: key);
+  const NameResult({Key? key}) : super(key: key);
 
   @override
   _NameResultState createState() => _NameResultState();
@@ -19,9 +20,10 @@ class _NameResultState extends State<NameResult> {
   */
   String itemName = "닥터베아제정";
   String entpName = "(주)대웅제약";
-  String efcyQesitm = ''' 이 약은 소화불량, 식욕감퇴(식욕부진), 과식, 체함, 소화촉진, 소화불량으로 인한 위부팽만감에 사용합니다.''';
+  String efcyQesitm =
+      ''' 이 약은 소화불량, 식욕감퇴(식욕부진), 과식, 체함, 소화촉진, 소화불량으로 인한 위부팽만감에 사용합니다.''';
   String useMethodQesitm = "성인 1회 1정을 1일 3회 식후에 복용합니다.";
-  String atpnWarnQesitm =  "";
+  String atpnWarnQesitm = "";
   String atpnQesitm = '''만 7세 이하의 소아는 이 약을 복용하지 마십시오.
 이 약을 복용하기 전에 알레르기 체질인 사람, 임부 또는 임신하고 있을 가능성이 있는 여성, 이 약 또는 황색4호에 과민증 환자는 의사 또는 약사와 상담하십시오.
 정해진 용법과 용량을 잘 지키십시오.
@@ -34,7 +36,6 @@ class _NameResultState extends State<NameResult> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return safeAreaPage(
       Colors.white,
       Colors.white,
@@ -43,8 +44,22 @@ class _NameResultState extends State<NameResult> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          resultHeader("식별 결과 보기", context),
-        
+            defaultHeader(
+              "식별 결과 보기",
+              context,
+              CupertinoButton(
+                minSize: 0,
+                padding: EdgeInsets.all(0),
+                onPressed: () {
+                  //Navigate to (수동)복약 정보 등록
+                },
+                child: const Icon(
+                  CupertinoIcons.rectangle_stack_badge_plus,
+                  color: greenColor,
+                  size: 28,
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: roundFitWidthImage(width, 'assets/image/test_cat.jpg'),
@@ -58,77 +73,9 @@ class _NameResultState extends State<NameResult> {
             pillDetailBox("상호작용", intrcQesitm),
             pillDetailBox("부작용", seQesitm),
             pillDetailBox("보관법", depositMethodQesitm),
-            
           ],
         ),
       ),
     );
   }
-
-  Padding pillDetailBox(String title, String content) {
-    if(content.isEmpty){
-      return Padding(padding: EdgeInsets.zero);
-    }
-    
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: blackTextStyle(15),
-          ),
-          Text(
-            content,
-            style: darkGrayTextStyle(15),
-          )
-        ],
-      ),
-    );
-  }
-
-  Container roundFitWidthImage(double width, String image) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(
-            color: mainColor,
-          )),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.0),
-        child: Image.asset(
-          image,
-          width: width,
-          height: width * (0.5),
-          fit: BoxFit.fitWidth,
-        ),
-      ),
-    );
-  }
-
-  ClipRRect roundFitWidthBlurImage(double width, String image) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10.0),
-      child: Stack(
-        children: [
-          Image.asset(
-            image,
-            width: width,
-            height: width * (0.5),
-            fit: BoxFit.fitWidth,
-          ),
-          BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-              child: Container(
-                width: width,
-                height: 180,
-                color: Colors.transparent,
-              )),
-        ],
-      ),
-    );
-  }
 }
-
-
