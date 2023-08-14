@@ -34,11 +34,13 @@ class RegisterMedWidget extends StatelessWidget {
                 width: 7
               ),
               InkWell(
-                  onTap: () {},
-                  child: Image.asset('images/icon_arrow_left.png',
-                      alignment: Alignment.bottomRight,
-                      fit: BoxFit.contain,
-                      height: 20)),
+                onTap: () {},
+                child: Image.asset('images/icon_arrow_left.png',
+                  alignment: Alignment.bottomRight,
+                  fit: BoxFit.contain,
+                  height: 20
+                )
+              ),
               SizedBox(width: 130),
               Text(
                 '복약 정보 등록하기',

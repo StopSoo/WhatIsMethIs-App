@@ -54,14 +54,17 @@ class _MyHomePage_afterState extends State<MyHomePage_after> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Column(children: <Widget>[
-        HomeScreen(),
-        TodaysMed(),
-        SizedBox(height: 56),
-        FindMed(),
-      ]),
-    ));
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            HomeScreen(),
+            TodaysMed(),
+            SizedBox(height: 56),
+            FindMed(),
+          ]
+        ),
+      )
+    );
   }
 }
 

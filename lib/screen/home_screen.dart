@@ -1,6 +1,7 @@
 // class MyHomePage_after 
 // 상단 바 - 로고 / 마이 페이지 / '오늘의 복약 정보' 텍스트 / 화살표 버튼
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
@@ -34,14 +35,23 @@ class TopBar extends StatelessWidget {
                   fit: BoxFit.contain,
                   height: 45),
               Spacer(),
-              Image.asset('images/icon_person.png',
-                  fit: BoxFit.contain, height: 45)
+              InkWell(
+                onTap: () {},
+                child: Icon(
+                CupertinoIcons.person,
+                size: 28
+                ),
+              ),
             ]),
-            SizedBox(height: 20, width: 200),
+            SizedBox(
+              height: 20, 
+              width: 200
+            ),
             // 오늘의 복약 정보
             Row(
               children: <Widget>[
-                Container(
+                InkWell(
+                  onTap: () {},
                   child: Text(
                     '오늘의 복약 정보',
                     style: TextStyle(fontSize: 24),
@@ -49,13 +59,15 @@ class TopBar extends StatelessWidget {
                 ),
                 SizedBox(height: 28, width: 10),
                 InkWell(
-                    onTap: () {},
-                    child: Image.asset(
-                      'images/icon_arrow_right.png',
-                      alignment: Alignment.bottomRight,
-                      fit: BoxFit.contain,
-                      height: 28
-                    )
+                  onTap: () {},
+                  child: Column(
+                    children: [
+                      Icon(
+                        CupertinoIcons.chevron_forward,
+                        size: 28
+                      ),
+                    ]
+                  ) 
                 ),
               ],
             ),
