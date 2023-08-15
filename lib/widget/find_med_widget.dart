@@ -28,58 +28,64 @@ class FindWidget extends StatelessWidget {
           scrollDirection: Axis.horizontal, // 가로 스크롤
           child: Row(
             children: [
-              InkWell(
-                  onTap: () {},
-                  child: Stack(children: [
-                    Container(
-                      child: Image.asset(
-                        'images/icon_yellowbox.png',
-                        fit: BoxFit.contain
-                      )
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(26, 133, 98, 81),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Text(
-                          '사진으로\n알약 찾기',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Inter-ExtraBold',
-                          ),
-                        )
-                      )
-                    ),
-                    SizedBox(width: 26),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(26, 53, 0, 0),
-                      child: Icon(
-                        CupertinoIcons.photo_on_rectangle,
-                        size: 28,
-                        color: Color(0xFF9A9526),
-                      )
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(28, 201, 32, 23),
-                      child: Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Text(
-                          '알약을 카메라로 찍으면\n이름을 알려줘요',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w200,
-                            fontFamily: 'Inter-ExtraBold',
-                          ),
-                        )
+              CupertinoButton(
+                onPressed: () {},
+                minSize: 0,
+                padding: EdgeInsets.all(0),
+                child: Stack(children: [
+                  Container(
+                    child: Image.asset(
+                      'images/icon_yellowbox.png',
+                      fit: BoxFit.contain
+                    )
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(26, 133, 98, 81),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text(
+                        '사진으로\n알약 찾기',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Inter-ExtraBold',
+                          color: black
+                        ),
                       )
                     )
-                  ]
-                )
+                  ),
+                  SizedBox(width: 26),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(26, 53, 0, 0),
+                    child: Icon(
+                      CupertinoIcons.photo_on_rectangle,
+                      size: 28,
+                      color: Color(0xFF9A9526),
+                    )
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(28, 201, 32, 23),
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        '알약을 카메라로 찍으면\n이름을 알려줘요',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w200,
+                          fontFamily: 'Inter-ExtraBold',
+                          color: black
+                        ),
+                      )
+                    )
+                  )
+                ]
+              )
               ),
               SizedBox(width: 33, height: 268),
-              InkWell(
-                onTap: () {},
+              CupertinoButton(
+                onPressed: () {},
+                minSize: 0,
+                padding: EdgeInsets.all(0),
                 child: Stack(children: [
                   Container(
                     child: Image.asset(
@@ -97,6 +103,7 @@ class FindWidget extends StatelessWidget {
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Inter-ExtraBold',
+                          color: black
                         ),
                       )
                     )
@@ -120,6 +127,7 @@ class FindWidget extends StatelessWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.w200,
                           fontFamily: 'Inter-ExtraBold',
+                          color: black
                         ),
                       )
                     )
@@ -127,52 +135,55 @@ class FindWidget extends StatelessWidget {
                 ]
               )),
               SizedBox(width: 33, height: 268),
-              InkWell(
-                onTap: () {},
-                child: Stack(children: [
-                  Container(
-                    child: Image.asset(
-                      'images/icon_yellowbox.png',
-                      fit: BoxFit.contain
-                    )
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(26, 133, 98, 81),
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Text(
-                        '비상 연락망\n등록하기',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Inter-ExtraBold',
-                        ),
+              CupertinoButton(
+                onPressed: () {},
+                child: Stack(
+                  children: [
+                    Container(
+                      child: Image.asset(
+                        'images/icon_yellowbox.png',
+                        fit: BoxFit.contain
+                      )
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(26, 133, 98, 81),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Text(
+                          '비상 연락망\n등록하기',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Inter-ExtraBold',
+                            color: black
+                          ),
+                        )
+                      )
+                    ),
+                    SizedBox(width: 26),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(26, 53, 0, 0),
+                      child: Icon(
+                        CupertinoIcons.exclamationmark_circle_fill,
+                        size: 28,
+                        color: Color(0xFF9A9526),
+                      )
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(28, 201, 32, 23),
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          '약을 먹지 않으면\n등록된 번호로 알림을 보내요',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w200,
+                            fontFamily: 'Inter-ExtraBold',
+                            color: black
+                          ),
+                        )
                       )
                     )
-                  ),
-                  SizedBox(width: 26),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(26, 53, 0, 0),
-                    child: Icon(
-                      CupertinoIcons.exclamationmark_circle_fill,
-                      size: 28,
-                      color: Color(0xFF9A9526),
-                    )
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(28, 201, 32, 23),
-                    child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        '약을 먹지 않으면\n등록된 번호로 알림을 보내요',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w200,
-                          fontFamily: 'Inter-ExtraBold',
-                        ),
-                      )
-                    )
-                  )
                 ]
               )
             ),

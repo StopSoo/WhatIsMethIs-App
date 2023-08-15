@@ -22,7 +22,7 @@ class PleaseLoginWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 330,
-      padding: EdgeInsets.fromLTRB(35, 101, 35, 177),
+      padding: EdgeInsets.fromLTRB(35, 101, 38, 177),
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Text(

@@ -13,10 +13,9 @@ const black = Color(0xFF000000);
 const white = Color(0xFFFFFFFF);
 const gray = Color(0xFFDADADA);
 const dark_gray = Color(0xFF6D6D6D);
-
+const bright_gray = Color(0xFFF5F5F5);
 const Color mainColor = Color.fromRGBO(208, 245, 190, 1.0);
 const Color greenColor = Color.fromRGBO(47, 201, 85, 1.0);
-
 
 // font
 const String mainFont = 'NotoSansKR-Medium';

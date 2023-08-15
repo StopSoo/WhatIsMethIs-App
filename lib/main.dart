@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'dart:ui';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/screen/home_screen.dart';
 import 'package:flutter_application/widget/find_med_widget.dart';
 import 'package:flutter_application/widget/todays_med_widget.dart';
 import 'package:flutter_application/widget/before_login_widget.dart';
 import 'package:flutter_application/widget/register_med_info.dart';
-import 'dart:ui';
+import 'constants/colors.dart';
 
 void main() {
   runApp(MyApp()); // 하나의 위젯(시작점)을 파라미터로 전달 받는 runApp 함수
@@ -54,17 +56,14 @@ class _MyHomePage_afterState extends State<MyHomePage_after> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            HomeScreen(),
-            TodaysMed(),
-            SizedBox(height: 56),
-            FindMed(),
-          ]
-        ),
-      )
-    );
+        body: Center(
+      child: Column(children: <Widget>[
+        HomeScreen(),
+        TodaysMed(),
+        SizedBox(height: 56),
+        FindMed(),
+      ]),
+    ));
   }
 }
 
@@ -90,11 +89,13 @@ class _MyHomePage_beforeState extends State<MyHomePage_before> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(children: <Widget>[
-          HomeScreen(),
-          PleaseLogin(),
-          FindMed(),
-        ]),
+        child: Column(
+          children: <Widget>[
+            HomeScreen(),
+            PleaseLogin(),
+            FindMed(),
+          ]
+        ),
       )
     );
   }
@@ -111,7 +112,7 @@ class RegisterMedPage extends StatefulWidget {
 
 class _RegisterMedPageState extends State<RegisterMedPage> {
   int _counter = 0;
-
+  
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -125,7 +126,9 @@ class _RegisterMedPageState extends State<RegisterMedPage> {
         child: Column(
           children: <Widget>[
             RegisterMed(),
-        ]),
-    ));
+          ]
+        ),
+      )
+    );
   }
 }

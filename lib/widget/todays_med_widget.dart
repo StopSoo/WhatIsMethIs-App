@@ -2,6 +2,7 @@
 // 오늘의 복약 정보 위젯
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/constants/colors.dart';
 
 class TodaysMed extends StatefulWidget {
   _TodaysMedState createState() => _TodaysMedState();
@@ -123,22 +124,30 @@ class MedWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                InkWell(
-                  onTap: () {},
+                CupertinoButton(
+                  onPressed: () {},
+                  minSize: 0,
+                  padding: EdgeInsets.all(0),
                   child: Text(
                   '더보기',
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: black
+                  ),
                   ),
                 ),
                 SizedBox(
                   height: 22,
                   width: 4
                 ),
-                InkWell(
-                  onTap: () {},
+                CupertinoButton(
+                  onPressed: () {},
+                  minSize: 0,
+                  padding: EdgeInsets.all(0),
                   child: Icon(
                     CupertinoIcons.chevron_down,
-                    size: 25
+                    size: 25,
+                    color: black,
                   )
                 ),
               ]
