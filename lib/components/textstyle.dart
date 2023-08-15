@@ -70,6 +70,7 @@ TextStyle customTextStyle(double size_, Color textColor) {
   );
 }
 
+
 const TextStyle defaultTextStyle_gray = TextStyle(
   fontFamily: 'NotoSansKR',
   color: Color.fromRGBO(0, 0, 0, 0.3),
