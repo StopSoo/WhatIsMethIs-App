@@ -35,7 +35,6 @@ class _CameraResultState extends State<CameraResult> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return safeAreaPage(
       Colors.white,
       Colors.white,
@@ -44,10 +43,23 @@ class _CameraResultState extends State<CameraResult> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            resultHeader("식별 결과 보기", context),
+            defaultHeader("식별 결과 보기", context, 
+              CupertinoButton(
+                minSize: 0,
+                padding: const EdgeInsets.all(0),
+                onPressed: () {
+                  //Navigate to (자동)복약 정보 등록
+                },
+                child: const Icon(
+                  CupertinoIcons.rectangle_stack_badge_plus,
+                  color: greenColor,
+                  size: 28,
+                ),
+              )
+            ),
             CupertinoButton(
               minSize: 0,
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               onPressed: () {
                 //Todo: navigate to camera
                 print("click image");
@@ -59,7 +71,7 @@ class _CameraResultState extends State<CameraResult> {
                   Center(
                     child: Text(
                       "사진을 눌러 다시 찍기",
-                      style: whiteTextStyle_Bold(16),
+                      style: customTextStyle(16, Colors.white, FontWeight.w600),
                     ),
                   ),
                 ],
@@ -85,48 +97,6 @@ class _CameraResultState extends State<CameraResult> {
             pillDetailBox("보관법", depositMethodQesitm),
             
           ],
-        ),
-      ),
-    );
-  }
-
-  Padding pillDetailBox(String title, String content) {
-    if(content.isEmpty){
-      return Padding(padding: EdgeInsets.zero);
-    }
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: blackTextStyle(15),
-          ),
-          Text(
-            content,
-            style: darkGrayTextStyle(15),
-          )
-        ],
-      ),
-    );
-  }
-
-  Container roundFitWidthImage(double width, String image) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(
-            color: mainColor,
-          )),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.0),
-        child: Image.asset(
-          image,
-          width: width,
-          height: width * (0.5),
-          fit: BoxFit.fitWidth,
         ),
       ),
     );

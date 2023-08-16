@@ -5,13 +5,14 @@ const Color greenColor = Color.fromRGBO(47, 201, 85, 1.0);
 
 
 // font
-const String mainFont = 'NotoSansKR-Medium';
+const String mainFont = 'Inter-Medium';
 
 const Color real_black = Color.fromRGBO(0, 0, 0, 1);
 
 // basicColors
 const Color lightGrayColor = Color.fromRGBO(245, 245, 245, 1.0);
 const Color darkGrayColor = Color.fromRGBO(109, 109, 109, 1.0);
+const Color redColor = Color.fromRGBO(255, 97, 97, 1.0); 
 
 // fontColor
-const Color fontBlueColor = Color.fromRGBO(103, 153, 255, 1.0);
+const Color fontBlueColor = Color.fromRGBO(0, 122, 255, 1.0);

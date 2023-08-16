@@ -28,7 +28,7 @@ Widget CupertinoTextButton(String text) {
   );
 }
 
-Widget resultHeader(String centerText, BuildContext context,
+Widget defaultHeader(String centerText, BuildContext context, Widget rightWidget,
     [double height = 50.0]) {
   return Container(
     color: Colors.white,
@@ -47,8 +47,8 @@ Widget resultHeader(String centerText, BuildContext context,
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Icon(
-                Icons.arrow_back_ios_new,
+              child: const Icon(
+                CupertinoIcons.chevron_back,
                 color: greenColor,
                 size: 30,
               ),
@@ -63,21 +63,53 @@ Widget resultHeader(String centerText, BuildContext context,
           ),
           // * Right Icon
           Center(
-            child: CupertinoButton(
-              minSize: 0,
-              padding: EdgeInsets.all(0),
-              onPressed: () {
-                //Todo: change the Icon
-              },
-              child: Icon(
-                CupertinoIcons.rectangle_stack_badge_plus,
-                color: greenColor,
-                size: 28,
-              ),
+            child: rightWidget,
             ),
-          )
         ],
       ),
     ),
   );
 }
+
+Padding pillDetailBox(String title, String content) {
+    if(content.isEmpty){
+      return Padding(padding: EdgeInsets.zero);
+    }
+    
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: blackTextStyle(15),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            content,
+            style: darkGrayTextStyle(15),
+          )
+        ],
+      ),
+    );
+  }
+
+  Container roundFitWidthImage(double width, String image) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(
+            color: mainColor,
+          )),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: Image.asset(
+          image,
+          width: width,
+          height: width * (0.5),
+          fit: BoxFit.fitWidth,
+        ),
+      ),
+    );
+  }
