@@ -56,9 +56,30 @@
 - 누적된 To do list
 1) DropdownButton 구현하기
 2) margin, padding 깔끔하게 정리하기
-3) main.dart 파일 정리하기
-4) time picker 창 구현하기
-5) 메인 화면 가로 스크롤 바 만들기
-6) 복약 정보 등록 화면 페이지 상하 스크롤 구현 -> 페이지 오버플로우 해결
+3) ~~main.dart 파일 정리하기~~
+4) ~~time picker 창 구현하기~~
+5) ~~메인 화면 가로 스크롤 바 만들기~~
+6) ~~복약 정보 등록 화면 페이지 상하 스크롤 구현 -> 페이지 오버플로우 해결~~
 
 + 마지막 세 번째 뷰 만들기 !
+
+> 0816: 메인 화면 가로 스크롤 바 구현 시도 & 복약 정보 등록 화면 버튼 구체화
+
+* 공통
+- [x] 하나의 화면을 하나의 파일로 구성하기
+- [x] 남은 이미지들 모두 Container로 변경하기
+
+
+* 메인 화면
+<br><img src="https://github.com/StopSoo/WhatIsMethIs-App/assets/114139700/5c81b1bb-6db8-4311-b985-809780224659" width="324" height="702"/></br>
+- [x] 가로 스크롤 바 구현하기 -> 구현하는 데는 성공했으나 우측 오버플로우 해결 실패 ..
+
+
+* 복약 정보 등록 화면 (자동) 
+<br><img src="https://github.com/StopSoo/WhatIsMethIs-App/assets/114139700/983913e0-9fd7-4623-a1aa-4e67d9490fe9" width="324" height="702"/> <img src="https://github.com/StopSoo/WhatIsMethIs-App/assets/114139700/3860a17a-41ec-486e-8233-ebb9296bf8c4" width="324" height="702"/> <img src="https://github.com/StopSoo/WhatIsMethIs-App/assets/114139700/e9e6cd49-0f47-4d1a-a787-778a72c0a1ba" width="324" height="702"/></br>
+
+- [ ] dropdownbutton 구현하기
+- [x] 복용 기간 - date picker 구현하기 -> 취소/완료 버튼은 구현되지 않음
+- [ ] 복약 알림 - time picker 구현하기
+- [x] 페이지 상하 스크롤 구현하기 - 안 보여도 내려갈 수 있게 !
+
