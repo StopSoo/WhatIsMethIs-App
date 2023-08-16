@@ -28,8 +28,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  smooth_page_indicator: ^1.1.0
   flutter:
     sdk: flutter
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -63,23 +65,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/icon_logo.png
-    - images/icon_person.png
-    - images/icon_arrow_right.png
-    - images/icon_arrow_bottom.png
-    - images/icon_arrow_left.png
-    - images/icon_todays_med.png
-    - images/icon_find_med_pic.png
-    - images/icon_find_med_name.png
-    - images/icon_find_med_contact.png
-    - images/icon_register_pic.png
-    - images/icon_date_bar.png
-    - images/icon_wave.png
-    - images/icon_yellowbox.png
-    - images/icon_greenbox.png
-    - images/icon_greenCircle.png
-    - images/icon_grayBox.png
-    - images/icon_longGrayBox.png
-    - images/icon_bigGrayBox.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
