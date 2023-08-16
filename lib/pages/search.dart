@@ -107,7 +107,8 @@ class _SearchState extends State<Search> {
             // * Right Button
             focusNode.hasFocus
                 ? Center(
-                    child: TextButton(
+                    child: CupertinoButton(
+                      padding: const EdgeInsets.only(left: 8.0),
                       onPressed: () {
                         setState(() {
                           focusNode.unfocus();
