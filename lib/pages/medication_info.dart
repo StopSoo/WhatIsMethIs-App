@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application/pages/medication_info_delete.dart';
 
 import '../components/colors.dart';
 import '../components/component.dart';
@@ -107,19 +108,22 @@ class _MedicationInfoState extends State<MedicationInfo> {
       },
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // * Left Image
-          CircleAvatar(
-            backgroundColor: mainColor,
-            radius: 40,
-            child: image.isEmpty
-                ? const Text("💊")
-                : CircleAvatar(
-                    backgroundImage: AssetImage(image),
-                    radius: 38,
-                  ),
+          Container(
+            margin: const EdgeInsets.only(right: 25),
+            child: CircleAvatar(
+              backgroundColor: mainColor,
+              radius: 40,
+              child: image.isEmpty
+                  ? const Text("💊")
+                  : CircleAvatar(
+                      backgroundImage: AssetImage(image),
+                      radius: 38,
+                    ),
+            ),
           ),
           // * Right Text
           Column(
@@ -129,9 +133,9 @@ class _MedicationInfoState extends State<MedicationInfo> {
               const SizedBox(height: 5),
               Row(
                 children: [
-                  Text(itemName, style: darkGrayTextStyle(15)),
+                  Text(itemName, style: darkGrayTextStyle(15), softWrap: true,),
                   const SizedBox(width: 15),
-                  Text( "${cnt}정", style: darkGrayTextStyle(15)),
+                  Text( "${cnt}정", style: darkGrayTextStyle(15), softWrap: true,),
                 ],
               )
             ],
@@ -163,8 +167,9 @@ class _MedicationInfoState extends State<MedicationInfo> {
           CupertinoActionSheetAction(
             isDestructiveAction: true,
             onPressed: () {
-              //Todo: Navigate to 복약정보 삭제
-              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (context) => MedicationInfoDelete()));
             },
             child: const Text('복약 정보 삭제하기', style: defaultactionSheetTextStyle),
           ),

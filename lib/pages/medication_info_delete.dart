@@ -115,19 +115,19 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
         print(_isChecked[index]);
       },
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          CupertinoCheckbox(
-            onChanged: null,
-            value: _isChecked[index],
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            activeColor: greenColor,
-            inactiveColor: greenColor,
-          ),
-          pillShortInfoBox(images[index], lunch[index], after[index],
-              itemName[index], cnt[index]),
-        ],
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CupertinoCheckbox(
+              onChanged: null,
+              value: _isChecked[index],
+              shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              activeColor: greenColor,
+              inactiveColor: greenColor,
+            ),
+            pillShortInfoBox(images[index], lunch[index], after[index],
+                itemName[index], cnt[index]),
+          ],
       ),
     );
   }
@@ -135,9 +135,9 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
   Padding pillShortInfoBox(
       String image, String lunch, String after, String itemName, int cnt) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 20, 16, 20),
+      padding: const EdgeInsets.fromLTRB(8, 20, 8, 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // * Left Image
@@ -162,9 +162,9 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
               const SizedBox(height: 5),
               Row(
                 children: [
-                  Text(itemName, style: darkGrayTextStyle(15)),
+                  Text(itemName, style: darkGrayTextStyle(15), softWrap: true,),
                   const SizedBox(width: 15),
-                  Text("${cnt}정", style: darkGrayTextStyle(15)),
+                  Text("${cnt}정", style: darkGrayTextStyle(15), softWrap: true,),
                 ],
               )
             ],
