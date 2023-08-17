@@ -1,13 +1,10 @@
-// class MyHomePage_after 
 // 애플리케이션 메인 화면 : 로그인 후
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
-import 'package:flutter_application/widget/dotIndicator.dart';
+import 'package:flutter_application/widget/findMedWidget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-// 1. 메인 화면 - 로그인 후
-// 가로 스크롤 버튼 만들어야 함
 class MyHomePage_after extends StatefulWidget {
   const MyHomePage_after({super.key, required this.title});
 
@@ -52,10 +49,11 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end, 
               children: <Widget>[
                 Image.asset(
-                    alignment: Alignment.topLeft,
-                    'images/icon_logo.png',
-                    fit: BoxFit.contain,
-                    height: 45),
+                  alignment: Alignment.topLeft,
+                  'images/icon_logo.png',
+                  fit: BoxFit.contain,
+                  height: 45
+                ),
                 Spacer(),
                 CupertinoButton(
                   onPressed: () {},
@@ -269,7 +267,8 @@ class HomeScreen extends StatelessWidget {
               )
             ),
             SizedBox(height: 56),
-            DotIndicatorWidget()
+            // 알약 찾기 위젯
+            FindMedWidget()
           ],
         )
       );

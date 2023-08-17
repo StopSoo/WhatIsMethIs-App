@@ -1,15 +1,15 @@
-// time picker widget
+// date picker widget
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
 
-class CupertinoDatePickerWidget extends StatefulWidget {
+class DatePickerWidget extends StatefulWidget {
   @override
-  _CupertinoDatePickerWidgetState createState() =>
-      _CupertinoDatePickerWidgetState();
+  _DatePickerWidgetState createState() =>
+      _DatePickerWidgetState();
 }
 
-class _CupertinoDatePickerWidgetState extends State<CupertinoDatePickerWidget> {
+class _DatePickerWidgetState extends State<DatePickerWidget> {
   DateTime _selectedDate = DateTime.now();
 
   @override
@@ -51,7 +51,8 @@ class _CupertinoDatePickerWidgetState extends State<CupertinoDatePickerWidget> {
 
   Widget _buildCupertinoDatePicker() {
     return Container(
-      height: 300,
+      color: CupertinoColors.systemBackground.resolveFrom(context),
+      height: 350,
       child: Column(
         children: [
           Expanded(

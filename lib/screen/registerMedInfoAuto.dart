@@ -1,9 +1,10 @@
-// class RegisterMedPage
-// 복약 정보 등록하기
+// 복약 정보 등록하기 : 자동
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/widget/datePickerWidget.dart';
+import 'package:flutter_application/widget/medCountWidget.dart';
+import 'package:flutter_application/widget/medCycleWidget.dart';
 
 // 3. 복약 정보 등록하기 화면 - 자동 등록
 class RegisterMedPageAuto extends StatefulWidget {
@@ -65,30 +66,35 @@ class _RegisterMedState extends State<RegisterMed> {
       child: Column(
         children: <Widget>[
           Container(
-              padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
-              child: Row(
-                children: [
-                  SizedBox(width: 7),
-                  CupertinoButton(
-                      onPressed: () {},
-                      minSize: 0,
-                      padding: EdgeInsets.all(0),
-                      child: Icon(CupertinoIcons.chevron_left,
-                          size: 20, color: bright_green)),
-                  SizedBox(width: 130),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      '복약 정보 등록하기',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 17,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+            padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
+            child: Row(
+              children: [
+                SizedBox(width: 7),
+                CupertinoButton(
+                  onPressed: () {},
+                  minSize: 0,
+                  padding: EdgeInsets.all(0),
+                  child: Icon(
+                    CupertinoIcons.chevron_left,
+                    size: 20, 
+                    color: bright_green
                   )
-                ],
-              )),
+                ),
+                SizedBox(width: 130),
+                Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    '복약 정보 등록하기',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 17,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              ],
+            )
+          ),
           Container(
             padding: EdgeInsets.fromLTRB(155, 36, 155, 0),
             child: Stack(
@@ -97,83 +103,71 @@ class _RegisterMedState extends State<RegisterMed> {
                   width: 80,
                   height: 80,
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: main_color_green),
+                    shape: BoxShape.circle, color: main_color_green),
                 ),
                 Container(
-                    margin: EdgeInsets.fromLTRB(26, 26, 26, 26),
-                    child: Icon(
-                      CupertinoIcons.photo_on_rectangle,
-                      size: 28,
-                      color: dark_green,
-                    ))
+                  margin: EdgeInsets.fromLTRB(26, 26, 26, 26),
+                  child: Icon(
+                    CupertinoIcons.photo_on_rectangle,
+                    size: 28,
+                    color: dark_green,
+                  )
+                )
               ],
             ),
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(80, 18, 0, 0),
-              child: Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0, 7, 0, 0),
-                    child: Text('타이레놀8시간이알서방정',
-                        style: TextStyle(
-                          fontSize: 15,
-                        )),
+            padding: EdgeInsets.fromLTRB(80, 18, 0, 0),
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: Text('타이레놀8시간이알서방정',
+                    style: TextStyle(
+                      fontSize: 15,
+                    )
                   ),
-                  SizedBox(width: 12),
-                  CupertinoButton(
-                      onPressed: () {},
-                      minSize: 0,
-                      padding: EdgeInsets.fromLTRB(12, 6, 0, 0),
-                      child: Stack(children: [
-                        Container(
-                          width: 60,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              color: bright_gray,
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.fromLTRB(15, 11, 15, 9),
-                            child: Text('1정',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
-                                    color: dark_gray))),
-                      ])),
-                ],
-              )),
+                ),
+                SizedBox(width: 12),
+                MedCountPickerWidget()
+              ],
+            )
+          ),
           // 복용 기간
           Container(
-              padding: EdgeInsets.fromLTRB(45, 27, 0, 0),
-              alignment: Alignment.centerLeft,
-              child: Text('복용 기간',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ))),
+            padding: EdgeInsets.fromLTRB(45, 27, 0, 0),
+            alignment: Alignment.centerLeft,
+            child: Text('복용 기간',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              )
+            )
+          ),
           Container(
             alignment: Alignment.center,
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              CupertinoDatePickerWidget(),
+              DatePickerWidget(),
               SizedBox(width: 2),
               Text('~',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
               SizedBox(width: 2),
-              CupertinoDatePickerWidget(),
+              DatePickerWidget(),
             ]),
           ),
           SizedBox(height: 20),
           // 복약 시간
           Container(
-              padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
-              alignment: Alignment.centerLeft,
-              child: Text('복약 시간',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ))),
-          SizedBox(height: 7),
+            padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
+            alignment: Alignment.centerLeft,
+            child: Text('복약 시간',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              )
+            )
+          ),
+        SizedBox(height: 7),
           Row(
             children: [
               SizedBox(
@@ -183,56 +177,65 @@ class _RegisterMedState extends State<RegisterMed> {
                 width: 57,
                 height: 40,
                 child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isChoosedTimeB = !_isChoosedTimeB;
-                      });
-                    },
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            _isChoosedTimeB ? bright_green : bright_gray)),
-                    child: Text('아침',
-                        style: TextStyle(
-                            color: _isChoosedTimeB ? white : dark_gray,
-                            fontWeight: FontWeight.w300))),
+                  onPressed: () {
+                    setState(() {
+                      _isChoosedTimeB = !_isChoosedTimeB;
+                    });
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      _isChoosedTimeB ? bright_green : bright_gray)),
+                  child: Text('아침',
+                      style: TextStyle(
+                        color: _isChoosedTimeB ? white : dark_gray,
+                        fontWeight: FontWeight.w300
+                      )
+                    )
+                  ),
               ),
               SizedBox(width: 11),
               SizedBox(
                 width: 57,
                 height: 40,
                 child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isChoosedTimeL = !_isChoosedTimeL;
-                      });
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          _isChoosedTimeL ? bright_green : bright_gray),
-                    ),
-                    child: Text('점심',
-                        style: TextStyle(
-                            color: _isChoosedTimeL ? white : dark_gray,
-                            fontWeight: FontWeight.w300))),
+                  onPressed: () {
+                    setState(() {
+                      _isChoosedTimeL = !_isChoosedTimeL;
+                    });
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      _isChoosedTimeL ? bright_green : bright_gray),
+                  ),
+                  child: Text('점심',
+                    style: TextStyle(
+                      color: _isChoosedTimeL ? white : dark_gray,
+                      fontWeight: FontWeight.w300
+                    )
+                  )
+                ),
               ),
               SizedBox(width: 11),
               SizedBox(
                 width: 57,
                 height: 40,
                 child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isChoosedTimeD = !_isChoosedTimeD;
-                      });
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          _isChoosedTimeD ? bright_green : bright_gray),
-                    ),
-                    child: Text('저녁',
-                        style: TextStyle(
-                            color: _isChoosedTimeD ? white : dark_gray,
-                            fontWeight: FontWeight.w300))),
+                  onPressed: () {
+                    setState(() {
+                      _isChoosedTimeD = !_isChoosedTimeD;
+                    });
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        _isChoosedTimeD ? bright_green : bright_gray),
+                  ),
+                  child: Text('저녁',
+                    style: TextStyle(
+                      color: _isChoosedTimeD ? white : dark_gray,
+                      fontWeight: FontWeight.w300
+                    )
+                  )
+                ),
               ),
             ],
           ),
@@ -244,38 +247,44 @@ class _RegisterMedState extends State<RegisterMed> {
                 width: 57,
                 height: 40,
                 child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isChoosedBe = !_isChoosedBe;
-                      });
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          _isChoosedBe ? bright_green : bright_gray),
-                    ),
-                    child: Text('식전',
-                        style: TextStyle(
-                            color: _isChoosedBe ? white : dark_gray,
-                            fontWeight: FontWeight.w300))),
+                  onPressed: () {
+                    setState(() {
+                      _isChoosedBe = !_isChoosedBe;
+                    });
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        _isChoosedBe ? bright_green : bright_gray),
+                  ),
+                  child: Text('식전',
+                    style: TextStyle(
+                      color: _isChoosedBe ? white : dark_gray,
+                      fontWeight: FontWeight.w300
+                    )
+                  )
+                ),
               ),
               SizedBox(width: 11),
               SizedBox(
                 width: 57,
                 height: 40,
                 child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _isChoosedAf = !_isChoosedAf;
-                      });
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          _isChoosedAf ? bright_green : bright_gray),
-                    ),
-                    child: Text('식후',
-                        style: TextStyle(
-                            color: _isChoosedAf ? white : dark_gray,
-                            fontWeight: FontWeight.w300))),
+                  onPressed: () {
+                    setState(() {
+                      _isChoosedAf = !_isChoosedAf;
+                    });
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        _isChoosedAf ? bright_green : bright_gray),
+                  ),
+                  child: Text('식후',
+                    style: TextStyle(
+                      color: _isChoosedAf ? white : dark_gray,
+                      fontWeight: FontWeight.w300
+                    )
+                  )
+                ),
               ),
             ],
           ),
@@ -287,39 +296,18 @@ class _RegisterMedState extends State<RegisterMed> {
             padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
             alignment: Alignment.centerLeft,
             child: Text('복약 주기',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ))),
-          CupertinoButton(
-            onPressed: () {},
-            minSize: 0,
-            padding: EdgeInsets.fromLTRB(0, 7, 0, 0),
-            child: Stack(
-              children: [
-                Container(
-                  width: 318,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: bright_gray,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(150, 9, 0, 9),
-                  child: Text('1 달',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: dark_gray
-                    )
-                  )
-                ),
-              ]
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              )
             )
           ),
           SizedBox(
-            height: 25,
+            height: 10
+          ),
+          MedCyclePickerWidget(),
+          SizedBox(
+            height: 10,
           ),
           // 복약 알림
           Row(
@@ -348,7 +336,16 @@ class _RegisterMedState extends State<RegisterMed> {
               minSize: 0,
               padding: EdgeInsets.fromLTRB(0, 7, 0, 0),
               child: Stack(children: [
-                Image.asset('images/icon_longGrayBox.png', height: 40),
+                Container(
+                  child: Container(
+                    width: 319,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: bright_gray,
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+                  )
+                ),
                 Padding(
                     padding: EdgeInsets.fromLTRB(130, 9, 0, 9),
                     child: Text('13 : 00 PM',
@@ -358,7 +355,7 @@ class _RegisterMedState extends State<RegisterMed> {
                             color: dark_gray))),
               ])),
           SizedBox(
-            height: 16,
+            height: 10,
           ),
           Container(
               padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
@@ -368,9 +365,24 @@ class _RegisterMedState extends State<RegisterMed> {
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ))),
+          SizedBox(
+            height: 10
+          ),
           Container(
-              padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-              child: Image.asset('images/icon_bigGrayBox.png')),
+            padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
+            child: Container(
+              width: 324,
+              height: 219,
+              decoration: BoxDecoration(
+                color: bright_gray,
+                borderRadius: BorderRadius.circular(12)
+              ),
+            )
+          ),
+          // 여유 공간
+          SizedBox(
+            height: 30
+          )
         ],
       ),
     );
