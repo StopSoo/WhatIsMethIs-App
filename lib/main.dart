@@ -19,8 +19,8 @@ void main() {
   runApp(MyApp()); // 하나의 위젯(시작점)을 파라미터로 전달 받는 runApp 함수
 }
 
-class MyApp extends StatefulWidget {
-  _MyAppState createState() => _MyAppState();
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   static const String _title = 'ChalKak Medicine';
   @override
