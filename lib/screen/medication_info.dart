@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application/pages/medication_info_delete.dart';
+import 'package:flutter_application/screen/medication_info_delete.dart';
 
 import '../components/colors.dart';
 import '../components/component.dart';
@@ -54,15 +54,15 @@ class _MedicationInfoState extends State<MedicationInfo> {
 
   List<String> images = [
     "",
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
     "",
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg'
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg'
   ];
 
   @override

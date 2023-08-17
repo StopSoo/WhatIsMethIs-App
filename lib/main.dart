@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_application/pages/camera_result.dart';
-import 'package:flutter_application/pages/emergency_contact.dart';
-import 'package:flutter_application/pages/medication_info.dart';
-import 'package:flutter_application/pages/medication_info_delete.dart';
-import 'package:flutter_application/pages/search.dart';
-import 'pages/name_result.dart';
+import 'package:flutter_application/screen/camera_result.dart';
+import 'package:flutter_application/screen/emergency_contact.dart';
+import 'package:flutter_application/screen/medication_info.dart';
+import 'package:flutter_application/screen/medication_info_delete.dart';
+import 'package:flutter_application/screen/search.dart';
+import 'screen/name_result.dart';
 
 
 
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       title: _title,
-      home: CameraResult(), 
+      home: MedicationInfo(), 
     );
   }
 }

@@ -67,7 +67,7 @@ class _CameraResultState extends State<CameraResult> {
               child: Stack(
                 alignment: AlignmentDirectional.center,
                 children: [
-                  roundFitWidthBlurImage(width, 'assets/image/test_cat.jpg'),
+                  roundFitWidthBlurImage(width, 'assets/images/test_cat.jpg'),
                   Center(
                     child: Text(
                       "사진을 눌러 다시 찍기",
@@ -84,7 +84,7 @@ class _CameraResultState extends State<CameraResult> {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: roundFitWidthImage(width, 'assets/image/test_cat.jpg'),
+              child: roundFitWidthImage(width, 'assets/images/test_cat.jpg'),
             ),
             pillDetailBox("제품명", itemName),
             pillDetailBox("업체명", entpName),

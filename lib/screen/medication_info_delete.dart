@@ -53,15 +53,15 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
 
   List<String> images = [
     "",
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
     "",
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg'
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg'
   ];
   late List<bool> _isChecked;
 

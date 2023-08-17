@@ -28,15 +28,15 @@ class _SearchState extends State<Search> {
     "타이레놀12시간이알서방정"
   ];
   List<String> images = [
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg',
-    'assets/image/test_cat.jpg'
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg',
+    'assets/images/test_cat.jpg'
   ];
 
   @override
