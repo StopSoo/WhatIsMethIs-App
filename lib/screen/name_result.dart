@@ -62,7 +62,7 @@ class _NameResultState extends State<NameResult> {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: roundFitWidthImage(width, 'assets/image/test_cat.jpg'),
+              child: roundFitWidthImage(width, 'assets/images/test_cat.jpg'),
             ),
             pillDetailBox("제품명", itemName),
             pillDetailBox("업체명", entpName),
