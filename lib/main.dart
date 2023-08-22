@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/screen/loginPage.dart';
 import 'package:flutter_application/screen/mainScreenAfterLogin.dart';
 import 'package:flutter_application/screen/mainScreenBeforeLogin.dart';
 import 'package:flutter_application/screen/registerMedInfoAuto.dart';
@@ -16,9 +16,8 @@ import 'package:flutter_application/screen/search.dart';
 import 'screen/name_result.dart';
 
 void main() {
-  runApp(   // 하나의 위젯(시작점)을 파라미터로 전달 받는 runApp 함수
-    MyApp()
-  ); 
+  runApp(// 하나의 위젯(시작점)을 파라미터로 전달 받는 runApp 함수
+      MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -36,7 +35,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       title: _title,
-      home: MedicationInfo(), 
+      home: LoginPage(),
     );
   }
 }
