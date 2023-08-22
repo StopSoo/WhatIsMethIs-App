@@ -6,11 +6,11 @@ import 'package:flutter_application/screen/mainScreenBeforeLogin.dart';
 import 'package:flutter_application/screen/registerMedInfoAuto.dart';
 import 'package:flutter_application/screen/registerMedInfoManual.dart';
 import 'package:flutter_application/screen/myPage.dart';
+import 'package:flutter_application/widget/medTimeButton.dart';
 
 void main() {
-  runApp(   // 하나의 위젯(시작점)을 파라미터로 전달 받는 runApp 함수
-    MyApp()
-  ); 
+  runApp(// 하나의 위젯(시작점)을 파라미터로 전달 받는 runApp 함수
+      MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
         primaryColor: white,
         hintColor: black,
       ),
-      home: const RegisterMedPageAuto(title: 'Flutter Demo Home Page'),
+      home: const RegisterMedPageManual(title: ''),
     );
   }
 }
