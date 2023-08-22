@@ -66,6 +66,7 @@ flutter:
   assets:
     - assets/images/icon_logo.png
 
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -98,6 +99,3 @@ flutter:
         weight: 800
       - asset: assets/fonts/Inter-Black.ttf
         weight: 900
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
