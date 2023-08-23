@@ -26,9 +26,9 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(47, 11, 47, 0),
+            padding: EdgeInsets.fromLTRB(19, 9, 0, 0),
             child: Text(
-              '날짜 선택',
+              '${_selectedDate.year}년 ${_selectedDate.month}월 ${_selectedDate.day}일',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: dark_gray,
@@ -68,19 +68,23 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
                       color: Colors.red
                     )
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
                 ),
                 CupertinoButton(
                   child: Text(
                     '완료'
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
                 )
               ]
             ),
           ),
           Expanded(
-            flex: 10,
+            flex: 15,
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
               initialDateTime: DateTime.now(),

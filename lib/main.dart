@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_application/screen/registerMedInfoAuto.dart';
 import 'package:flutter_application/screen/registerMedInfoManual.dart';
 import 'package:flutter_application/screen/myPage.dart';
 import 'package:flutter_application/widget/medTimeButton.dart';
+import 'package:flutter_application/widget/timePickerWidget.dart';
 import 'dart:ui';
 import 'package:flutter_application/screen/camera_result.dart';
 import 'package:flutter_application/screen/emergency_contact.dart';
@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CupertinoApp(
+      debugShowCheckedModeBanner: false,
       theme: CupertinoThemeData(
         textTheme: CupertinoTextThemeData(
           textStyle: TextStyle(
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const RegisterMedPageManual(title: ''),
+      home: const RegisterMedPageAuto(title: ''),
     );
   }
 }

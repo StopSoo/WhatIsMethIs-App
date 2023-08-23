@@ -1,8 +1,10 @@
 // 복약 정보 등록하기 : 자동
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import '../components/component.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/widget/datePickerWidget.dart';
+import 'package:flutter_application/widget/timePickerWidget.dart';
 import 'package:flutter_application/widget/medCountWidget.dart';
 import 'package:flutter_application/widget/medCycleWidget.dart';
 import 'package:flutter_application/widget/medTimeBeAfButton.dart';
@@ -54,36 +56,13 @@ class _RegisterMedState extends State<RegisterMed> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: Container(
+    return safeAreaPage(
+      Colors.white,
+      Colors.white,
+      Container(
         child: Column(
           children: <Widget>[
-            Container(
-                padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
-                child: Row(
-                  children: [
-                    SizedBox(width: 7),
-                    CupertinoButton(
-                        onPressed: () {},
-                        minSize: 0,
-                        padding: EdgeInsets.all(0),
-                        child: Icon(CupertinoIcons.chevron_left,
-                            size: 20, color: bright_green)),
-                    SizedBox(width: 130),
-                    Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        '복약 정보 등록하기',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 17,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                )),
+            defaultHeader('복약 정보 등록하기', context, SizedBox(width: 30)),
             Container(
               padding: EdgeInsets.fromLTRB(155, 36, 155, 0),
               child: Stack(
@@ -131,22 +110,15 @@ class _RegisterMedState extends State<RegisterMed> {
             Container(
               alignment: Alignment.center,
               child:
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center, 
-                  children: [
-                    DatePickerWidget(),
-                    SizedBox(width: 2),
-                    Text(
-                      '~',
-                      style: TextStyle(
-                        fontSize: 12, 
-                        fontWeight: FontWeight.w700
-                      )
-                    ),
-                    SizedBox(width: 2),
-                    DatePickerWidget(),
-                  ]
-                ),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                DatePickerWidget(),
+                SizedBox(width: 2),
+                Text('~',
+                    style:
+                        TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+                SizedBox(width: 2),
+                DatePickerWidget(),
+              ]),
             ),
             SizedBox(height: 15),
             // 복약 시간
@@ -189,13 +161,15 @@ class _RegisterMedState extends State<RegisterMed> {
             Row(
               children: [
                 Container(
-                    padding: EdgeInsets.fromLTRB(45, 0, 10, 0),
-                    alignment: Alignment.centerLeft,
-                    child: Text('복약 알림',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ))),
+                  padding: EdgeInsets.fromLTRB(45, 0, 10, 0),
+                  alignment: Alignment.centerLeft,
+                  child: Text('복약 알림',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    )
+                  )
+                ),
                 CupertinoSwitch(
                   value: _isChecked,
                   activeColor: CupertinoColors.activeGreen,
@@ -207,29 +181,10 @@ class _RegisterMedState extends State<RegisterMed> {
                 )
               ],
             ),
-            CupertinoButton(
-                onPressed: () {},
-                minSize: 0,
-                padding: EdgeInsets.fromLTRB(0, 7, 0, 0),
-                child: Stack(children: [
-                  Container(
-                      child: Container(
-                    width: 319,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        color: bright_gray,
-                        borderRadius: BorderRadius.circular(12)),
-                  )),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(130, 9, 0, 9),
-                      child: Text('13 : 00 PM',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              color: dark_gray))),
-                ])),
+            SizedBox(height: 8),
+            DatePickerExample(),
             SizedBox(
-              height: 10,
+              height: 13,
             ),
             Container(
                 padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
@@ -241,16 +196,16 @@ class _RegisterMedState extends State<RegisterMed> {
                     ))),
             SizedBox(height: 10),
             Container(
-                padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-                child: Container(
-                  width: 324,
-                  height: 219,
-                  decoration: BoxDecoration(
-                      color: bright_gray,
-                      borderRadius: BorderRadius.circular(12)),
-                )),
-            // 여유 공간
-            SizedBox(height: 30)
+              padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
+              child: Container(
+                width: 324,
+                height: 219,
+                decoration: BoxDecoration(
+                  color: bright_gray,
+                  borderRadius: BorderRadius.circular(12)
+                ),
+              )
+            ),
           ],
         ),
       ),

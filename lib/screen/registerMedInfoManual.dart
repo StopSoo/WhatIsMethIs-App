@@ -1,6 +1,8 @@
 // 복약 정보 등록하기 : 수동
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import '../components/component.dart';
+import 'package:flutter_application/components/component.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/widget/datePickerWidget.dart';
 import 'package:flutter_application/widget/medCountWidget.dart';
@@ -66,39 +68,19 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: Container(
+    return safeAreaPage(
+      Colors.white,
+      Colors.white,
+      Container(
         child: Column(
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
-              child: Row(
-                children: [
-                  SizedBox(width: 7),
-                  CupertinoButton(
-                    onPressed: () {},
-                    minSize: 0,
-                    padding: EdgeInsets.all(0),
-                    child: Icon(
-                      CupertinoIcons.chevron_left,
-                      size: 20, color: bright_green
-                    )
-                  ),
-                  SizedBox(width: 130),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      '복약 정보 등록하기',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 17,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
-              )),
+            defaultHeader(
+              '복약 정보 등록하기', 
+              context, 
+              SizedBox(
+                width: 30
+              )
+            ),
             Container(
               padding: EdgeInsets.fromLTRB(155, 36, 155, 0),
               child: Stack(
