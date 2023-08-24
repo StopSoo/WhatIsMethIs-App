@@ -1,4 +1,5 @@
 // 복약 알림 시간 설정 위젯
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,14 @@ class DatePickerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CupertinoApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('ko', 'KO'),
+      ],
       theme: CupertinoThemeData(brightness: Brightness.light),
       home: DatePickerExample(),
     );

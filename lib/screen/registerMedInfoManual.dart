@@ -10,6 +10,8 @@ import 'package:flutter_application/widget/medCycleWidget.dart';
 import 'package:flutter_application/widget/medTimeBeAfButton.dart';
 import 'package:flutter_application/widget/medTimeButton.dart';
 
+import '../widget/timePickerWidget.dart';
+
 class RegisterMedPageManual extends StatefulWidget {
   const RegisterMedPageManual({super.key, required this.title});
 
@@ -48,22 +50,12 @@ class RegisterMedManual extends StatefulWidget {
 
 class _RegisterMedManualState extends State<RegisterMedManual> {
   bool _isChecked = false; // 복약 알림 - switch
-  bool _isChoosedTimeB = false; // 복약 시간 - 아침
-  bool _isChoosedTimeL = false; // 복약 시간 - 점심
-  bool _isChoosedTimeD = false; // 복약 시간 - 저녁
-  bool _isChoosedBe = false; // 복약 시간 - 식전
-  bool _isChoosedAf = false; // 복약 시간 - 식전
 
   @override
   void initState() {
     // 초기화
     super.initState();
     _isChecked = false;
-    _isChoosedTimeB = false;
-    _isChoosedTimeL = false;
-    _isChoosedTimeD = false;
-    _isChoosedBe = false;
-    _isChoosedAf = false;
   }
 
   @override
@@ -231,37 +223,10 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                 )
               ],
             ),
-            CupertinoButton(
-              onPressed: () {},
-              minSize: 0,
-              padding: EdgeInsets.fromLTRB(0, 7, 0, 0),
-              child: Stack(
-                children: [
-                  Container(
-                    child: Container(
-                      width: 319,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: bright_gray,
-                        borderRadius: BorderRadius.circular(12)
-                      ),
-                    )
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(130, 9, 0, 9),
-                    child: Text('13 : 00 PM',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: dark_gray
-                      )
-                    )
-                  ),
-                ]
-              )
-            ),
+            SizedBox(height: 8),
+            DatePickerExample(),
             SizedBox(
-              height: 10,
+              height: 13,
             ),
             Container(
               padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
