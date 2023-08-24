@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const ImagePickerScreen(),
+      home: const MyPage(title: ''),
     );
   }
 }
