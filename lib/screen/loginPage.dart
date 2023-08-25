@@ -133,6 +133,24 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+
+                // 소셜 로그인
+                const SizedBox(height: 40),
+
+                const Text(
+                  "간편 로그인",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                    color: real_black,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                // 카카오 로그인 버튼
+                Image.asset(
+                  "assets/images/kakao_login_large_wide.png",
+                ),
+                // 애플 로그인 버튼
               ],
             ),
           ),
