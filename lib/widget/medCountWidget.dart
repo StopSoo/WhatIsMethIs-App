@@ -43,7 +43,7 @@ class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
     showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => Container(
-        height: 250,
+        height: 300,
         padding: const EdgeInsets.only(top: 6.0),
         margin: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -51,7 +51,42 @@ class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
         color: CupertinoColors.systemBackground.resolveFrom(context),
         child: SafeArea(
           top: false,
-          child: child,
+          child: Column(
+            children: [
+              Expanded(
+                flex: 6,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CupertinoButton(
+                      child: Text(
+                        '취소',
+                        style: TextStyle(
+                          color: Colors.red
+                        )
+                      ),
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                    ),
+                    CupertinoButton(
+                      child: Text(
+                        '완료'
+                      ),
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                    )
+                  ]
+                ),
+              ),
+              Expanded(
+                flex: 20,
+                child: child
+              ),
+            ]
+          ),
         ),
       ),
     );
@@ -67,43 +102,44 @@ class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           CupertinoButton(
-              minSize: 0.0,
-              padding: EdgeInsets.fromLTRB(13, 9, 8, 9),
-              color: bright_gray,
-              onPressed: () => _showDialog(
-                CupertinoPicker(
-                  magnification: 1.22,
-                  squeeze: 1.2,
-                  useMagnifier: true,
-                  itemExtent: _kItemExtent,
-                  scrollController: FixedExtentScrollController(
-                    initialItem: _selectedCount,
-                  ),
-                  onSelectedItemChanged: (int selectedItem) {
-                    setState(() {
-                      _selectedCount = selectedItem;
-                    });
-                  },
-                  children:
-                      List<Widget>.generate(_medCounts.length, (int index) {
-                    return Center(child: Text(_medCounts[index]));
-                  }),
+            minSize: 0.0,
+            padding: EdgeInsets.fromLTRB(13, 9, 8, 9),
+            color: bright_gray,
+            onPressed: () => _showDialog(
+              CupertinoPicker(
+                magnification: 1.22,
+                squeeze: 1.2,
+                useMagnifier: true,
+                itemExtent: _kItemExtent,
+                scrollController: FixedExtentScrollController(
+                  initialItem: _selectedCount,
                 ),
+                onSelectedItemChanged: (int selectedItem) {
+                  setState(() {
+                    _selectedCount = selectedItem;
+                  });
+                },
+                children:
+                    List<Widget>.generate(_medCounts.length, (int index) {
+                  return Center(child: Text(_medCounts[index]));
+                }),
               ),
-              child: Row(
-                children: [
-                  Text(
-                    _medCounts[_selectedCount],
-                    style: const TextStyle(fontSize: 15.0, color: dark_gray),
-                  ),
-                  SizedBox(width: 6),
-                  Icon(
-                    CupertinoIcons.chevron_down,
-                    size: 15,
-                    color: black,
-                  ),
-                ],
-              )),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  _medCounts[_selectedCount],
+                  style: const TextStyle(fontSize: 15.0, color: dark_gray),
+                ),
+                SizedBox(width: 6),
+                Icon(
+                  CupertinoIcons.chevron_down,
+                  size: 15,
+                  color: black,
+                ),
+              ],
+            )
+          ),
         ],
       ),
     );

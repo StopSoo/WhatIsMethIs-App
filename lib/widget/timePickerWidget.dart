@@ -1,5 +1,7 @@
-// 아직 미완입니닷 !!!!!! (( 수정 중 ))
-
+// 복약 알림 시간 설정 위젯
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
 
@@ -11,6 +13,14 @@ class DatePickerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CupertinoApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('ko', 'KO'),
+      ],
       theme: CupertinoThemeData(brightness: Brightness.light),
       home: DatePickerExample(),
     );
@@ -25,7 +35,8 @@ class DatePickerExample extends StatefulWidget {
 }
 
 class _DatePickerExampleState extends State<DatePickerExample> {
-  DateTime time = DateTime(2016, 5, 10, 22, 35);
+  DateTime time = DateTime.now();
+  DateFormat dateFormat = DateFormat('aa hh:mm');
 
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
@@ -38,61 +49,82 @@ class _DatePickerExampleState extends State<DatePickerExample> {
         ),
         color: CupertinoColors.systemBackground.resolveFrom(context),
         child: SafeArea(
-          top: false,
-          child: child,
-        ),
+            top: false,
+            child: Column(children: [
+              Expanded(
+                flex: 6,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CupertinoButton(
+                      child: Text('취소', style: TextStyle(color: Colors.red)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    CupertinoButton(
+                      child: Text('완료'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ]
+                ),
+              ),
+              Expanded(
+                flex: 20, 
+                child: child
+              ),
+            ])),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: 318,
-          height: 40,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-          child: CupertinoPageScaffold(
-            child: DefaultTextStyle(
-              style: TextStyle(
-                color: CupertinoColors.label.resolveFrom(context),
-                fontSize: 22.0,
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _DatePickerItem(
-                      children: <Widget>[
-                        CupertinoButton(
-                          onPressed: () => _showDialog(
-                            CupertinoDatePicker(
-                              initialDateTime: time,
-                              mode: CupertinoDatePickerMode.time,
-                              use24hFormat: true,
-                              onDateTimeChanged: (DateTime newTime) {
-                                setState(() => time = newTime);
-                              },
-                            ),
-                          ),
-                          child: Text(
-                            '${time.hour}:${time.minute}',
-                            style: const TextStyle(
-                              fontSize: 22.0,
-                            ),
+    return Container(
+        width: 330,
+        height: 50,
+        child: CupertinoPageScaffold(
+          child: DefaultTextStyle(
+            style: TextStyle(
+              color: white,
+              fontSize: 15.0,
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _DatePickerItem(
+                    children: <Widget>[
+                      CupertinoButton(
+                        onPressed: () => _showDialog(
+                          CupertinoDatePicker(
+                            initialDateTime: time,
+                            mode: CupertinoDatePickerMode.time,
+                            use24hFormat: false,
+                            onDateTimeChanged: (DateTime newTime) {
+                              setState(() => time = newTime);
+                            },
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                        child: Center(
+                          child: Text(
+                            dateFormat.format(time),
+                            style: const TextStyle(
+                                fontSize: 15.0, color: dark_gray),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          )
+          ),
         )
-      ],
-    );
+      );
   }
 }
 
@@ -103,26 +135,17 @@ class _DatePickerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: CupertinoColors.inactiveGray,
-            width: 0.0,
-          ),
-          bottom: BorderSide(
-            color: CupertinoColors.inactiveGray,
-            width: 0.0,
-          ),
+    return Container(
+      child: Container(
+        decoration: BoxDecoration(
+          color: bright_gray,
+          borderRadius: BorderRadius.circular(12)
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: children,
         ),
-      ),
+      )
     );
   }
 }

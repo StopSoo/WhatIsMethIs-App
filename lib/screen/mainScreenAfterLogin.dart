@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
               children: <Widget>[
                 Image.asset(
                   alignment: Alignment.topLeft,
-                  'images/icon_logo.png',
+                  'assets/images/icon_logo.png',
                   fit: BoxFit.contain,
                   height: 45
                 ),
