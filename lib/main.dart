@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
+
 import 'package:flutter_application/widget/choosePic.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_application/screen/loginPage.dart';
 import 'package:flutter_application/screen/mainScreenAfterLogin.dart';
 import 'package:flutter_application/screen/mainScreenBeforeLogin.dart';
 import 'package:flutter_application/screen/registerMedInfoAuto.dart';
@@ -50,6 +52,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const MyPage(title: ''),
+
     );
   }
 }
