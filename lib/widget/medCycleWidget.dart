@@ -51,7 +51,42 @@ class _MedCyclePickerWidgetState extends State<MedCyclePickerWidget> {
         color: CupertinoColors.systemBackground.resolveFrom(context),
         child: SafeArea(
           top: false,
-          child: child,
+          child: Column(
+            children: [
+              Expanded(
+                flex: 6,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CupertinoButton(
+                      child: Text(
+                        '취소',
+                        style: TextStyle(
+                          color: Colors.red
+                        )
+                      ),
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                    ),
+                    CupertinoButton(
+                      child: Text(
+                        '완료'
+                      ),
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                    )
+                  ]
+                ),
+              ),
+              Expanded(
+                flex: 20,
+                child: child
+              ),
+            ]
+          )
         ),
       ),
     );
@@ -60,53 +95,54 @@ class _MedCyclePickerWidgetState extends State<MedCyclePickerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 318,
+      width: 330,
       height: 40,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
+        children: [
           CupertinoButton(
-              minSize: 0.0,
-              padding: EdgeInsets.fromLTRB(13, 9, 8, 9),
-              color: bright_gray,
-              onPressed: () => _showDialog(
-                CupertinoPicker(
-                  magnification: 1.22,
-                  squeeze: 1.2,
-                  useMagnifier: true,
-                  itemExtent: _kItemExtent,
-                  scrollController: FixedExtentScrollController(
-                    initialItem: _selectedCycle,
-                  ),
-                  onSelectedItemChanged: (int selectedItem) {
-                    setState(() {
-                      _selectedCycle = selectedItem;
-                    });
-                  },
-                  children:
-                      List<Widget>.generate(_medCounts.length, (int index) {
-                    return Center(child: Text(_medCounts[index]));
-                  }),
+            minSize: 0.0,
+            padding: EdgeInsets.fromLTRB(13, 9, 8, 9),
+            color: bright_gray,
+            onPressed: () => _showDialog(
+              CupertinoPicker(
+                magnification: 1.22,
+                squeeze: 1.2,
+                useMagnifier: true,
+                itemExtent: _kItemExtent,
+                scrollController: FixedExtentScrollController(
+                  initialItem: _selectedCycle,
                 ),
+                onSelectedItemChanged: (int selectedItem) {
+                  setState(() {
+                    _selectedCycle = selectedItem;
+                  });
+                },
+                children:
+                    List<Widget>.generate(_medCounts.length, (int index) {
+                  return Center(child: Text(_medCounts[index]));
+                }),
               ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 140
-                  ),
-                  Text(
-                    _medCounts[_selectedCycle],
-                    style: const TextStyle(fontSize: 15.0, color: dark_gray),
-                  ),
-                  SizedBox(width: 111),
-                  Icon(
-                    CupertinoIcons.chevron_down,
-                    size: 15,
-                    color: black,
-                  ),
-                ],
-              )),
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 140
+                ),
+                Text(
+                  _medCounts[_selectedCycle],
+                  style: const TextStyle(fontSize: 15.0, color: dark_gray),
+                ),
+                SizedBox(width: 120),
+                Icon(
+                  CupertinoIcons.chevron_down,
+                  size: 15,
+                  color: black,
+                ),
+              ],
+            )
+          ),
         ],
       ),
     );
