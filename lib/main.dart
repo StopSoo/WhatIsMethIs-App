@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: const MyPage(title: ''),
+      home: RegisterMedPageAuto(),
 
     );
   }

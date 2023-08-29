@@ -11,36 +11,33 @@ import 'package:flutter_application/widget/medTimeBeAfButton.dart';
 import 'package:flutter_application/widget/medTimeButton.dart';
 
 class RegisterMedPageAuto extends StatefulWidget {
-  const RegisterMedPageAuto({super.key, required this.title});
+  const RegisterMedPageAuto({super.key});
 
-  final String title;
   @override
   State<RegisterMedPageAuto> createState() => _RegisterMedPageAutoState();
 }
 
 class _RegisterMedPageAutoState extends State<RegisterMedPageAuto> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return safeAreaPage(
     Colors.white,
     Colors.white,
-      Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              RegisterMed(),
-            ]
-          ),
-        )
+      GestureDetector(
+        onTap: (){
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                RegisterMed(),
+              ]
+            ),
+          )
+        ),
       ),
     );
   }
@@ -63,6 +60,7 @@ class _RegisterMedState extends State<RegisterMed> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(color: white),
       child: Column(
         children: <Widget>[
@@ -211,11 +209,25 @@ class _RegisterMedState extends State<RegisterMed> {
           Container(
             padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
             child: Container(
+              padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
               width: 324,
               height: 219,
               decoration: BoxDecoration(
                 color: bright_gray,
                 borderRadius: BorderRadius.circular(12)
+              ),
+              child: TextField(
+                scrollPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                keyboardType: TextInputType.multiline,
+                maxLines: null, // 자동 줄바꿈
+                decoration: const InputDecoration(
+                  hintText: '약에 대한 설명을 입력하세요.',
+                  border: InputBorder.none, // 텍스트 박스 아래 줄 제거
+                  labelStyle: TextStyle(color: dark_gray),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none
+                  )
+                ),
               ),
             )
           ),

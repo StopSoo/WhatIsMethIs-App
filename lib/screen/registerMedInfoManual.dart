@@ -13,33 +13,30 @@ import 'package:flutter_application/widget/medTimeButton.dart';
 import '../widget/timePickerWidget.dart';
 
 class RegisterMedPageManual extends StatefulWidget {
-  const RegisterMedPageManual({super.key, required this.title});
+  const RegisterMedPageManual({super.key});
 
-  final String title;
   @override
   State<RegisterMedPageManual> createState() => _RegisterMedPageManualState();
 }
 
 class _RegisterMedPageManualState extends State<RegisterMedPageManual> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            RegisterMedManual(),
-          ]
-        ),
-      )
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              RegisterMedManual(),
+            ]
+          ),
+        )
+      ),
     );
   }
 }
@@ -64,6 +61,7 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
       Colors.white,
       Colors.white,
       Container(
+        width: MediaQuery.of(context).size.width,
         child: Column(
           children: <Widget>[
             defaultHeader(
@@ -100,26 +98,29 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
               padding: EdgeInsets.fromLTRB(80, 18, 0, 0),
               child: Row(
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        width: 168,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: bright_gray,
-                          borderRadius: BorderRadius.circular(12)
-                        ),
+                  Container(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(20, 6, 0, 0),
+                      width: 168,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: bright_gray,
+                        borderRadius: BorderRadius.circular(12)
                       ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                        child: Text('약 이름',
-                          style: TextStyle(
-                            fontSize: 15,
+                      child: TextField(
+                        keyboardType: TextInputType.multiline,
+                        decoration: const InputDecoration(
+                          hintText: '약 이름',
+                          hintStyle: TextStyle(color: dark_gray, fontSize: 16),
+                          border: InputBorder.none, // 텍스트 박스 아래 줄 제거
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none
                           )
                         ),
                       ),
-                    ],
+                    )
                   ),
+                  
                   SizedBox(width: 12),
                   // 약 개수 선택 위젯
                   MedCountPickerWidget()
@@ -243,16 +244,30 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
               height: 10
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-              child: Container(
-                width: 324,
-                height: 219,
-                decoration: BoxDecoration(
-                  color: bright_gray,
-                  borderRadius: BorderRadius.circular(12)
+            padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
+            child: Container(
+              padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
+              width: 324,
+              height: 219,
+              decoration: BoxDecoration(
+                color: bright_gray,
+                borderRadius: BorderRadius.circular(12)
+              ),
+              child: TextField(
+                scrollPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                keyboardType: TextInputType.multiline,
+                maxLines: null, // 자동 줄바꿈
+                decoration: const InputDecoration(
+                  hintText: '약에 대한 설명을 입력하세요.',
+                  border: InputBorder.none, // 텍스트 박스 아래 줄 제거
+                  labelStyle: TextStyle(color: dark_gray),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none
+                  )
                 ),
-              )
-            ),
+              ),
+            )
+          ),
             // 여유 공간
             SizedBox(
               height: 30

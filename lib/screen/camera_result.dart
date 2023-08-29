@@ -17,7 +17,7 @@ class CameraResult extends StatefulWidget {
 
 class _CameraResultState extends State<CameraResult> {
   /*
-   e약은요 API 기준 명명
+  e약은요 API 기준 명명
   */
   String itemName = "닥터베아제정";
   String entpName = "(주)대웅제약";
@@ -141,13 +141,13 @@ class _CameraResultState extends State<CameraResult> {
                   onPressed: () {
                     Navigator.pop(context);
                   }),
-                   CupertinoDialogAction(
+                  CupertinoDialogAction(
                   isDefaultAction: true,
                   child: Text("예"),
                   onPressed: () {
-                   Navigator.push(
-                  context,
-                  CupertinoPageRoute(builder: (context) => RegisterMedPageAuto(title: '복약 정보 자동 등록')));
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(builder: (context) => RegisterMedPageAuto()));
                   })
             ],
           );
