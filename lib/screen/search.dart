@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application/constants/colors.dart';
 
-import '../components/colors.dart';
 import '../components/component.dart';
 import '../components/textstyle.dart';
 
@@ -56,7 +56,7 @@ class _SearchState extends State<Search> {
                 separatorBuilder: (BuildContext context, int index) =>
                     const Divider(
                       height: 1,
-                      color: lightGrayColor,
+                      color: bright_gray,
                     ),
                 itemCount: pillNames.length),
           )
@@ -85,7 +85,7 @@ class _SearchState extends State<Search> {
                 },
                 child: const Icon(
                   CupertinoIcons.chevron_back,
-                  color: greenColor,
+                  color: more_green,
                   size: 30,
                 ),
               ),
@@ -157,7 +157,7 @@ class _SearchState extends State<Search> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(
-            color: mainColor,
+            color: main_color_green,
           )),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10.0),

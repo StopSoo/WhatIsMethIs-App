@@ -1,11 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application/constants/colors.dart';
 
-import '../components/colors.dart';
 import '../components/component.dart';
-import '../components/textstyle.dart';
 
 class NameResult extends StatefulWidget {
   const NameResult({Key? key}) : super(key: key);
@@ -55,7 +52,7 @@ class _NameResultState extends State<NameResult> {
                 },
                 child: const Icon(
                   CupertinoIcons.rectangle_stack_badge_plus,
-                  color: greenColor,
+                  color: more_green,
                   size: 28,
                 ),
               ),
