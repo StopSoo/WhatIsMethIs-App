@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'colors.dart';
+import '../constants/colors.dart';
 
 const TextStyle headerTextStyle = TextStyle(
     fontFamily: 'NotoSans',
@@ -63,7 +63,7 @@ TextStyle blackTextStyle_Bold(double size_) {
 TextStyle darkGrayTextStyle(double size_) {
   return TextStyle(
     fontFamily: 'Inter',
-    color: darkGrayColor,
+    color: dark_gray,
     fontSize: size_,
   );
 }
@@ -74,7 +74,7 @@ TextStyle darkGrayTextStyle(double size_) {
 TextStyle DarkGrayTextStyle_Bold(double size_) {
   return TextStyle(
     fontFamily: 'Inter',
-    color: darkGrayColor,
+    color: dark_gray,
     fontSize: size_,
     fontWeight: FontWeight.bold,
   );
@@ -127,7 +127,7 @@ TextStyle blueTextStyle(double size_) {
 TextStyle greenTextStyle(double size_) {
   return TextStyle(
     fontFamily: 'Inter',
-    color: greenColor,
+    color: bright_green,
     fontWeight: FontWeight.w500,
     fontSize: size_,
   );

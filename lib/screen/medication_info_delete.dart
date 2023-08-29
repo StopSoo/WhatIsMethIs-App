@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application/constants/colors.dart';
 
-import '../components/colors.dart';
 import '../components/component.dart';
 import '../components/textstyle.dart';
 
@@ -122,8 +122,8 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
               value: _isChecked[index],
               shape:
                   RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              activeColor: greenColor,
-              inactiveColor: greenColor,
+              activeColor: more_green,
+              inactiveColor: more_green,
             ),
             pillShortInfoBox(images[index], lunch[index], after[index],
                 itemName[index], cnt[index]),
@@ -144,7 +144,7 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
           Container(
             margin: const EdgeInsets.only(right: 25),
             child: CircleAvatar(
-              backgroundColor: mainColor,
+              backgroundColor: main_color_green,
               radius: 40,
               child: image.isEmpty
                   ? const Text("💊")

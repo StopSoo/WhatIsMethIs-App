@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../components/colors.dart';
+import '../constants/colors.dart';
 import '../components/component.dart';
 import '../components/textstyle.dart';
 
@@ -98,7 +98,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: lightGrayColor,
+            backgroundColor: gray,
             radius: 38,
             child: image.isEmpty
                 ? const Text("💊")
@@ -125,8 +125,8 @@ class _EmergencyContactState extends State<EmergencyContact> {
               onPressed: () {},
               child: const Icon(
                 CupertinoIcons.plus_app,
-                color: greenColor,
-                size: 30,
+                color: bright_green,
+                size: 28,
               ),
             ),
         ],
@@ -140,7 +140,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: lightGrayColor,
+          color: gray,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

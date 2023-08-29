@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/screen/medication_info_delete.dart';
 
-import '../components/colors.dart';
 import '../components/component.dart';
 import '../components/textstyle.dart';
 
@@ -115,7 +115,7 @@ class _MedicationInfoState extends State<MedicationInfo> {
           Container(
             margin: const EdgeInsets.only(right: 25),
             child: CircleAvatar(
-              backgroundColor: mainColor,
+              backgroundColor: main_color_green,
               radius: 40,
               child: image.isEmpty
                   ? const Text("💊")
