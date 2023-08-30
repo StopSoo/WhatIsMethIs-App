@@ -2,7 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
-
+import 'package:flutter_application/screen/camera_result.dart';
+import 'package:flutter_application/screen/emergency_contact.dart';
+import 'package:flutter_application/screen/medication_info.dart';
+import 'package:flutter_application/screen/name_result.dart';
 import 'package:flutter_application/widget/choosePic.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_application/screen/loginPage.dart';
@@ -13,8 +16,8 @@ import 'package:flutter_application/screen/registerMedInfoManual.dart';
 import 'package:flutter_application/screen/myPage.dart';
 import 'package:flutter_application/widget/medTimeButton.dart';
 import 'package:flutter_application/widget/timePickerWidget.dart';
+import 'package:flutter_application/widget/imagePickerWidgetInMed.dart';
 import 'dart:ui';
-
 
 
 void main() {
@@ -26,7 +29,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const String _title = 'ChalKak Medicine';
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: RegisterMedPageAuto(),
+      home: MyHomePage_before(),
 
     );
   }

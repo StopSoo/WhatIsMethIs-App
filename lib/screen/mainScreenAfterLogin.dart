@@ -6,21 +6,13 @@ import 'package:flutter_application/widget/findMedWidget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MyHomePage_after extends StatefulWidget {
-  const MyHomePage_after({super.key, required this.title});
+  const MyHomePage_after({super.key});
 
-  final String title;
   @override
   State<MyHomePage_after> createState() => _MyHomePage_afterState();
 }
 
 class _MyHomePage_afterState extends State<MyHomePage_after> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
