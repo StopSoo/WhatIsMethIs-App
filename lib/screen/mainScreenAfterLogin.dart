@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/screen/myPage.dart';
 import 'package:flutter_application/widget/findMedWidget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -48,7 +49,12 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Spacer(),
                 CupertinoButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                    context,
+                    CupertinoPageRoute(builder: (context) => MyPage())
+                  );
+                  },
                   child: Icon(
                   CupertinoIcons.person,
                   size: 28,

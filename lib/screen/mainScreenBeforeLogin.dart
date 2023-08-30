@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/screen/myPage.dart';
 import 'package:flutter_application/widget/findMedWidget.dart';
 
 class MyHomePage_before extends StatefulWidget {
@@ -40,7 +41,12 @@ class PleaseLogin extends StatelessWidget {
                 height: 45),
               Spacer(),
               CupertinoButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(builder: (context) => MyPage())
+                  );
+                },
                 child: Icon(
                 CupertinoIcons.person,
                 size: 28,
