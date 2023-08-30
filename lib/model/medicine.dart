@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'medicine.g.dart';
+
+@JsonSerializable()
 class Medicine{
   String entpName;
   String itemName;
@@ -30,4 +35,8 @@ class Medicine{
     this.itemImage,
     this.bizrno
   );
+
+  factory Medicine.fromJson(Map<String, dynamic> json) =>
+      _$MedicineFromJson(json);
+  Map<String, dynamic> toJson() => _$MedicineToJson(this);
 }

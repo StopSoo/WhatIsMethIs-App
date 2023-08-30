@@ -1,6 +1,6 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/screen/medication_info.dart';
+import 'package:flutter_application/screen/name_result.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,8 +9,11 @@ import 'provider/medication_provider.dart';
 import 'provider/medicine_provider.dart';
 import 'provider/user_provider.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+
+void main() async {
+  await dotenv.load(fileName: 'assets/config/.env');
  runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => MedicationProvider()),
