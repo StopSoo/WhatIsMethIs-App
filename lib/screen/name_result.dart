@@ -1,8 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/provider/medicine_provider.dart';
+import 'package:flutter_provider/flutter_provider.dart';
+
+import 'package:flutter_application/dto/base_response.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../components/component.dart';
+import '../model/medicine.dart';
 
 class NameResult extends StatefulWidget {
   const NameResult({Key? key}) : super(key: key);
@@ -12,9 +20,11 @@ class NameResult extends StatefulWidget {
 }
 
 class _NameResultState extends State<NameResult> {
+  late MedicineProvider _medicineProvider;
   /*
    e약은요 API 기준 명명
   */
+  String itemSeq = "1";
   String itemName = "닥터베아제정";
   String entpName = "(주)대웅제약";
   String efcyQesitm =
@@ -29,9 +39,36 @@ class _NameResultState extends State<NameResult> {
   String seQesitm = "";
   String depositMethodQesitm = '''습기와 빛을 피해 실온에서 보관하십시오.
 어린이의 손이 닿지 않는 곳에 보관하십시오.''';
+  String openDe = "";
+  String updateDe = "";
+  String itemImage = "";
+  String bizrno = "";
+
+  late Medicine medicine = Medicine(
+      entpName,
+      itemName,
+      itemSeq,
+      efcyQesitm,
+      useMethodQesitm,
+      atpnWarnQesitm,
+      atpnQesitm,
+      intrcQesitm,
+      seQesitm,
+      depositMethodQesitm,
+      openDe,
+      updateDe,
+      itemImage,
+      bizrno);
 
   @override
   Widget build(BuildContext context) {
+    //헬프 미 플리즈...ㅜ
+    _medicineProvider = Provider.of<MedicineProvider>(context, listen: false);
+    _medicineProvider.setMedicine(medicine);
+    print("medicine itemName: ${medicine.itemName}");
+    print("medicine entpName: ${medicine.entpName}");
+
+    fetchMedicineInfo();
     double width = MediaQuery.of(context).size.width;
     return safeAreaPage(
       Colors.white,
@@ -74,5 +111,18 @@ class _NameResultState extends State<NameResult> {
         ),
       ),
     );
+  }
+
+  void fetchMedicineInfo() async {
+    String baseUrl = dotenv.get("BASE_URL");
+    String seq = "202001927";
+
+    late String _url = '${baseUrl}/medicines?itemSeq=${seq}';
+    final response = await http.get(Uri.parse(_url));
+
+    var responseBody = utf8.decode(response.bodyBytes);
+    Map responseMap = jsonDecode(responseBody);
+
+    var Brmedicine = BaseResponse.fromJSON(responseMap);
   }
 }

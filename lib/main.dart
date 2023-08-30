@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: MedicationInfo(),
+      home: NameResult(),
 
     );
   }
