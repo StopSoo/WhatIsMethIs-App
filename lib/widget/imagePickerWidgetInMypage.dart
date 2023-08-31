@@ -51,33 +51,37 @@ class _ImagePickerWidgetMPState extends State<ImagePickerWidgetMP> {
         onPressed: () {
           getImage(ImageSource.gallery);
         },
-        child: Stack(
-          children: [
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 0,
-                    blurRadius: 5.0,
-                    offset: Offset(0, 10), // changes position of shadow
-                  ),
-                ],
-                color: white
+        child: Container(
+          color: white,
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: Stack(
+            children: [
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 0,
+                      blurRadius: 5.0,
+                      offset: Offset(0, 10), // changes position of shadow
+                    ),
+                  ],
+                  color: white
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(26, 26, 26, 26),
-              child: Icon(
-                CupertinoIcons.photo_on_rectangle,
-                size: 28,
-                color: dark_gray,
+              Container(
+                margin: EdgeInsets.fromLTRB(26, 26, 26, 26),
+                child: Icon(
+                  CupertinoIcons.photo_on_rectangle,
+                  size: 28,
+                  color: dark_gray,
+                )
               )
-            )
-          ],
+            ],
+          ),
         ),
       );
   }

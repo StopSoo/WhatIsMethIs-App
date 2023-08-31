@@ -51,10 +51,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
         children: [
           defaultHeader('마이 페이지', context, SizedBox(width: 30)),
           // 사진 선택 버튼
-          Container(
-            padding: EdgeInsets.fromLTRB(155, 20, 155, 0),
-            child: ImagePickerWidgetMP()
-          ),
+          ImagePickerWidgetMP(),
           SizedBox(
             height: 20
           ),
