@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/components/textstyle.dart';
 
 enum Time { breakfast, lunch, dinner }
 
@@ -47,13 +48,13 @@ class _MedTimeControlWidgetState extends State<MedTimeControlWidget> {
           });
         }
       },
-      children: const <Time, Widget>{
+      children: <Time, Widget>{
         Time.breakfast: Padding(
           padding: EdgeInsets.symmetric(horizontal: 33),
           child: Text(
             '아침',
             style: TextStyle(
-              color: dark_gray,
+              color: _selectedSegment == Time.breakfast ? white : dark_gray,
               fontSize: 15
             ),
           ),
@@ -63,7 +64,7 @@ class _MedTimeControlWidgetState extends State<MedTimeControlWidget> {
           child: Text(
             '점심',
             style: TextStyle(
-              color: dark_gray,
+              color: _selectedSegment == Time.lunch ? white : dark_gray,
               fontSize: 15
             ),          ),
         ),
@@ -72,7 +73,7 @@ class _MedTimeControlWidgetState extends State<MedTimeControlWidget> {
           child: Text(
             '저녁',
             style: TextStyle(
-              color: dark_gray,
+              color: _selectedSegment == Time.dinner ? white : dark_gray,
               fontSize: 15
             ),
           ),

@@ -2,24 +2,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/screen/myPage.dart';
 import 'package:flutter_application/widget/findMedWidget.dart';
 
 class MyHomePage_before extends StatefulWidget {
-  const MyHomePage_before({super.key, required this.title});
+  const MyHomePage_before({super.key});
 
-  final String title;
   @override
   State<MyHomePage_before> createState() => _MyHomePage_beforeState();
 }
 
 class _MyHomePage_beforeState extends State<MyHomePage_before> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +41,12 @@ class PleaseLogin extends StatelessWidget {
                 height: 45),
               Spacer(),
               CupertinoButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(builder: (context) => MyPage())
+                  );
+                },
                 child: Icon(
                 CupertinoIcons.person,
                 size: 28,

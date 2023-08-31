@@ -2,25 +2,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/screen/myPage.dart';
 import 'package:flutter_application/widget/findMedWidget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MyHomePage_after extends StatefulWidget {
-  const MyHomePage_after({super.key, required this.title});
+  const MyHomePage_after({super.key});
 
-  final String title;
   @override
   State<MyHomePage_after> createState() => _MyHomePage_afterState();
 }
 
 class _MyHomePage_afterState extends State<MyHomePage_after> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +49,12 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Spacer(),
                 CupertinoButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                    context,
+                    CupertinoPageRoute(builder: (context) => MyPage())
+                  );
+                  },
                   child: Icon(
                   CupertinoIcons.person,
                   size: 28,

@@ -2,15 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../components/component.dart';
-import 'package:flutter_application/components/component.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/widget/timePickerWidget.dart';
 import 'package:flutter_application/widget/datePickerWidget.dart';
 import 'package:flutter_application/widget/medCountWidget.dart';
 import 'package:flutter_application/widget/medCycleWidget.dart';
 import 'package:flutter_application/widget/medTimeBeAfButton.dart';
 import 'package:flutter_application/widget/medTimeButton.dart';
-
-import '../widget/timePickerWidget.dart';
+import 'package:flutter_application/widget/imagePickerWidgetInMed.dart';
 
 class RegisterMedPageManual extends StatefulWidget {
   const RegisterMedPageManual({super.key});
@@ -71,29 +70,7 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                 width: 30
               )
             ),
-            Container(
-              padding: EdgeInsets.fromLTRB(155, 36, 155, 0),
-              child: Stack(
-                children: [
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle, 
-                      color: main_color_green
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(26, 26, 26, 26),
-                    child: Icon(
-                      CupertinoIcons.photo_on_rectangle,
-                      size: 28,
-                      color: dark_green,
-                    )
-                  )
-                ],
-              ),
-            ),
+            ImagePickerWidget(),
             Container(
               padding: EdgeInsets.fromLTRB(80, 18, 0, 0),
               child: Row(

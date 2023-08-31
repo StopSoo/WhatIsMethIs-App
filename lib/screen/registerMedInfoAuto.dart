@@ -9,6 +9,7 @@ import 'package:flutter_application/widget/medCountWidget.dart';
 import 'package:flutter_application/widget/medCycleWidget.dart';
 import 'package:flutter_application/widget/medTimeBeAfButton.dart';
 import 'package:flutter_application/widget/medTimeButton.dart';
+import 'package:flutter_application/widget/imagePickerWidgetInMed.dart';
 
 class RegisterMedPageAuto extends StatefulWidget {
   const RegisterMedPageAuto({super.key});
@@ -65,41 +66,24 @@ class _RegisterMedState extends State<RegisterMed> {
       child: Column(
         children: <Widget>[
           defaultHeader('복약 정보 등록하기', context, SizedBox(width: 30)),
+          // 갤러리에서 사진 선택하는 위젯
+          ImagePickerWidget(),  
           Container(
-            padding: EdgeInsets.fromLTRB(155, 36, 155, 0),
-            child: Stack(
+            padding: EdgeInsets.fromLTRB(80, 10, 0, 0),
+            child: Row(
               children: [
                 Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: main_color_green),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: Text('타이레놀8시간이알서방정',
+                      style: TextStyle(
+                        fontSize: 15,
+                      )),
                 ),
-                Container(
-                    margin: EdgeInsets.fromLTRB(26, 26, 26, 26),
-                    child: Icon(
-                      CupertinoIcons.photo_on_rectangle,
-                      size: 28,
-                      color: dark_green,
-                    ))
+                SizedBox(width: 12),
+                MedCountPickerWidget()
               ],
-            ),
+            )
           ),
-          Container(
-              padding: EdgeInsets.fromLTRB(80, 18, 0, 0),
-              child: Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: Text('타이레놀8시간이알서방정',
-                        style: TextStyle(
-                          fontSize: 15,
-                        )),
-                  ),
-                  SizedBox(width: 12),
-                  MedCountPickerWidget()
-                ],
-              )),
           // 복용 기간
           Container(
             padding: EdgeInsets.fromLTRB(45, 27, 0, 0),

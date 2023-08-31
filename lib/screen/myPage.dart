@@ -3,25 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/components/component.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_application/widget/imagePickerWidgetInMypage.dart';
 import 'dart:io';
 
 class MyPage extends StatefulWidget {
-  const MyPage({super.key, required this.title});
+  const MyPage({super.key});
 
-  final String title;
   @override
   State<MyPage> createState() => _MyPageState();
 }
 
 class _MyPageState extends State<MyPage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,41 +50,8 @@ class _MyPageWidgetState extends State<MyPageWidget> {
       child: Column(
         children: [
           defaultHeader('마이 페이지', context, SizedBox(width: 30)),
-          // 사진 아이콘 버튼
-          Container(
-            padding: EdgeInsets.fromLTRB(155, 20, 155, 0),
-            child: CupertinoButton(
-              child: Stack(
-                children: [
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 0,
-                          blurRadius: 5.0,
-                          offset: Offset(0, 10), // changes position of shadow
-                        ),
-                      ],
-                      color: white
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(26, 26, 26, 26),
-                    child: Icon(
-                      CupertinoIcons.photo_on_rectangle,
-                      size: 28,
-                      color: dark_gray,
-                    )
-                  )
-                ],
-              ),
-              onPressed: (){},
-            ),
-          ),
+          // 사진 선택 버튼
+          ImagePickerWidgetMP(),
           SizedBox(
             height: 20
           ),
