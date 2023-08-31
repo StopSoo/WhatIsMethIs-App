@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/provider/medicine_provider.dart';
-import 'package:flutter_provider/flutter_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter_application/dto/base_response.dart';
 import 'package:http/http.dart' as http;
@@ -27,8 +27,7 @@ class _NameResultState extends State<NameResult> {
   String itemSeq = "1";
   String itemName = "닥터베아제정";
   String entpName = "(주)대웅제약";
-  String efcyQesitm =
-      ''' 이 약은 소화불량, 식욕감퇴(식욕부진), 과식, 체함, 소화촉진, 소화불량으로 인한 위부팽만감에 사용합니다.''';
+  String efcyQesitm = ''' 이 약은 소화불량, 식욕감퇴(식욕부진), 과식, 체함, 소화촉진, 소화불량으로 인한 위부팽만감에 사용합니다.''';
   String useMethodQesitm = "성인 1회 1정을 1일 3회 식후에 복용합니다.";
   String atpnWarnQesitm = "";
   String atpnQesitm = '''만 7세 이하의 소아는 이 약을 복용하지 마십시오.
@@ -44,21 +43,8 @@ class _NameResultState extends State<NameResult> {
   String itemImage = "";
   String bizrno = "";
 
-  late Medicine medicine = Medicine(
-      entpName,
-      itemName,
-      itemSeq,
-      efcyQesitm,
-      useMethodQesitm,
-      atpnWarnQesitm,
-      atpnQesitm,
-      intrcQesitm,
-      seQesitm,
-      depositMethodQesitm,
-      openDe,
-      updateDe,
-      itemImage,
-      bizrno);
+  late Medicine medicine = Medicine(entpName, itemName, itemSeq, efcyQesitm, useMethodQesitm, atpnWarnQesitm, atpnQesitm, intrcQesitm, seQesitm,
+      depositMethodQesitm, openDe, updateDe, itemImage, bizrno);
 
   @override
   Widget build(BuildContext context) {
