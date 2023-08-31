@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/provider/medicine_provider.dart';
+import 'package:flutter_application/screen/registerMedInfoAuto.dart';
 import 'package:flutter_provider/flutter_provider.dart';
 
 import 'package:flutter_application/dto/base_response.dart';
@@ -20,7 +21,6 @@ class NameResult extends StatefulWidget {
 }
 
 class _NameResultState extends State<NameResult> {
-  late MedicineProvider _medicineProvider;
   /*
    e약은요 API 기준 명명
   */
@@ -62,9 +62,8 @@ class _NameResultState extends State<NameResult> {
 
   @override
   Widget build(BuildContext context) {
-    //헬프 미 플리즈...ㅜ
-    _medicineProvider = Provider.of<MedicineProvider>(context, listen: false);
-    _medicineProvider.setMedicine(medicine);
+    // final medicineProvider = Provider.of<MedicineProvider>(context);
+    // medicineProvider.setMedicine(medicine);
     print("medicine itemName: ${medicine.itemName}");
     print("medicine entpName: ${medicine.entpName}");
 
@@ -86,6 +85,7 @@ class _NameResultState extends State<NameResult> {
                 padding: EdgeInsets.all(0),
                 onPressed: () {
                   //Navigate to (수동)복약 정보 등록
+                  _showAlert("'$itemName'을(를) 복약 정보에 등록하시겠습니까?", "'$itemName'을(를) 복약 정보에 등록하기 위해 복약 정보 등록페이지로 이동합니다.");
                 },
                 child: const Icon(
                   CupertinoIcons.rectangle_stack_badge_plus,
@@ -113,6 +113,33 @@ class _NameResultState extends State<NameResult> {
     );
   }
 
+  void _showAlert(String title, String message) {
+    showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: Text(title),
+            content: Text(message),
+            actions: [
+                  CupertinoDialogAction(
+                  child: Text("아니오"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+                   CupertinoDialogAction(
+                  isDefaultAction: true,
+                  child: Text("예"),
+                  onPressed: () {
+                   Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (context) => RegisterMedPageAuto(title: '복약 정보 자동 등록')));
+                  })
+            ],
+          );
+        });
+  }
+}
+
   void fetchMedicineInfo() async {
     String baseUrl = dotenv.get("BASE_URL");
     String seq = "202001927";
@@ -125,4 +152,3 @@ class _NameResultState extends State<NameResult> {
 
     var Brmedicine = BaseResponse.fromJSON(responseMap);
   }
-}

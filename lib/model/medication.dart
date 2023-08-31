@@ -5,14 +5,14 @@ part 'medication.g.dart';
 @JsonSerializable()
 class Medication{
   String medicineName;
-  String medicineImage;
+  String? medicineImage;
   int takeCapacity;
   String takeStartDate;
   String takeEndDate;
   String takeMealTime;
   String takeBeforeAfter;
   int takeCycle;
-  String notificationTime;
+  String? notificationTime;
   String? description;
 
   Medication(
