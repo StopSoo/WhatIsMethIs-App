@@ -2,34 +2,58 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>&lt;?xml</string>
-				<string>version="1.0"</string>
-				<string>encoding="UTF-8"?&gt;
-&lt;!DOCTYPE</string>
-				<string>plist</string>
-				<string>PUBLIC</string>
-				<string>"-//Apple//DTD</string>
-				<string>PLIST</string>
-				<string>1.0//EN"</string>
-				<string>"http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
-&lt;plist</string>
-				<string>version="1.0"&gt;
-&lt;string&gt;com.googleusercontent.apps.450164775622-hs5fnd1i7bkp3mb7a187dke79f36htbv&lt;/string&gt;
-&lt;/plist&gt;
-</string>
-			</array>
-		</dict>
-	</array>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleDisplayName</key>
+    <string>Flutter Application</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>flutter_application</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>$(FLUTTER_BUILD_NAME)</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleVersion</key>
+    <string>$(FLUTTER_BUILD_NUMBER)</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+    <key>UIMainStoryboardFile</key>
+    <string>Main</string>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <!-- 여기에 추가적인 iPad를 위한 지원되는 인터페이스 방향을 추가할 수 있습니다 -->
+    </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <!-- 여기에 올바른 URL 스키마를 추가하세요. 예시로 하나만 추가했습니다 -->
+                <string>com.googleusercontent.apps.450164775622-hs5fnd1i7bkp3mb7a187dke79f36htbv</string>
+            </array>
+        </dict>
+    </array>
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
+    <key>UIApplicationSupportsIndirectInputEvents</key>
+    <true/>
 </dict>
 </plist>
