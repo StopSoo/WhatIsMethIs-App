@@ -61,7 +61,8 @@ class _CameraResultState extends State<CameraResult> {
                           //복약정보 등록 확인(?) 팝업
                           _showAlert(
                               "'${_medicine.itemName}'을(를) 복약 정보에 등록하시겠습니까?",
-                              "'${_medicine.itemName}'을(를) 복약 정보에 등록하기 위해 복약 정보 등록페이지로 이동합니다.");
+                              "'${_medicine.itemName}'을(를) 복약 정보에 등록하기 위해 복약 정보 등록페이지로 이동합니다.",
+                              _medicine.itemName!);
                         },
                         child: const Icon(
                           CupertinoIcons.rectangle_stack_badge_plus,
@@ -119,6 +120,7 @@ class _CameraResultState extends State<CameraResult> {
       borderRadius: BorderRadius.circular(10.0),
       child: Stack(
         children: [
+          //사용자가 찍은 사진 - 추후에 Image.asset -> 다른걸로 변경
           Image.asset(
             image,
             width: width,
@@ -137,7 +139,7 @@ class _CameraResultState extends State<CameraResult> {
     );
   }
 
-  void _showAlert(String title, String message) {
+  void _showAlert(String title, String message, String medicineName) {
     showCupertinoDialog(
         context: context,
         builder: (context) {
@@ -158,7 +160,7 @@ class _CameraResultState extends State<CameraResult> {
                         context,
                         CupertinoPageRoute(
                             builder: (context) =>
-                                RegisterMedPageAuto(title: '복약 정보 자동 등록')));
+                                RegisterMedPageAuto(medicineName: medicineName,)));
                   })
             ],
           );

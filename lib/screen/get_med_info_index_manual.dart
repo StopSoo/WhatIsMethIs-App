@@ -96,7 +96,7 @@ class _MedInfoIndexManualState extends State<MedInfoIndexManual> {
                 child: medication.medicineImage == null
                     ? const Text("💊")
                     : CircleAvatar(
-                        backgroundImage: AssetImage(medication.medicineImage!),
+                        backgroundImage: NetworkImage(medication.medicineImage!),
                         radius: 38,
                       ),
               ),

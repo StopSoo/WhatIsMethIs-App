@@ -97,6 +97,8 @@ Padding pillDetailBox(String title, String? content) {
 
   Container roundFitWidthImage(double width, String? image) {
     return Container(
+      width: width,
+          height: width * (0.5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(
@@ -110,7 +112,7 @@ Padding pillDetailBox(String title, String? content) {
           width: width,
           height: width * (0.5),
           fit: BoxFit.fitWidth,
-        ) : Text("저장된 약물 사진이 없어요😥")
+        ) : Center(child: Text("등록된 약물 사진이 없어요😥", style: darkGrayTextStyle(15.0),))
       ),
     );
   }

@@ -58,7 +58,8 @@ class _NameResultState extends State<NameResult> {
                         //복약정보 등록 확인(?) 팝업
                         _showAlert(
                             "'${_medicine.itemName}'을(를) 복약 정보에 등록하시겠습니까?",
-                            "'${_medicine.itemName}'을(를) 복약 정보에 등록하기 위해 복약 정보 등록페이지로 이동합니다.");
+                            "'${_medicine.itemName}'을(를) 복약 정보에 등록하기 위해 복약 정보 등록페이지로 이동합니다.",
+                            _medicine.itemName!);
                       },
                       child: const Icon(
                         CupertinoIcons.rectangle_stack_badge_plus,
@@ -86,7 +87,7 @@ class _NameResultState extends State<NameResult> {
     );
   }
 
-  void _showAlert(String title, String message) {
+  void _showAlert(String title, String message, String medicineName) {
     showCupertinoDialog(
         context: context,
         builder: (context) {
@@ -107,7 +108,7 @@ class _NameResultState extends State<NameResult> {
                         context,
                         CupertinoPageRoute(
                             builder: (context) =>
-                                RegisterMedPageAuto(title: '복약 정보 자동 등록')));
+                                RegisterMedPageAuto(medicineName: medicineName,)));
                   })
             ],
           );

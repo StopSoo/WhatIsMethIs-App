@@ -103,7 +103,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
             child: image.isEmpty
                 ? const Text("💊")
                 : CircleAvatar(
-                    backgroundImage: AssetImage(image),
+                    backgroundImage: NetworkImage(image),
                     radius: 36,
                   ),
           ),

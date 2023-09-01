@@ -11,9 +11,9 @@ import 'package:flutter_application/widget/medTimeBeAfButton.dart';
 import 'package:flutter_application/widget/medTimeButton.dart';
 
 class RegisterMedPageAuto extends StatefulWidget {
-  const RegisterMedPageAuto({super.key, required this.title});
+  const RegisterMedPageAuto({super.key, required this.medicineName});
 
-  final String title;
+  final String medicineName;
   @override
   State<RegisterMedPageAuto> createState() => _RegisterMedPageAutoState();
 }

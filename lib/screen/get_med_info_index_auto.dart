@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/controller/medication_controller.dart';
 import 'package:flutter_application/model/medication.dart';
+import 'package:flutter_application/screen/medication_info.dart';
 import '../components/component.dart';
 import 'package:flutter_application/constants/colors.dart';
 
@@ -12,13 +14,15 @@ import '../widget/medTimeNonChanged.dart';
 import 'package:intl/intl.dart';
 
 class GetMedInfoIndexAuto extends StatefulWidget {
-  const GetMedInfoIndexAuto({Key? key}) : super(key: key);
+  final int medicationId;
+  const GetMedInfoIndexAuto({Key? key, required this.medicationId}) : super(key: key);
 
   @override
   _GetMedInfoIndexAutoState createState() => _GetMedInfoIndexAutoState();
 }
 
 class _GetMedInfoIndexAutoState extends State<GetMedInfoIndexAuto> {
+
   @override
   Widget build(BuildContext context) {
     return safeAreaPage(
@@ -28,7 +32,7 @@ class _GetMedInfoIndexAutoState extends State<GetMedInfoIndexAuto> {
           resizeToAvoidBottomInset: false,
           body: SingleChildScrollView(
             child: Column(children: <Widget>[
-              MedInfoIndexAuto(),
+              MedInfoIndexAuto(medicationId: widget.medicationId),
             ]),
           )),
     );
@@ -36,14 +40,18 @@ class _GetMedInfoIndexAutoState extends State<GetMedInfoIndexAuto> {
 }
 
 class MedInfoIndexAuto extends StatefulWidget {
-  const MedInfoIndexAuto({Key? key}) : super(key: key);
+  final int medicationId;
+  const MedInfoIndexAuto({Key? key, required this.medicationId}) : super(key: key);
 
   @override
   _MedInfoIndexAutoState createState() => _MedInfoIndexAutoState();
 }
 
 class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
-  Medication medication = Medication(
+  final MedicationController _medicationController = MedicationController();
+  
+
+  Medication _medication = Medication(
     1,
       "끓는 인간은 같은 위하여",
       null,
@@ -59,6 +67,20 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
 없으면, 사랑의 보이는 그들은 속잎나고, 귀는 물방아 이것이다. 미인을 하는 이상이 대중을 운다. 청춘의 풀밭에 현저하게 그러므로 청춘 트고, 안고, 있는가? 같은 있는 청춘 예가 살 아름다우냐? 심장의 설산에서 열락의 인생을 인생에 있으랴? 가는 위하여 인생을 위하여서, 얼마나 생의 것이다. 풍부하게 장식하는 위하여 밝은 산야에 생생하며, 사막이다. 수 눈에 낙원을 황금시대를 운다. 것이다.보라, 광야에서 끓는 피부가 그들의 이상이 미묘한 사막이다. 꽃이 할지니, 미인을 맺어, 피가 남는 방황하여도, 속에서 때문이다.
 
 얼마나 피가 소금이라 얼마나 이 운다. 하여도 너의 얼음과 목숨이 이는 위하여서 길을 것이다. 앞이 그들을 되는 있는가? 인생을 평화스러운 보배를 인간은 듣는다. 희망의 투명하되 생의 원질이 끓는 구하지 들어 있으랴? 따뜻한 청춘 만물은 들어 착목한는 그러므로 약동하다. 사는가 듣기만 이 풍부하게 청춘은 약동하다. 생명을 그들은 우리의 풍부하게 이 돋고, 이것이야말로 그리하였는가? 보이는 맺어, 가는 그들의 공자는 천고에 뜨거운지라, 위하여서. 그러므로 주는 모래뿐일 얼마나 인류의 황금시대의 아름다우냐?''');
+
+@override
+  void initState() {
+    super.initState();
+    _loadMedicationInfo(widget.medicationId);
+  }
+
+  Future<void> _loadMedicationInfo(int medicationId) async {
+    Medication medication = 
+        await _medicationController.fetchMedicationInfoIndex(medicationId);
+    setState(() {
+      _medication = medication;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,10 +115,10 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
               child: CircleAvatar(
                 backgroundColor: main_color_green,
                 radius: 40,
-                child: medication.medicineImage == null
+                child: _medication.medicineImage == null
                     ? const Text("💊")
                     : CircleAvatar(
-                        backgroundImage: AssetImage(medication.medicineImage!),
+                        backgroundImage: NetworkImage(_medication.medicineImage!),
                         radius: 38,
                       ),
               ),
@@ -111,7 +133,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
                       padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
                       height: 40,
                       child: Center(
-                        child: Text(medication.medicineName ?? ''),
+                        child: Text(_medication.medicineName ?? ''),
                       ),
                     ),
                     SizedBox(width: 12),
@@ -123,7 +145,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
                       padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                       child: Center(
                           child: Text(
-                        "${medication.takeCapacity}정",
+                        "${_medication.takeCapacity}정",
                       )),
                     ),
                   ],
@@ -147,7 +169,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
                   decoration: medInfoIndexDecoration(),
                   child: Center(
                     child: Text(
-                      formatDate(medication.takeStartDate  ?? ''),
+                      formatDate(_medication.takeStartDate  ?? ''),
                     ),
                   ),
                 ),
@@ -165,7 +187,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
                   decoration: medInfoIndexDecoration(),
                   child: Center(
                     child: Text(
-                      formatDate(medication.takeEndDate  ?? ''),
+                      formatDate(_medication.takeEndDate  ?? ''),
                     ),
                   ),
                 ),
@@ -188,7 +210,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
               child: IgnorePointer(
                   ignoring: true,
                   child: MedTimeNotChangedWidget(
-                      selectedSegment: medication.takeMealTime  ?? '')),
+                      selectedSegment: _medication.takeMealTime  ?? '')),
             ),
             SizedBox(height: 7),
             //** 복약 시간 - 식후, 식전
@@ -197,7 +219,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
               child: IgnorePointer(
                   ignoring: true,
                   child: MedTimeBeAfNotChangedWidget(
-                      selectedSegment: medication.takeBeforeAfter  ?? '')),
+                      selectedSegment: _medication.takeBeforeAfter  ?? '')),
             ),
             SizedBox(
               height: 15,
@@ -229,7 +251,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
               height: 10,
             ),
             // 복약 알림
-            medication.notificationTime != null
+            _medication.notificationTime != null
                 ? Column(
                     children: [
                       Row(
@@ -259,7 +281,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
                           height: 50,
                           child: Center(
                             child: Text(
-                              formatTime(medication.notificationTime!),
+                              formatTime(_medication.notificationTime!),
                             ),
                           )),
                       SizedBox(
@@ -284,7 +306,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
                 padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                 width: 324,
                 decoration: medInfoIndexDecoration(),
-                child: Text(medication.description!),
+                child: Text(_medication.description!),
               ),
             ),
             // 여유 공간

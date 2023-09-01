@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/controller/medication_controller.dart';
 import 'package:flutter_application/model/medication.dart';
+import 'package:flutter_application/screen/get_med_info_index_auto.dart';
 import 'package:flutter_application/screen/medication_info_delete.dart';
 
 import '../components/component.dart';
@@ -76,6 +77,7 @@ class _MedicationInfoState extends State<MedicationInfo> {
       });
 
       print("page: ${_page}");
+      
       List<Medication> medInfos = await _medicationController.fetchMedicationInfo(_page);
 
       if (medInfos.isNotEmpty) {
@@ -125,6 +127,7 @@ class _MedicationInfoState extends State<MedicationInfo> {
                 itemCount: _medInfoList.length,
                 itemBuilder: (BuildContext context, int index) =>
                     medicationShortInfoBox(
+                      _medInfoList[index].medicationId!,
                         _medInfoList[index].medicineImage,
                         mealTime[_medInfoList[index].takeMealTime]!,
                         beforeAfterTime[_medInfoList[index].takeBeforeAfter]!,
@@ -143,11 +146,16 @@ class _MedicationInfoState extends State<MedicationInfo> {
     );
   }
 
-  CupertinoButton medicationShortInfoBox(
+  CupertinoButton medicationShortInfoBox(int medicationId,
       String? image, String lunch, String after, String itemName, int cnt) {
     return CupertinoButton(
       onPressed: () => {
-        //복약 정보 1개 조회
+        //TODO: 복약 정보 1개 조회 - 추후 자동/수동 구분하기
+        Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) => GetMedInfoIndexAuto(medicationId: medicationId,
+                          )))
       },
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
       child: Row(
@@ -163,7 +171,7 @@ class _MedicationInfoState extends State<MedicationInfo> {
               child: image == null
                   ? const Text("💊")
                   : CircleAvatar(
-                      backgroundImage: AssetImage(image),
+                      backgroundImage: NetworkImage(image),
                       radius: 38,
                     ),
             ),

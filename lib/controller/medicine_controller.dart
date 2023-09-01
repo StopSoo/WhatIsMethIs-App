@@ -24,4 +24,34 @@ class MedicineController{
     return medicineInfoListRes.medicines[0];
   }
 
+  Future<List<Medicine>> fetchAllMedicineListInfo(int _pageNo) async {
+    
+    String _url = '${baseUrl}/medicines?pageNo=${_pageNo}';
+    final response = await http.get(Uri.parse(_url));
+
+    var responseBody = utf8.decode(response.bodyBytes);
+    Map responseMap = jsonDecode(responseBody);
+
+    var Brmedicine = BaseResponse.fromJson(responseMap);
+
+    var medicineInfoListRes = MedicineInfoListRes.fromJson(Brmedicine.result);
+    
+    return medicineInfoListRes.medicines;
+  }
+
+  Future<List<Medicine>> fetchMedicineListInfoWithName(String _itemName) async {
+    
+    String _url = '${baseUrl}/medicines?pageNo=1&itemName=${_itemName}';
+    final response = await http.get(Uri.parse(_url));
+
+    var responseBody = utf8.decode(response.bodyBytes);
+    Map responseMap = jsonDecode(responseBody);
+
+    var Brmedicine = BaseResponse.fromJson(responseMap);
+
+    var medicineInfoListRes = MedicineInfoListRes.fromJson(Brmedicine.result);
+    
+    return medicineInfoListRes.medicines;
+  }
+
 }

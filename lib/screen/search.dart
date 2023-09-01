@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/controller/medicine_controller.dart';
+import 'package:flutter_application/model/medicine.dart';
+import 'package:flutter_application/screen/name_result.dart';
 
 import '../components/component.dart';
 import '../components/textstyle.dart';
@@ -13,31 +16,84 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  TextEditingController controller = TextEditingController();
+  TextEditingController textController = TextEditingController();
   FocusNode focusNode = FocusNode();
 
-  List<String> pillNames = [
-    "타이레놀6시간이알서방정",
-    "타이레놀8시간이알서방정",
-    "타이레놀12시간이알서방정",
-    "타이레놀6시간이알서방정",
-    "타이레놀8시간이알서방정",
-    "타이레놀12시간이알서방정",
-    "타이레놀6시간이알서방정",
-    "타이레놀8시간이알서방정",
-    "타이레놀12시간이알서방정"
-  ];
-  List<String> images = [
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg'
-  ];
+  final MedicineController _medicineController = MedicineController();
+  int _page = 1;
+  bool _hasNextPage = true;
+  bool _isFirstLoadRunning = false;
+  bool _isLoadMoreRunning = false;
+  late ScrollController _scrollController;
+  List<Medicine> medcineList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadInitMedicineList();
+    _scrollController = ScrollController()
+      ..addListener(_loadMoreMedicineList);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_loadMoreMedicineList);
+    super.dispose();
+  }
+
+  Future<void> _loadInitMedicineList() async {
+    setState(() {
+      _isFirstLoadRunning = true;
+    });
+    print("page: ${_page}");
+
+    List<Medicine> medInfos =
+        await _medicineController.fetchAllMedicineListInfo(_page);
+    setState(() {
+      medcineList.addAll(medInfos);
+      _isFirstLoadRunning = false;
+    });
+  }
+
+  Future<void> _loadMoreMedicineList() async {
+    if (_hasNextPage &&
+        !_isFirstLoadRunning &&
+        !_isLoadMoreRunning &&
+        _scrollController.position.extentAfter < 100) {
+      setState(() {
+        _isLoadMoreRunning = true;
+        _page += 1;
+      });
+
+      print("page: ${_page}");
+      List<Medicine> medInfos =
+          await _medicineController.fetchAllMedicineListInfo(_page);
+
+      if (medInfos.isNotEmpty) {
+        setState(() {
+          medcineList.addAll(medInfos);
+        });
+      } else {
+        //더이상 데이터 X
+        setState(() {
+          _hasNextPage = false;
+        });
+      }
+      setState(() {
+        _isLoadMoreRunning = false;
+      });
+    }
+  }
+
+  Future<void> _loadMedicineListWithName(String _itemName) async {
+    List<Medicine> medInfos =
+        await _medicineController.fetchMedicineListInfoWithName(_itemName);
+    setState(() {
+      medcineList = [];
+      medcineList.addAll(medInfos);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +106,26 @@ class _SearchState extends State<Search> {
           searchHeader(),
           Expanded(
             child: ListView.separated(
+              controller: _scrollController,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) =>
-                    pillInfoBox(width, pillNames[index], images[index]),
+                    pillInfoBox(width, 
+                    medcineList[index].itemSeq!,
+                    medcineList[index].itemName, medcineList[index].itemImage),
                 separatorBuilder: (BuildContext context, int index) =>
                     const Divider(
                       height: 1,
                       color: bright_gray,
                     ),
-                itemCount: pillNames.length),
-          )
+                itemCount: medcineList.length),
+          ),
+          if (_isLoadMoreRunning == true)
+            Container(
+              padding: const EdgeInsets.all(30),
+              child: const Center(
+                child: CupertinoActivityIndicator(),
+              ),
+            ),
         ],
       ),
     );
@@ -96,11 +162,11 @@ class _SearchState extends State<Search> {
               child: CupertinoSearchTextField(
                 placeholder: "약 이름을 검색하세요",
                 focusNode: focusNode,
-                controller: controller,
+                controller: textController,
                 style: darkGrayTextStyle(15),
-                onSubmitted: (value) => {
-                  //Todo: call searchAPI
-                  controller.clear()
+                onSubmitted: (value) async => {
+                  //TODO: 잘못 검색했을 시 화면 처리
+                  await _loadMedicineListWithName(value),
                 },
               ),
             )),
@@ -112,7 +178,8 @@ class _SearchState extends State<Search> {
                       onPressed: () {
                         setState(() {
                           focusNode.unfocus();
-                          controller.clear();
+                          textController.clear();
+                       
                         });
                       },
                       child: Text("취소", style: blueTextStyle(17)),
@@ -128,46 +195,58 @@ class _SearchState extends State<Search> {
     );
   }
 
-  Container pillInfoBox(double width, String pillName, String image) {
-    return Container(
-      color: Colors.white,
-      width: width,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              roundFitWidthImage_Small(width, image),
-              const SizedBox(
-                width: 20,
-              ),
-              Text(
-                pillName,
-                style: darkGrayTextStyle(15),
-                softWrap: true,
-              )
-            ]),
+  CupertinoButton pillInfoBox(double width, String itemSeq, String? pillName, String? image) {
+    return CupertinoButton(
+      onPressed: () { 
+        Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) => NameResult(itemSeq: itemSeq,
+                          )));
+       },
+      child: Container(
+        color: Colors.white,
+        width: width,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                roundFitWidthImage_Small(width, image),
+                const SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: Text(
+                    pillName?? '',
+                    style: darkGrayTextStyle(15),
+                    softWrap: true,
+                  ),
+                )
+              ]),
+        ),
       ),
     );
   }
 
-  Container roundFitWidthImage_Small(double width, String image) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(
+  Widget roundFitWidthImage_Small(double width, String? image) {
+    return 
+      image == null?
+      Container(
+         width: width * (0.30),
+        height: width * (0.15),
+         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
             color: main_color_green,
-          )),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.0),
-        child: Image.asset(
-          image,
-          width: width * (0.35),
-          height: 80,
-          fit: BoxFit.fitWidth,
-        ),
-      ),
-    );
+          ),
+        child: Center(child: Text("💊")))
+      : Image.network(
+        image,
+        width: width * (0.30),
+        height: 80,
+        fit: BoxFit.fitWidth,
+      );
+
   }
 }
