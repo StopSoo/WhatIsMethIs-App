@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: NameResult(),
+      home: RegisterMedPageManual(),
     );
   }
 }
