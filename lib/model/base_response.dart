@@ -6,7 +6,7 @@ class BaseResponse{
 
   BaseResponse({this.isSuccess, this.code, this.message, this.result});
 
-  factory BaseResponse.fromJSON(Map<dynamic, dynamic> json){
+  factory BaseResponse.fromJson(Map<dynamic, dynamic> json){
     print('isSuccess: ${json['isSuccess']}');
     print('code: ${json['code']}');
     print('message: ${json['message']}');

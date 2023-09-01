@@ -44,6 +44,7 @@ class MedInfoIndexAuto extends StatefulWidget {
 
 class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
   Medication medication = Medication(
+    1,
       "끓는 인간은 같은 위하여",
       null,
       2,
@@ -110,7 +111,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
                       padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
                       height: 40,
                       child: Center(
-                        child: Text(medication.medicineName),
+                        child: Text(medication.medicineName ?? ''),
                       ),
                     ),
                     SizedBox(width: 12),
@@ -146,7 +147,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
                   decoration: medInfoIndexDecoration(),
                   child: Center(
                     child: Text(
-                      formatDate(medication.takeStartDate),
+                      formatDate(medication.takeStartDate  ?? ''),
                     ),
                   ),
                 ),
@@ -164,7 +165,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
                   decoration: medInfoIndexDecoration(),
                   child: Center(
                     child: Text(
-                      formatDate(medication.takeEndDate),
+                      formatDate(medication.takeEndDate  ?? ''),
                     ),
                   ),
                 ),
@@ -187,7 +188,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
               child: IgnorePointer(
                   ignoring: true,
                   child: MedTimeNotChangedWidget(
-                      selectedSegment: medication.takeMealTime)),
+                      selectedSegment: medication.takeMealTime  ?? '')),
             ),
             SizedBox(height: 7),
             //** 복약 시간 - 식후, 식전
@@ -196,7 +197,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
               child: IgnorePointer(
                   ignoring: true,
                   child: MedTimeBeAfNotChangedWidget(
-                      selectedSegment: medication.takeBeforeAfter)),
+                      selectedSegment: medication.takeBeforeAfter  ?? '')),
             ),
             SizedBox(
               height: 15,

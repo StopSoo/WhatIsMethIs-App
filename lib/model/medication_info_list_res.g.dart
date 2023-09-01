@@ -10,7 +10,7 @@ MedicationInfoListRes _$MedicationInfoListResFromJson(
         Map<String, dynamic> json) =>
     MedicationInfoListRes(
       (json['medicationShortInfos'] as List<dynamic>)
-          .map((e) => MedicationShortInfo.fromJson(e as Map<String, dynamic>))
+          .map((e) => Medication.fromJson(e as Map<String, dynamic>))
           .toList(),
       json['totalPages'] as int,
     );

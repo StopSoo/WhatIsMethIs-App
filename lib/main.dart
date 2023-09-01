@@ -1,24 +1,20 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/screen/camera_result.dart';
 import 'package:flutter_application/screen/medication_info.dart';
 import 'package:flutter_application/screen/name_result.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'screen/search.dart';
-import 'provider/medication_provider.dart';
-import 'provider/medicine_provider.dart';
-import 'provider/user_provider.dart';
+import 'package:flutter_application/provider/user_provider.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 void main() async {
   await dotenv.load(fileName: 'assets/config/.env');
- runApp(MultiProvider(
+  runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (context) => MedicationProvider()),
-      ChangeNotifierProvider(create: (context) => MedicineProvider()),
-      ChangeNotifierProvider(create: (context) => UserProvider()),
+      ChangeNotifierProvider(create: (_) => UserProvider()),
     ],
     child: const MyApp(),
   ));
@@ -28,9 +24,10 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   static const String _title = 'ChalKak Medicine';
+
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
+    return const CupertinoApp(
       // datePickerWidget 언어 한글로 변경
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
@@ -38,7 +35,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('ko', 'KO'),
+        Locale('ko', 'KO'),
       ],
       // debug 로고 제거
       debugShowCheckedModeBanner: false,
@@ -50,8 +47,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: NameResult(),
-
+      home: MedicationInfo(),
     );
   }
 }

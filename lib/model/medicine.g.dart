@@ -7,20 +7,20 @@ part of 'medicine.dart';
 // **************************************************************************
 
 Medicine _$MedicineFromJson(Map<String, dynamic> json) => Medicine(
-      json['entpName'] as String,
-      json['itemName'] as String,
-      json['itemSeq'] as String,
-      json['efcyQesitm'] as String,
-      json['useMethodQesitm'] as String,
-      json['atpnWarnQesitm'] as String,
-      json['atpnQesitm'] as String,
-      json['intrcQesitm'] as String,
-      json['seQesitm'] as String,
-      json['depositMethodQesitm'] as String,
-      json['openDe'] as String,
-      json['updateDe'] as String,
-      json['itemImage'] as String,
-      json['bizrno'] as String,
+      json['entpName'] as String?,
+      json['itemName'] as String?,
+      json['itemSeq'] as String?,
+      json['efcyQesitm'] as String?,
+      json['useMethodQesitm'] as String?,
+      json['atpnWarnQesitm'] as String?,
+      json['atpnQesitm'] as String?,
+      json['intrcQesitm'] as String?,
+      json['seQesitm'] as String?,
+      json['depositMethodQesitm'] as String?,
+      json['openDe'] as String?,
+      json['updateDe'] as String?,
+      json['itemImage'] as String?,
+      json['bizrno'] as String?,
     );
 
 Map<String, dynamic> _$MedicineToJson(Medicine instance) => <String, dynamic>{

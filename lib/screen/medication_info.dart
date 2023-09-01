@@ -1,19 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/controller/medication_controller.dart';
+import 'package:flutter_application/model/medication.dart';
 import 'package:flutter_application/screen/medication_info_delete.dart';
-import 'package:flutter_application/dto/medication_info_list_res.dart';
 
 import '../components/component.dart';
 import '../components/textstyle.dart';
 
-import 'package:flutter_application/dto/base_response.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-import '../dto/medication_short_info.dart';
 import 'registerMedInfoManual.dart';
+
+Map<String, String> mealTime = {
+  "BREAKFAST": "아침",
+  "LUNCH": "점심",
+  "DINNER": "저녁",
+};
+
+Map<String, String> beforeAfterTime = {
+  "BEFORE": "식전",
+  "AFTER": "식후",
+};
 
 class MedicationInfo extends StatefulWidget {
   const MedicationInfo({Key? key}) : super(key: key);
@@ -23,110 +29,65 @@ class MedicationInfo extends StatefulWidget {
 }
 
 class _MedicationInfoState extends State<MedicationInfo> {
-  String baseUrl = dotenv.get("BASE_URL");
-
-  //Todo: 로그인 구현되면 받아오는걸로 수정하기
-  String accessToken = dotenv.get("ACCESS_TOKEN");
-
-  late Map<String, String> headers = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'X-ACCESS-TOKEN':
-        accessToken
-  };
+  final MedicationController _medicationController = MedicationController();
 
   int _page = 0;
-  late String _url = '${baseUrl}/medications/all/${_page}';
   bool _hasNextPage = true;
   bool _isFirstLoadRunning = false;
   bool _isLoadMoreRunning = false;
-  late ScrollController _controller;
-  List<MedicationShortInfo> _medInfoList = [];
+  late ScrollController _scrollController;
+  List<Medication> _medInfoList = [];
 
   @override
   void initState() {
     super.initState();
-    fetchInfo();
-    _controller = ScrollController()..addListener(fetchMoreInfo);
+    _loadInitMedicationInfoList();
+    _scrollController = ScrollController()..addListener(_loadMoreMedicationInfoList);
   }
 
   @override
   void dispose() {
-    _controller.removeListener(fetchMoreInfo);
+    _scrollController.removeListener(_loadMoreMedicationInfoList);
     super.dispose();
   }
 
-  void fetchInfo() async {
+  Future<void> _loadInitMedicationInfoList() async {
     setState(() {
       _isFirstLoadRunning = true;
     });
     print("page: ${_page}");
-    final response = await http.get(Uri.parse(_url), headers: headers);
 
-    var statusCode = response.statusCode;
-    var responseBody = utf8.decode(response.bodyBytes);
-    // print("statusCode: ${statusCode}");
-    // print("responseBody: ${responseBody}");
-    Map responseMap = jsonDecode(responseBody);
-
-    var BrmedicationInfo = BaseResponse.fromJSON(responseMap);
-    // print("code: ${BrmedicationInfo.code}");
-    // print("message: ${BrmedicationInfo.message}");
-    // print("result: ${BrmedicationInfo.result}");
-
-    MedicationInfoListRes medList =
-        MedicationInfoListRes.fromJson(BrmedicationInfo.result);
-    // print("totalPages: ${medList.totalPages}");
+    List<Medication> medInfos = await _medicationController.fetchMedicationInfo(_page);
     setState(() {
-      _medInfoList.addAll(medList.medicationShortInfos);
-    });
-
-    setState(() {
+      _medInfoList.addAll(medInfos);
       _isFirstLoadRunning = false;
     });
+
   }
 
-  void fetchMoreInfo() async {
+  Future<void> _loadMoreMedicationInfoList() async {
     if (_hasNextPage &&
         !_isFirstLoadRunning &&
         !_isLoadMoreRunning &&
-        _controller.position.extentAfter < 100) {
-          setState(() {
+        _scrollController.position.extentAfter < 100) {
+      setState(() {
         _isLoadMoreRunning = true;
         _page += 1;
       });
-      
+
       print("page: ${_page}");
-      _url = '${baseUrl}/medications/all/${_page}';
-      print("_url: ${_url}");
-      final response = await http.get(Uri.parse(_url), headers: headers);
+      List<Medication> medInfos = await _medicationController.fetchMedicationInfo(_page);
 
-      var statusCode = response.statusCode;
-      var responseBody = utf8.decode(response.bodyBytes);
-      // print("statusCode: ${statusCode}");
-      // print("responseBody: ${responseBody}");
-      Map responseMap = jsonDecode(responseBody);
-
-      var BrmedicationInfo = BaseResponse.fromJSON(responseMap);
-      // print("code: ${BrmedicationInfo.code}");
-      // print("message: ${BrmedicationInfo.message}");
-      // print("result: ${BrmedicationInfo.result}");
-
-      MedicationInfoListRes medList =
-          MedicationInfoListRes.fromJson(BrmedicationInfo.result);
-
-      if (medList.medicationShortInfos.isNotEmpty) {
+      if (medInfos.isNotEmpty) {
         setState(() {
-          _medInfoList.addAll(medList.medicationShortInfos);
+          _medInfoList.addAll(medInfos);
         });
       } else {
-        // This means there is no more data
-        // and therefore, we will not send another GET request
+        //더이상 데이터 X
         setState(() {
           _hasNextPage = false;
         });
       }
-      // print("totalPages: ${medList.totalPages}");
       setState(() {
         _isLoadMoreRunning = false;
       });
@@ -159,16 +120,16 @@ class _MedicationInfoState extends State<MedicationInfo> {
           ),
           Expanded(
             child: ListView.builder(
-                controller: _controller,
+                controller: _scrollController,
                 shrinkWrap: true,
                 itemCount: _medInfoList.length,
                 itemBuilder: (BuildContext context, int index) =>
-                    pillShortInfoBox(
+                    medicationShortInfoBox(
                         _medInfoList[index].medicineImage,
-                        _medInfoList[index].takeMealTime,
-                        _medInfoList[index].takeBeforeAfter,
-                        _medInfoList[index].medicineName,
-                        _medInfoList[index].takeCapacity)),
+                        mealTime[_medInfoList[index].takeMealTime]!,
+                        beforeAfterTime[_medInfoList[index].takeBeforeAfter]!,
+                        _medInfoList[index].medicineName  ?? '',
+                        _medInfoList[index].takeCapacity  ?? 0)),
           ),
           if (_isLoadMoreRunning == true)
             Container(
@@ -177,38 +138,16 @@ class _MedicationInfoState extends State<MedicationInfo> {
                 child: CupertinoActivityIndicator(),
               ),
             ),
-          if (_hasNextPage == false)
-            Container(
-              padding: const EdgeInsets.all(20),
-              color: Colors.blue,
-              child: const Center(
-                child: Text('No more data to be fetched.',
-                    style: TextStyle(color: Colors.white)),
-              ),
-            ),
         ],
       ),
     );
   }
 
-  CupertinoButton pillShortInfoBox(
-      String image, String lunch, String after, String itemName, int cnt) {
-    if (lunch == "DINNER") {
-      lunch = "저녁";
-    } else if (lunch == "LUNCH") {
-      lunch = "점심";
-    } else if (lunch == "BREAKFAST") {
-      lunch = "아침";
-    }
-    if (after == "AFTER") {
-      after = "식후";
-    } else if (after == "BEFORE") {
-      after = "식전";
-    }
-
+  CupertinoButton medicationShortInfoBox(
+      String? image, String lunch, String after, String itemName, int cnt) {
     return CupertinoButton(
       onPressed: () => {
-        //Todo: Navigate to pillDetail
+        //복약 정보 1개 조회
       },
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
       child: Row(
@@ -221,7 +160,7 @@ class _MedicationInfoState extends State<MedicationInfo> {
             child: CircleAvatar(
               backgroundColor: main_color_green,
               radius: 40,
-              child: image.isEmpty
+              child: image == null
                   ? const Text("💊")
                   : CircleAvatar(
                       backgroundImage: AssetImage(image),

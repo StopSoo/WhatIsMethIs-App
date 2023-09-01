@@ -4,20 +4,20 @@ part 'medicine.g.dart';
 
 @JsonSerializable()
 class Medicine{
-  String entpName;
-  String itemName;
-  String itemSeq;
-  String efcyQesitm;
-  String useMethodQesitm;
-  String atpnWarnQesitm;
-  String atpnQesitm;
-  String intrcQesitm;
-  String seQesitm;
-  String depositMethodQesitm;
-  String openDe;
-  String updateDe;
-  String itemImage;
-  String bizrno;
+  String? entpName;
+  String? itemName;
+  String? itemSeq;
+  String? efcyQesitm;
+  String? useMethodQesitm;
+  String? atpnWarnQesitm;
+  String? atpnQesitm;
+  String? intrcQesitm;
+  String? seQesitm;
+  String? depositMethodQesitm;
+  String? openDe;
+  String? updateDe;
+  String? itemImage;
+  String? bizrno;
 
   Medicine(
     this.entpName,

@@ -7,20 +7,22 @@ part of 'medication.dart';
 // **************************************************************************
 
 Medication _$MedicationFromJson(Map<String, dynamic> json) => Medication(
-      json['medicineName'] as String,
-      json['medicineImage'] as String,
-      json['takeCapacity'] as int,
-      json['takeStartDate'] as String,
-      json['takeEndDate'] as String,
-      json['takeMealTime'] as String,
-      json['takeBeforeAfter'] as String,
-      json['takeCycle'] as int,
-      json['notificationTime'] as String,
+      json['medicationId'] as int?,
+      json['medicineName'] as String?,
+      json['medicineImage'] as String?,
+      json['takeCapacity'] as int?,
+      json['takeStartDate'] as String?,
+      json['takeEndDate'] as String?,
+      json['takeMealTime'] as String?,
+      json['takeBeforeAfter'] as String?,
+      json['takeCycle'] as int?,
+      json['notificationTime'] as String?,
       json['description'] as String?,
     );
 
 Map<String, dynamic> _$MedicationToJson(Medication instance) =>
     <String, dynamic>{
+      'medicationId': instance.medicationId,
       'medicineName': instance.medicineName,
       'medicineImage': instance.medicineImage,
       'takeCapacity': instance.takeCapacity,

@@ -1,12 +1,11 @@
+import 'package:flutter_application/model/medication.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'medication_short_info.dart';
 
 part 'medication_info_list_res.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class MedicationInfoListRes{
-  List<MedicationShortInfo> medicationShortInfos;
+  List<Medication> medicationShortInfos;
   int totalPages;
 
   MedicationInfoListRes(

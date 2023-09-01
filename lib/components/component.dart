@@ -71,8 +71,8 @@ Widget defaultHeader(String centerText, BuildContext context, Widget rightWidget
   );
 }
 
-Padding pillDetailBox(String title, String content) {
-    if(content.isEmpty){
+Padding pillDetailBox(String title, String? content) {
+    if(content == null){
       return Padding(padding: EdgeInsets.zero);
     }
     
@@ -95,7 +95,7 @@ Padding pillDetailBox(String title, String content) {
     );
   }
 
-  Container roundFitWidthImage(double width, String image) {
+  Container roundFitWidthImage(double width, String? image) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
@@ -104,12 +104,13 @@ Padding pillDetailBox(String title, String content) {
           )),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10.0),
-        child: Image.asset(
+        child: image != null?
+        Image.network(
           image,
           width: width,
           height: width * (0.5),
           fit: BoxFit.fitWidth,
-        ),
+        ) : Text("저장된 약물 사진이 없어요😥")
       ),
     );
   }
