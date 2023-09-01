@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/components/component.dart';
 import 'package:flutter_application/components/decorations.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/widget/kakaoLoginWidget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -147,9 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 15),
                 // 카카오 로그인 버튼
-                Image.asset(
-                  "assets/images/kakao_login_large_wide.png",
-                ),
+                KakaoLogin()
                 // 애플 로그인 버튼
               ],
             ),

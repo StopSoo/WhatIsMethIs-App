@@ -19,7 +19,7 @@ import 'package:flutter_application/widget/imagePickerWidgetInMed.dart';
 import 'dart:ui';
 
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:flutter_application/screen/sampleScreen.dart';
+import 'package:flutter_application/widget/kakaoLoginWidget.dart';
 
 void main() {
   KakaoSdk.init(nativeAppKey: '177ec17efa9ed10f54f86aaa8923b68e');
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: NameResult(),
+      home: LoginPage(),
     );
   }
 }

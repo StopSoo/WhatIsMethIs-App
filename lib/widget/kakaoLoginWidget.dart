@@ -1,27 +1,25 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application/screen/mainScreenAfterLogin.dart';
 import 'package:http/http.dart' as http;
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 enum LoginPlatform {
-  facebook,
-  google,
-  kakao,
-  naver,
-  apple,
-  none,
+  kakao,  // 로그인 
+  none,   // 로그아웃
 }
 
-class SampleScreen extends StatefulWidget {
-  const SampleScreen({Key? key}) : super(key: key);
+class KakaoLogin extends StatefulWidget {
+  const KakaoLogin({Key? key}) : super(key: key);
 
   @override
-  State<SampleScreen> createState() => _SampleScreenState();
+  State<KakaoLogin> createState() => _KakaoLoginState();
 }
 
-class _SampleScreenState extends State<SampleScreen> {
+class _KakaoLoginState extends State<KakaoLogin> {
   LoginPlatform _loginPlatform = LoginPlatform.none;
 
 
@@ -56,16 +54,8 @@ class _SampleScreenState extends State<SampleScreen> {
 
   void signOut() async {
     switch (_loginPlatform) {
-      case LoginPlatform.facebook:
-        break;
-      case LoginPlatform.google:
-        break;
       case LoginPlatform.kakao:
         await UserApi.instance.logout();
-        break;
-      case LoginPlatform.naver:
-        break;
-      case LoginPlatform.apple:
         break;
       case LoginPlatform.none:
         break;
@@ -78,38 +68,38 @@ class _SampleScreenState extends State<SampleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: _loginPlatform != LoginPlatform.none
-              ? _logoutButton()
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _loginButton(
-                      'kakao',
-                      signInWithKakao,
-                    )
-                  ],
-                )),
-    );
+    return _loginPlatform != LoginPlatform.none
+      ? _logoutButton()
+      : Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _loginButton(
+            signInWithKakao,
+          )
+        ],
+      );
   }
 
-  Widget _loginButton(String path, VoidCallback onTap) {
-    return Card(
-      elevation: 5.0,
-      shape: const CircleBorder(),
-      clipBehavior: Clip.antiAlias,
-      child: Ink.image(
-        image: AssetImage('../assets/images/${path}.png'),
-        width: 60,
-        height: 60,
-        child: InkWell(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(35.0),
-          ),
-          onTap: onTap,
+  Widget _loginButton(VoidCallback onTap) {
+    return CupertinoButton(
+      child: Container(
+        width: 240,
+        height: 36,
+        child: Image.asset(
+          'assets/images/kakao_login_large_wide.png'
         ),
-      ),
+      ), 
+      onPressed: onTap
+      // () {
+      //   onTap;
+      //   // Navigator.of(context).push(
+      //   //   MaterialPageRoute(
+      //   //     builder: (BuildContext context) {
+      //   //       return MyHomePage_after();
+      //   //     },
+      //   //   )
+      //   // );
+      // },
     );
   }
 
