@@ -11,8 +11,8 @@ import '../controller/medicine_controller.dart';
 import '../model/medicine.dart';
 
 class CameraResult extends StatefulWidget {
-  final String itemSeq;
-  const CameraResult({Key? key, required this.itemSeq}) : super(key: key);
+  String itemSeq;
+  CameraResult({Key? key, required this.itemSeq}) : super(key: key);
 
   @override
   _CameraResultState createState() => _CameraResultState();

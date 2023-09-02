@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/screen/camera_result.dart';
 import 'package:flutter_application/screen/medication_info.dart';
 import 'package:flutter_application/screen/name_result.dart';
+import 'package:flutter_application/screen/registerMedInfoAuto.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
       ),
 
       home: MedicationInfo(),
+
     );
   }
 }

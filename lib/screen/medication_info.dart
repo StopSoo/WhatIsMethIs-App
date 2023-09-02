@@ -216,7 +216,6 @@ class _MedicationInfoState extends State<MedicationInfo> {
                   context,
                   CupertinoPageRoute(
                       builder: (context) => RegisterMedPageManual(
-                            title: '',
                           )));
             },
             child: const Text('복약 정보 등록하기', style: defaultactionSheetTextStyle),
