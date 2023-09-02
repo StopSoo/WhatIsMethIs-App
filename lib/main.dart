@@ -19,7 +19,7 @@ import 'package:flutter_application/widget/imagePickerWidgetInMed.dart';
 import 'dart:ui';
 
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:flutter_application/screen/sampleScreen.dart';
+import 'package:flutter_application/widget/kakaoLoginWidget.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: RegisterMedPageManual(),
+      home: NameResult(),
     );
   }
 }
