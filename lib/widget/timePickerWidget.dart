@@ -103,7 +103,10 @@ class _DatePickerExampleState extends State<DatePickerExample> {
                             mode: CupertinoDatePickerMode.time,
                             use24hFormat: false,
                             onDateTimeChanged: (DateTime newTime) {
-                              setState(() => widget.time = newTime);
+                              setState(() {
+                                widget.time = newTime;
+                                widget.onTimePickerChanged?.call(widget.time);
+                              } );
                             },
                           ),
                         ),

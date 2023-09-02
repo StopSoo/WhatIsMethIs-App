@@ -131,24 +131,30 @@ class _EditMedState extends State<EditMed> {
                         ),
                       ),
                     )),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(155, 36, 155, 0),
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle, color: main_color_green),
-                      ),
-                      Container(
-                          margin: EdgeInsets.fromLTRB(26, 26, 26, 26),
-                          child: const Icon(
-                            CupertinoIcons.photo_on_rectangle,
-                            size: 28,
-                            color: dark_green,
-                          ))
-                    ],
+                //** 약 이미지
+                CupertinoButton(
+                  minSize: 0,
+                  padding: const EdgeInsets.all(0),
+                  onPressed: () {
+                    //TODO: 클릭하면 이미지 수정할 수 있게 변경
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 18.0),
+                    child: CircleAvatar(
+                      backgroundColor: main_color_green,
+                      radius: 40,
+                      child: _medication.medicineImage == null
+                          ? const Icon(
+                              CupertinoIcons.photo_on_rectangle,
+                              size: 28,
+                              color: dark_green,
+                            )
+                          : CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(_medication.medicineImage!),
+                              radius: 38,
+                            ),
+                    ),
                   ),
                 ),
                 Container(
@@ -197,7 +203,7 @@ class _EditMedState extends State<EditMed> {
                             onDateChanged: (newDate) {
                               setState(() {
                                 _medication.takeStartDate =
-                                    date2string(newDate);
+                                    date2String(newDate);
                               });
                             }),
                         const SizedBox(width: 2),
@@ -209,7 +215,7 @@ class _EditMedState extends State<EditMed> {
                             selectedDate: string2Date(_medication.takeEndDate!),
                             onDateChanged: (newDate) {
                               setState(() {
-                                _medication.takeEndDate = date2string(newDate);
+                                _medication.takeEndDate = date2String(newDate);
                               });
                             }),
                       ]),
@@ -224,7 +230,7 @@ class _EditMedState extends State<EditMed> {
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ))),
-                SizedBox(height: 7),
+                const SizedBox(height: 7),
                 Container(
                   alignment: Alignment.center,
                   child: MedTimeNotChangedWidget(
@@ -236,7 +242,7 @@ class _EditMedState extends State<EditMed> {
                     },
                   ),
                 ),
-                SizedBox(height: 7),
+                const SizedBox(height: 7),
                 Container(
                   alignment: Alignment.center,
                   child: MedTimeBeAfNotChangedWidget(
@@ -248,9 +254,7 @@ class _EditMedState extends State<EditMed> {
                     },
                   ),
                 ),
-                const SizedBox(
-                  height: 15
-                ),
+                const SizedBox(height: 15),
                 // 복약 주기
                 Container(
                     padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
@@ -269,9 +273,7 @@ class _EditMedState extends State<EditMed> {
                     });
                   },
                 ),
-                const SizedBox(
-                  height: 10
-                ),
+                const SizedBox(height: 10),
                 // 복약 알림
                 Row(
                   children: [
@@ -289,7 +291,6 @@ class _EditMedState extends State<EditMed> {
                       onChanged: (bool? value) {
                         setState(() {
                           _isChecked = !_isChecked;
-                          print(_isChecked);
                         });
                       },
                     )
@@ -299,16 +300,15 @@ class _EditMedState extends State<EditMed> {
                 DatePickerExample(
                   time: _medication.notificationTime == null
                       ? DateTime.now()
-                      : string2Date(_medication.notificationTime!),
+                      : string2Time(_medication.notificationTime!),
                   onTimePickerChanged: (newTime) {
                     setState(() {
                       _medication.notificationTime = time2String(newTime);
+                      print(newTime);
                     });
                   },
                 ),
-                const SizedBox(
-                  height: 13
-                ),
+                const SizedBox(height: 13),
                 Container(
                     padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
                     alignment: Alignment.centerLeft,
@@ -351,23 +351,23 @@ class _EditMedState extends State<EditMed> {
     return dateTime;
   }
 
-  String date2string(DateTime dateTime) {
+  String date2String(DateTime dateTime) {
     String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
 
     return formattedDate;
   }
 
   String time2String(DateTime dateTime) {
-    String formattedTime = DateFormat.jm('ko_KR').format(dateTime);
+    String formattedTime = DateFormat("HH:mm:ss").format(dateTime);
 
     return formattedTime;
   }
 
-  String formatTime(String inputTime) {
-    DateTime dateTime = DateFormat("HH:mm:ss").parse(inputTime);
+  DateTime string2Time(String inputTime) {
+    //더미 날짜
+    String dummyDate = "2023-09-03";
+    DateTime dateTime = DateTime.parse("$dummyDate $inputTime");
 
-    String formattedTime = DateFormat.jm('ko_KR').format(dateTime);
-
-    return formattedTime;
+    return dateTime;
   }
 }
