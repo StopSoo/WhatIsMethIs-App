@@ -35,12 +35,21 @@ class _EditMedInfoIndexAutoState extends State<EditMedInfoIndexAuto> {
     return safeAreaPage(
       Colors.white,
       Colors.white,
-      Scaffold(
+      GestureDetector(
+        onTap: (){
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: SingleChildScrollView(
-        child: Column(children: <Widget>[
-          EditMed(medicationId: widget.medicationId),
-        ]),
-      )),
+            child: Column(
+              children: <Widget>[
+                EditMed(medicationId: widget.medicationId),
+              ]
+            ),
+          )
+        ),
+      ),
     );
   }
 }
