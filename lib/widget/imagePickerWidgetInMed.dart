@@ -7,6 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class ImagePickerWidget extends StatefulWidget {
   const ImagePickerWidget({Key? key}) : super(key: key);
@@ -94,6 +95,9 @@ String convertBase64(XFile image) {
 
 Future<void> sendImageToServer(XFile _image) async {
   File image = File(_image.path);
+  // 이미지 압축
+  File compressedImage = await compressImage(image);
+
   final baseUrl = dotenv.env['BASE_URL']!;
 
   // url 생성
@@ -102,7 +106,7 @@ Future<void> sendImageToServer(XFile _image) async {
   var client = http.Client();
   try {
     // MultipartFile 생성
-    final file = await http.MultipartFile.fromPath("files", image.path);
+    final file = await http.MultipartFile.fromPath("files", compressedImage.path);
 
     // MultipartRequest 생성
     final request = http.MultipartRequest('POST', uri);
@@ -124,4 +128,18 @@ Future<void> sendImageToServer(XFile _image) async {
   } finally {
     client.close();
   }
+}
+
+Future<File> compressImage(File file) async {
+  final result = await FlutterImageCompress.compressAndGetFile(
+    file.absolute.path,
+    file.absolute.path + ".temp.jpg",
+    quality: 88, // 품질을 조정하여 이미지 크기를 줄입니다.
+    minWidth: 400, // 최소 가로 크기
+    minHeight: 300, // 최소 세로 크기
+    format: CompressFormat.jpeg, // 출력 형식
+  );
+
+  File resultImage = File(result!.path);
+  return resultImage;
 }
