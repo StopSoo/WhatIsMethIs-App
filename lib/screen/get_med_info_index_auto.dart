@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/controller/medication_controller.dart';
 import 'package:flutter_application/model/medication.dart';
-import 'package:flutter_application/screen/medication_info.dart';
+import 'package:flutter_application/screen/edit_med_info_index_auto.dart';
 import '../components/component.dart';
 import 'package:flutter_application/constants/colors.dart';
 
@@ -51,22 +51,7 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
   final MedicationController _medicationController = MedicationController();
   
 
-  Medication _medication = Medication(
-    1,
-      "끓는 인간은 같은 위하여",
-      null,
-      2,
-      "2023-08-10",
-      "2023-08-15",
-      "LUNCH",
-      "AFTER",
-      5,
-      "11:05:12",
-      '''끓는 인간은 같은 위하여, 청춘에서만 석가는 전인 우리 있는가? 소리다.이것은 힘차게 소담스러운 스며들어 돋고, 이상 때문이다. 몸이 사랑의 심장의 실현에 것이다. 앞이 돋고, 쓸쓸한 온갖 피어나기 이것은 불러 그것은 피다. 역사를 피가 청춘의 스며들어 남는 운다. 능히 목숨을 그것은 뜨거운지라, 말이다. 공자는 영원히 트고, 피가 끓는다. 영원히 청춘에서만 그들의 작고 대중을 열매를 인생에 어디 황금시대다. 못할 품으며, 같은 약동하다. 피가 구하기 역사를 설산에서 뿐이다. 어디 목숨을 있는 것은 같은 굳세게 찬미를 꽃 대한 피다.
-
-없으면, 사랑의 보이는 그들은 속잎나고, 귀는 물방아 이것이다. 미인을 하는 이상이 대중을 운다. 청춘의 풀밭에 현저하게 그러므로 청춘 트고, 안고, 있는가? 같은 있는 청춘 예가 살 아름다우냐? 심장의 설산에서 열락의 인생을 인생에 있으랴? 가는 위하여 인생을 위하여서, 얼마나 생의 것이다. 풍부하게 장식하는 위하여 밝은 산야에 생생하며, 사막이다. 수 눈에 낙원을 황금시대를 운다. 것이다.보라, 광야에서 끓는 피부가 그들의 이상이 미묘한 사막이다. 꽃이 할지니, 미인을 맺어, 피가 남는 방황하여도, 속에서 때문이다.
-
-얼마나 피가 소금이라 얼마나 이 운다. 하여도 너의 얼음과 목숨이 이는 위하여서 길을 것이다. 앞이 그들을 되는 있는가? 인생을 평화스러운 보배를 인간은 듣는다. 희망의 투명하되 생의 원질이 끓는 구하지 들어 있으랴? 따뜻한 청춘 만물은 들어 착목한는 그러므로 약동하다. 사는가 듣기만 이 풍부하게 청춘은 약동하다. 생명을 그들은 우리의 풍부하게 이 돋고, 이것이야말로 그리하였는가? 보이는 맺어, 가는 그들의 공자는 천고에 뜨거운지라, 위하여서. 그러므로 주는 모래뿐일 얼마나 인류의 황금시대의 아름다우냐?''');
+    Medication _medication = Medication(null, null, null, null, null, null, null, null, null, null, null, null);
 
 @override
   void initState() {
@@ -87,6 +72,9 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
     return safeAreaPage(
       Colors.white,
       Colors.white,
+      _medication.medicineName == null
+              ? Center(child: CupertinoActivityIndicator())
+              : 
       Container(
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -341,7 +329,12 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
           CupertinoActionSheetAction(
             onPressed: () {
               //Todo: Navigate to 복약정보 수정
-              Navigator.pop(context);
+              Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) =>
+                                EditMedInfoIndexAuto(medicationId: widget.medicationId,)));
+
             },
             child: const Text('복약 정보 수정하기', style: defaultactionSheetTextStyle),
           ),

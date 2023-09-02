@@ -8,6 +8,7 @@ part of 'medication.dart';
 
 Medication _$MedicationFromJson(Map<String, dynamic> json) => Medication(
       json['medicationId'] as int?,
+      json['medicineId'] as String?,
       json['medicineName'] as String?,
       json['medicineImage'] as String?,
       json['takeCapacity'] as int?,
@@ -23,6 +24,7 @@ Medication _$MedicationFromJson(Map<String, dynamic> json) => Medication(
 Map<String, dynamic> _$MedicationToJson(Medication instance) =>
     <String, dynamic>{
       'medicationId': instance.medicationId,
+      'medicineId': instance.medicineId,
       'medicineName': instance.medicineName,
       'medicineImage': instance.medicineImage,
       'takeCapacity': instance.takeCapacity,

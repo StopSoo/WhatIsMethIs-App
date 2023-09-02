@@ -22,22 +22,26 @@ class MedCyclePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
+    return CupertinoApp(
       theme: CupertinoThemeData(brightness: Brightness.light),
-      home: MedCyclePickerWidget(),
+      home: MedCyclePickerWidget(selectedCycle: 0,),
     );
   }
 }
+typedef MedCycleChangedCallback = void Function(int newCycle);
+
 
 class MedCyclePickerWidget extends StatefulWidget {
-  const MedCyclePickerWidget({super.key});
+  int selectedCycle;
+  MedCycleChangedCallback? onMedCycleChanged; // Define the callback function.
+
+  MedCyclePickerWidget({super.key, required this.selectedCycle, this.onMedCycleChanged});
 
   @override
   State<MedCyclePickerWidget> createState() => _MedCyclePickerWidgetState();
 }
 
 class _MedCyclePickerWidgetState extends State<MedCyclePickerWidget> {
-  int _selectedCycle = 0;
 
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
@@ -112,11 +116,13 @@ class _MedCyclePickerWidgetState extends State<MedCyclePickerWidget> {
                 useMagnifier: true,
                 itemExtent: _kItemExtent,
                 scrollController: FixedExtentScrollController(
-                  initialItem: _selectedCycle,
+                  initialItem: widget.selectedCycle,
                 ),
                 onSelectedItemChanged: (int selectedItem) {
                   setState(() {
-                    _selectedCycle = selectedItem;
+                    widget.selectedCycle = selectedItem;
+                  widget.onMedCycleChanged?.call(widget.selectedCycle);
+
                   });
                 },
                 children:
@@ -131,7 +137,7 @@ class _MedCyclePickerWidgetState extends State<MedCyclePickerWidget> {
                   width: 140
                 ),
                 Text(
-                  _medCounts[_selectedCycle],
+                  _medCounts[widget.selectedCycle],
                   style: const TextStyle(fontSize: 15.0, color: dark_gray),
                 ),
                 SizedBox(width: 120),

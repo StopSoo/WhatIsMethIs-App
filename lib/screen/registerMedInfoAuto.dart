@@ -11,9 +11,10 @@ import 'package:flutter_application/widget/medTimeBeAfButton.dart';
 import 'package:flutter_application/widget/medTimeButton.dart';
 
 class RegisterMedPageAuto extends StatefulWidget {
-  const RegisterMedPageAuto({super.key, required this.medicineName});
+  const RegisterMedPageAuto({super.key, required this.medicineName, required this.medicineId});
 
   final String medicineName;
+  final String medicineId;
   @override
   State<RegisterMedPageAuto> createState() => _RegisterMedPageAutoState();
 }
@@ -30,18 +31,15 @@ class _RegisterMedPageAutoState extends State<RegisterMedPageAuto> {
   @override
   Widget build(BuildContext context) {
     return safeAreaPage(
-    Colors.white,
-    Colors.white,
+      Colors.white,
+      Colors.white,
       Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
+          resizeToAvoidBottomInset: false,
+          body: SingleChildScrollView(
+            child: Column(children: <Widget>[
               RegisterMed(),
-            ]
-          ),
-        )
-      ),
+            ]),
+          )),
     );
   }
 }
@@ -99,39 +97,34 @@ class _RegisterMedState extends State<RegisterMed> {
                         )),
                   ),
                   SizedBox(width: 12),
-                  MedCountPickerWidget()
+                  MedCountPickerWidget(
+                    selectedCount: 0,
+                  )
                 ],
               )),
           // 복용 기간
           Container(
-            padding: EdgeInsets.fromLTRB(45, 27, 0, 0),
-            alignment: Alignment.centerLeft,
-            child: Text('복용 기간',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              )
-            )
-          ),
+              padding: EdgeInsets.fromLTRB(45, 27, 0, 0),
+              alignment: Alignment.centerLeft,
+              child: Text('복용 기간',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ))),
           Container(
             alignment: Alignment.center,
-            child:
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center, 
-                children: [
-                  DatePickerWidget(),
-                  SizedBox(width: 2),
-                  Text(
-                    '~',
-                    style: TextStyle(
-                      fontSize: 12, 
-                      fontWeight: FontWeight.w700
-                    )
-                  ),
-                  SizedBox(width: 2),
-                  DatePickerWidget(),
-                ]
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              DatePickerWidget(
+                selectedDate: DateTime.now(),
               ),
+              SizedBox(width: 2),
+              Text('~',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+              SizedBox(width: 2),
+              DatePickerWidget(
+                selectedDate: DateTime.now(),
+              ),
+            ]),
           ),
           SizedBox(height: 15),
           // 복약 시간
@@ -166,7 +159,7 @@ class _RegisterMedState extends State<RegisterMed> {
                     fontWeight: FontWeight.w500,
                   ))),
           SizedBox(height: 10),
-          MedCyclePickerWidget(),
+          MedCyclePickerWidget(selectedCycle: 0,),
           SizedBox(
             height: 10,
           ),
@@ -174,15 +167,13 @@ class _RegisterMedState extends State<RegisterMed> {
           Row(
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(45, 0, 10, 0),
-                alignment: Alignment.centerLeft,
-                child: Text('복약 알림',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  )
-                )
-              ),
+                  padding: EdgeInsets.fromLTRB(45, 0, 10, 0),
+                  alignment: Alignment.centerLeft,
+                  child: Text('복약 알림',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ))),
               CupertinoSwitch(
                 value: _isChecked,
                 activeColor: CupertinoColors.activeGreen,
@@ -195,7 +186,7 @@ class _RegisterMedState extends State<RegisterMed> {
             ],
           ),
           SizedBox(height: 8),
-          DatePickerExample(),
+          DatePickerExample(time: DateTime.now(),),
           SizedBox(
             height: 13,
           ),
@@ -209,16 +200,14 @@ class _RegisterMedState extends State<RegisterMed> {
                   ))),
           SizedBox(height: 10),
           Container(
-            padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-            child: Container(
-              width: 324,
-              height: 219,
-              decoration: BoxDecoration(
-                color: bright_gray,
-                borderRadius: BorderRadius.circular(12)
-              ),
-            )
-          ),
+              padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
+              child: Container(
+                width: 324,
+                height: 219,
+                decoration: BoxDecoration(
+                    color: bright_gray,
+                    borderRadius: BorderRadius.circular(12)),
+              )),
         ],
       ),
     );

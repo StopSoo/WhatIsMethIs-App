@@ -5,6 +5,7 @@ part 'medication.g.dart';
 @JsonSerializable()
 class Medication{
   int? medicationId;
+  String? medicineId;
   String? medicineName;
   String? medicineImage;
   int? takeCapacity;
@@ -18,6 +19,7 @@ class Medication{
 
   Medication(
     this.medicationId,
+    this.medicineId,
     this.medicineName,
     this.medicineImage,
     this.takeCapacity,

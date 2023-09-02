@@ -8,18 +8,35 @@ Map<String, Color> MealTimeColors = <String, Color>{
   "DINNER": bright_green,
 };
 
-class MedTimeNotChangedWidget extends StatelessWidget {
-  final String selectedSegment; // 선택될 옵션
+typedef MedTimeChangedCallback = void Function(String newSegment);
 
-  const MedTimeNotChangedWidget({super.key, required this.selectedSegment});
 
+class MedTimeNotChangedWidget extends StatefulWidget {
+  String selectedSegment; // 선택될 옵션
+  final MedTimeChangedCallback? onMedTimeChanged; // Define the callback function.
+
+
+  MedTimeNotChangedWidget({super.key, required this.selectedSegment, this.onMedTimeChanged});
+
+  @override
+  State<MedTimeNotChangedWidget> createState() => _MedTimeNotChangedWidgetState();
+}
+
+class _MedTimeNotChangedWidgetState extends State<MedTimeNotChangedWidget> {
   @override
   Widget build(BuildContext context) {
     return CupertinoSlidingSegmentedControl<String>(
       backgroundColor: bar_gray,
-      thumbColor: MealTimeColors[selectedSegment]!,
-      groupValue: selectedSegment,
+      thumbColor: MealTimeColors[widget.selectedSegment]!,
+      groupValue: widget.selectedSegment,
       onValueChanged: (String? value) {
+        if (value != null) {
+          setState(() {
+            widget.selectedSegment = value;
+            widget.onMedTimeChanged?.call(widget.selectedSegment);
+
+          });
+        }
                },
       children: <String, Widget>{
         "BREAKFAST": Padding(
@@ -27,7 +44,7 @@ class MedTimeNotChangedWidget extends StatelessWidget {
           child: Text(
             '아침',
             style: TextStyle(
-              color: selectedSegment == "BREAKFAST" ? white : dark_gray,
+              color: widget.selectedSegment == "BREAKFAST" ? white : dark_gray,
               fontSize: 15
             ),
           ),
@@ -37,7 +54,7 @@ class MedTimeNotChangedWidget extends StatelessWidget {
           child: Text(
             '점심',
             style: TextStyle(
-              color: selectedSegment == "LUNCH" ? white : dark_gray,
+              color: widget.selectedSegment == "LUNCH" ? white : dark_gray,
               fontSize: 15
             ),
           ),
@@ -47,7 +64,7 @@ class MedTimeNotChangedWidget extends StatelessWidget {
           child: Text(
             '저녁',
             style: TextStyle(
-              color: selectedSegment == "DINNER" ? white : dark_gray,
+              color: widget.selectedSegment == "DINNER" ? white : dark_gray,
               fontSize: 15
             ),
           ),

@@ -2,15 +2,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
+typedef DateChangedCallback = void Function(DateTime newDate);
 
 class DatePickerWidget extends StatefulWidget {
+  DateTime selectedDate;
+  final DateChangedCallback? onDateChanged; // Define the callback function.
+
+
+  DatePickerWidget({super.key, required this.selectedDate, this.onDateChanged});
+
   @override
   _DatePickerWidgetState createState() =>
       _DatePickerWidgetState();
 }
 
 class _DatePickerWidgetState extends State<DatePickerWidget> {
-  DateTime _selectedDate = DateTime.now();
+  // DateTime _selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +35,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           Container(
             padding: EdgeInsets.fromLTRB(19, 9, 0, 0),
             child: Text(
-              '${_selectedDate.year}년 ${_selectedDate.month}월 ${_selectedDate.day}일',
+              '${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: dark_gray,
@@ -90,7 +97,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
               initialDateTime: DateTime.now(),
               onDateTimeChanged: (DateTime newDate) {
                 setState(() {
-                  _selectedDate = newDate;
+                  widget.selectedDate = newDate;
+                  widget.onDateChanged?.call(widget.selectedDate);
                 });
               },
             ),

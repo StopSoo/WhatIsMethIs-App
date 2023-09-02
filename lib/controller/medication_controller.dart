@@ -89,6 +89,30 @@ class MedicationController {
     
   }
 
+  Future<void> editMedicationInfoIndex(int _index, Medication medication) async {
+    //Todo: 로그인 구현되면 받아오는걸로 수정하기
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'X-ACCESS-TOKEN': accessToken
+    };
+
+    // Medication 객체를 JSON 문자열로 변환
+  String medicationJson = jsonEncode(medication.toJson());
+  print(medicationJson);
+
+    String _url = '${baseUrl}/medications/${_index}';
+    final response = await http.patch(Uri.parse(_url), headers: headers, body: medicationJson);
+
+    var statusCode = response.statusCode;
+    print(statusCode);
+
+    var responseBody = utf8.decode(response.bodyBytes);
+    Map responseMap = jsonDecode(responseBody);
+    var result = BaseResponse.fromJson(responseMap);
+
+  }
+
 
 
 

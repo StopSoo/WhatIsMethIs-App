@@ -22,22 +22,26 @@ class MedCountPickerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
+    return CupertinoApp(
       theme: CupertinoThemeData(brightness: Brightness.light),
-      home: MedCountPickerWidget(),
+      home: MedCountPickerWidget(selectedCount: 0,),
     );
   }
 }
 
+typedef CountChangedCallback = void Function(int newCount);
+
 class MedCountPickerWidget extends StatefulWidget {
-  const MedCountPickerWidget({super.key});
+  int selectedCount;
+  final CountChangedCallback? onCountChanged; // Define the callback function.
+
+  MedCountPickerWidget({super.key, required this.selectedCount, this.onCountChanged});
 
   @override
   State<MedCountPickerWidget> createState() => _MedCountPickerWidgetState();
 }
 
 class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
-  int _selectedCount = 0;
 
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
@@ -112,11 +116,12 @@ class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
                 useMagnifier: true,
                 itemExtent: _kItemExtent,
                 scrollController: FixedExtentScrollController(
-                  initialItem: _selectedCount,
+                  initialItem: widget.selectedCount,
                 ),
                 onSelectedItemChanged: (int selectedItem) {
                   setState(() {
-                    _selectedCount = selectedItem;
+                    widget.selectedCount = selectedItem;
+                    widget.onCountChanged?.call(widget.selectedCount);
                   });
                 },
                 children:
@@ -128,7 +133,7 @@ class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
             child: Row(
               children: [
                 Text(
-                  _medCounts[_selectedCount],
+                  _medCounts[widget.selectedCount],
                   style: const TextStyle(fontSize: 15.0, color: dark_gray),
                 ),
                 SizedBox(width: 6),
