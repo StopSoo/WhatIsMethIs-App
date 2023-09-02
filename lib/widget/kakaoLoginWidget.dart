@@ -21,22 +21,17 @@ class KakaoLogin extends StatefulWidget {
 class _KakaoLoginState extends State<KakaoLogin> {
   LoginPlatform _loginPlatform = LoginPlatform.none;
 
-
   void signInWithKakao() async {
     try {
       bool isInstalled = await isKakaoTalkInstalled();
 
-      OAuthToken token = isInstalled
-          ? await UserApi.instance.loginWithKakaoTalk()
-          : await UserApi.instance.loginWithKakaoAccount();
+      OAuthToken token = isInstalled ? await UserApi.instance.loginWithKakaoTalk() : await UserApi.instance.loginWithKakaoAccount();
 
       final url = Uri.https('kapi.kakao.com', '/v2/user/me');
 
       final response = await http.get(
         url,
-        headers: {
-          HttpHeaders.authorizationHeader: 'Bearer ${token.accessToken}'
-        },
+        headers: {HttpHeaders.authorizationHeader: 'Bearer ${token.accessToken}'},
       );
 
       final profileInfo = json.decode(response.body);
@@ -51,7 +46,6 @@ class _KakaoLoginState extends State<KakaoLogin> {
           )
         );
       });
-
     } catch (error) {
       print('카카오톡으로 로그인 실패 $error');
     }
