@@ -1,20 +1,25 @@
-import 'medicine.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class Medication {
-  Medicine? medicine;
+part 'medication.g.dart';
+
+@JsonSerializable()
+class Medication{
+  int? medicationId;
+  String? medicineId;
   String? medicineName;
   String? medicineImage;
-  int takeCapacity;
-  DateTime? takeStartDate;
-  DateTime? takeEndDate;
-  String takeMealTime;
-  String takeBeforeAfter;
-  int takeCycle;
-  DateTime? notificationTime;
+  int? takeCapacity;
+  String? takeStartDate;
+  String? takeEndDate;
+  String? takeMealTime;
+  String? takeBeforeAfter;
+  int? takeCycle;
+  String? notificationTime;
   String? description;
 
   Medication(
-    this.medicine,
+    this.medicationId,
+    this.medicineId,
     this.medicineName,
     this.medicineImage,
     this.takeCapacity,
@@ -24,6 +29,11 @@ class Medication {
     this.takeBeforeAfter,
     this.takeCycle,
     this.notificationTime,
-    this.description,
-  );
+    this.description
+);
+
+factory Medication.fromJson(Map<String, dynamic> json) =>
+      _$MedicationFromJson(json);
+  Map<String, dynamic> toJson() => _$MedicationToJson(this);
+  
 }

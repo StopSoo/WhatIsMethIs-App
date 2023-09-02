@@ -82,30 +82,39 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                             border: InputBorder.none, // 텍스트 박스 아래 줄 제거
                             focusedBorder: OutlineInputBorder(borderSide: BorderSide.none)),
                       ),
-                    )),
-
-                    const SizedBox(width: 12),
-                    // 약 개수 선택 위젯
-                    const MedCountPickerWidget()
-                  ],
-                )),
+                    )
+                  ),
+                  
+                  SizedBox(width: 12),
+                  // 약 개수 선택 위젯
+                  MedCountPickerWidget(selectedCount: 0,)
+                ],
+              )
+            ),
             // 복용 기간
             Container(
-                padding: const EdgeInsets.fromLTRB(45, 27, 0, 0),
+                padding: EdgeInsets.fromLTRB(45, 27, 0, 0),
                 alignment: Alignment.centerLeft,
-                child: const Text('복용 기간',
+                child: Text('복용 기간',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ))),
             Container(
               alignment: Alignment.center,
-              child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                DatePickerWidget(),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                DatePickerWidget(
+                  selectedDate: DateTime.now(),
+                ),
                 SizedBox(width: 2),
-                Text('~', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+                Text('~',
+                    style:
+                        TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
                 SizedBox(width: 2),
-                DatePickerWidget(),
+                DatePickerWidget(
+                  selectedDate: DateTime.now(),
+                ),
               ]),
             ),
             const SizedBox(height: 15),
@@ -141,7 +150,7 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                       fontWeight: FontWeight.w500,
                     ))),
             const SizedBox(height: 10),
-            const MedCyclePickerWidget(),
+            const MedCyclePickerWidget(selectedCycle: 0,),
             const SizedBox(
               height: 10,
             ),
@@ -168,7 +177,7 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
               ],
             ),
             const SizedBox(height: 8),
-            const DatePickerExample(),
+            const DatePickerExample(time: DateTime.now(),),
             const SizedBox(
               height: 13,
             ),

@@ -14,3 +14,8 @@ BoxDecoration textFieldDecoration() {
     ), // 둥근 테두리 설정
   );
 }
+
+BoxDecoration medInfoIndexDecoration() {
+  return BoxDecoration(
+      color: bright_gray, borderRadius: BorderRadius.circular(12));
+}

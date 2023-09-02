@@ -12,8 +12,10 @@ import 'package:flutter_application/widget/medTimeButton.dart';
 import 'package:flutter_application/widget/imagePickerWidgetInMed.dart';
 
 class RegisterMedPageAuto extends StatefulWidget {
-  const RegisterMedPageAuto({super.key});
+  RegisterMedPageAuto({super.key, required this.medicineName, required this.medicineId});
 
+  String medicineName;
+  String medicineId;
   @override
   State<RegisterMedPageAuto> createState() => _RegisterMedPageAutoState();
 }
@@ -78,8 +80,10 @@ class _RegisterMedState extends State<RegisterMed> {
                           fontSize: 15,
                         )),
                   ),
-                  const SizedBox(width: 12),
-                  const MedCountPickerWidget()
+                  SizedBox(width: 12),
+                  MedCountPickerWidget(
+                    selectedCount: 0,
+                  )
                 ],
               )),
           // 복용 기간
@@ -133,11 +137,9 @@ class _RegisterMedState extends State<RegisterMed> {
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ))),
-          const SizedBox(height: 10),
-          const MedCyclePickerWidget(),
-          const SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
+          MedCyclePickerWidget(selectedCycle: 0,),
+          SizedBox(height: 10),
           // 복약 알림
           Row(
             children: [
@@ -160,9 +162,9 @@ class _RegisterMedState extends State<RegisterMed> {
               )
             ],
           ),
-          const SizedBox(height: 8),
-          const DatePickerExample(),
-          const SizedBox(
+          SizedBox(height: 8),
+          DatePickerExample(time: DateTime.now(),),
+          SizedBox(
             height: 13,
           ),
           Container(

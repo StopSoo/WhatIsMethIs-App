@@ -12,7 +12,7 @@ class DatePickerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
+    return CupertinoApp(
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -22,20 +22,25 @@ class DatePickerApp extends StatelessWidget {
         Locale('ko', 'KO'),
       ],
       theme: CupertinoThemeData(brightness: Brightness.light),
-      home: DatePickerExample(),
+      home: DatePickerExample(time: DateTime.now(),),
     );
   }
 }
 
+typedef TimePickerChangedCallback = void Function(DateTime newTime);
+
+
 class DatePickerExample extends StatefulWidget {
-  const DatePickerExample({super.key});
+  DateTime time;
+  TimePickerChangedCallback? onTimePickerChanged;
+
+  DatePickerExample({super.key, required this.time, this.onTimePickerChanged});
 
   @override
   State<DatePickerExample> createState() => _DatePickerExampleState();
 }
 
 class _DatePickerExampleState extends State<DatePickerExample> {
-  DateTime time = DateTime.now();
   DateFormat dateFormat = DateFormat('aa hh:mm');
 
   void _showDialog(Widget child) {
@@ -94,17 +99,17 @@ class _DatePickerExampleState extends State<DatePickerExample> {
                       CupertinoButton(
                         onPressed: () => _showDialog(
                           CupertinoDatePicker(
-                            initialDateTime: time,
+                            initialDateTime: widget.time,
                             mode: CupertinoDatePickerMode.time,
                             use24hFormat: false,
                             onDateTimeChanged: (DateTime newTime) {
-                              setState(() => time = newTime);
+                              setState(() => widget.time = newTime);
                             },
                           ),
                         ),
                         child: Center(
                           child: Text(
-                            dateFormat.format(time),
+                            dateFormat.format(widget.time),
                             style: const TextStyle(fontSize: 15.0, color: dark_gray),
                           ),
                         ),

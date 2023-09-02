@@ -4,6 +4,20 @@ import 'package:flutter_application/constants/colors.dart';
 
 import '../components/component.dart';
 import '../components/textstyle.dart';
+import '../controller/medication_controller.dart';
+import '../model/medication.dart';
+import 'medication_info.dart';
+
+Map<String, String> mealTime = {
+  "BREAKFAST": "아침",
+  "LUNCH": "점심",
+  "DINNER": "저녁",
+};
+
+Map<String, String> beforeAfterTime = {
+  "BEFORE": "식전",
+  "AFTER": "식후",
+};
 
 class MedicationInfoDelete extends StatefulWidget {
   const MedicationInfoDelete({Key? key}) : super(key: key);
@@ -13,40 +27,77 @@ class MedicationInfoDelete extends StatefulWidget {
 }
 
 class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
-  List<String> lunch = ["아침", "점심", "아침", "점심", "아침", "저녁", "아침", "점심", "아침", "점심"];
-  List<String> after = ["식후", "식후", "식전", "식후", "식전", "식후", "식후", "식후", "식전", "식후"];
-  List<String> itemName = [
-    "타이레놀6시간이알서방정",
-    "타이레놀7시간이알서방정",
-    "타이레놀8시간이알서방정",
-    "타이레놀9시간이알서방정",
-    "타이레놀10시간이알서방정",
-    "타이레놀11시간이알서방정",
-    "타이레놀12시간이알서방정",
-    "타이레놀13시간이알서방정",
-    "타이레놀14시간이알서방정",
-    "타이레놀15시간이알서방정",
-  ];
-  List<int> cnt = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  final MedicationController _medicationController = MedicationController();
 
-  List<String> images = [
-    "",
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg',
-    "",
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg',
-    'assets/images/test_cat.jpg'
-  ];
-  late List<bool> _isChecked;
+  int _page = 0;
+  bool _hasNextPage = true;
+  bool _isFirstLoadRunning = false;
+  bool _isLoadMoreRunning = false;
+  late ScrollController _scrollController;
+  List<Medication> _medInfoList = [];
+  List<bool> _isChecked = [];
+
+  //삭제할 인덱스 리스트
+  List<int> medicationIds = [];
 
   @override
   void initState() {
     super.initState();
-    _isChecked = List<bool>.filled(lunch.length, false);
+    _loadInitMedicationInfoList();
+    _scrollController = ScrollController()
+      ..addListener(_loadMoreMedicationInfoList);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_loadMoreMedicationInfoList);
+    super.dispose();
+  }
+
+  Future<void> _loadInitMedicationInfoList() async {
+    setState(() {
+      _isFirstLoadRunning = true;
+    });
+    print("page: ${_page}");
+
+    List<Medication> medInfos =
+        await _medicationController.fetchMedicationInfo(_page);
+    setState(() {
+      _medInfoList.addAll(medInfos);
+      _isChecked.addAll(List<bool>.filled(medInfos.length, false));
+      _isFirstLoadRunning = false;
+    });
+  }
+
+  Future<void> _loadMoreMedicationInfoList() async {
+    if (_hasNextPage &&
+        !_isFirstLoadRunning &&
+        !_isLoadMoreRunning &&
+        _scrollController.position.extentAfter < 100) {
+      setState(() {
+        _isLoadMoreRunning = true;
+        _page += 1;
+      });
+
+      print("page: ${_page}");
+      List<Medication> medInfos =
+          await _medicationController.fetchMedicationInfo(_page);
+
+      if (medInfos.isNotEmpty) {
+        setState(() {
+          _medInfoList.addAll(medInfos);
+          _isChecked.addAll(List<bool>.filled(medInfos.length, false));
+        });
+      } else {
+        //더이상 데이터 X
+        setState(() {
+          _hasNextPage = false;
+        });
+      }
+      setState(() {
+        _isLoadMoreRunning = false;
+      });
+    }
   }
 
   @override
@@ -62,9 +113,18 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
               context,
               CupertinoButton(
                 minSize: 0,
-                padding: const EdgeInsets.all(0),
-                onPressed: () {
+                padding: EdgeInsets.all(0),
+                onPressed: () async {
                   //delete
+                  await _medicationController
+                      .deleteMedicationInfo(medicationIds);
+                  (medicationIds);
+
+                  //TODO: 페이지 스택 관리
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => MedicationInfo()));
                 },
                 child: Icon(
                   CupertinoIcons.trash,
@@ -74,12 +134,20 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
               )),
           Expanded(
             child: ListView.builder(
+                controller: _scrollController,
                 shrinkWrap: true,
-                itemCount: lunch.length,
+                itemCount: _medInfoList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return medicationDeleteRow(index);
                 }),
           ),
+          if (_isLoadMoreRunning == true)
+            Container(
+              padding: const EdgeInsets.all(30),
+              child: const Center(
+                child: CupertinoActivityIndicator(),
+              ),
+            ),
         ],
       ),
     );
@@ -90,7 +158,13 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
       onTap: () {
         setState(() {
           _isChecked[index] = !_isChecked[index];
+          if (_isChecked[index]) {
+            medicationIds.add(_medInfoList[index].medicationId!);
+          } else {
+            medicationIds.remove(_medInfoList[index].medicationId!);
+          }
         });
+        print(index);
         print(_isChecked[index]);
       },
       child: Row(
@@ -99,17 +173,24 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
           CupertinoCheckbox(
             onChanged: null,
             value: _isChecked[index],
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             activeColor: more_green,
             inactiveColor: more_green,
           ),
-          pillShortInfoBox(images[index], lunch[index], after[index], itemName[index], cnt[index]),
+          medicationShortInfoBox(
+              _medInfoList[index].medicineImage,
+              mealTime[_medInfoList[index].takeMealTime]!,
+              beforeAfterTime[_medInfoList[index].takeBeforeAfter]!,
+              _medInfoList[index].medicineName ?? '',
+              _medInfoList[index].takeCapacity ?? 0),
         ],
       ),
     );
   }
 
-  Padding pillShortInfoBox(String image, String lunch, String after, String itemName, int cnt) {
+  Padding medicationShortInfoBox(
+      String? image, String lunch, String after, String itemName, int cnt) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 20, 8, 20),
       child: Row(
@@ -122,10 +203,10 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
             child: CircleAvatar(
               backgroundColor: main_color_green,
               radius: 40,
-              child: image.isEmpty
+              child: image == null
                   ? const Text("💊")
                   : CircleAvatar(
-                      backgroundImage: AssetImage(image),
+                      backgroundImage: NetworkImage(image),
                       radius: 38,
                     ),
             ),

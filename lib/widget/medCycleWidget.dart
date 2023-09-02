@@ -21,22 +21,26 @@ class MedCyclePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
+    return CupertinoApp(
       theme: CupertinoThemeData(brightness: Brightness.light),
-      home: MedCyclePickerWidget(),
+      home: MedCyclePickerWidget(selectedCycle: 0,),
     );
   }
 }
+typedef MedCycleChangedCallback = void Function(int newCycle);
+
 
 class MedCyclePickerWidget extends StatefulWidget {
-  const MedCyclePickerWidget({super.key});
+  int selectedCycle;
+  MedCycleChangedCallback? onMedCycleChanged; // Define the callback function.
+
+  MedCyclePickerWidget({super.key, required this.selectedCycle, this.onMedCycleChanged});
 
   @override
   State<MedCyclePickerWidget> createState() => _MedCyclePickerWidgetState();
 }
 
 class _MedCyclePickerWidgetState extends State<MedCyclePickerWidget> {
-  int _selectedCycle = 0;
 
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
@@ -84,43 +88,49 @@ class _MedCyclePickerWidgetState extends State<MedCyclePickerWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CupertinoButton(
-              minSize: 0.0,
-              padding: const EdgeInsets.fromLTRB(13, 9, 8, 9),
-              color: bright_gray,
-              onPressed: () => _showDialog(
-                    CupertinoPicker(
-                      magnification: 1.22,
-                      squeeze: 1.2,
-                      useMagnifier: true,
-                      itemExtent: _kItemExtent,
-                      scrollController: FixedExtentScrollController(
-                        initialItem: _selectedCycle,
-                      ),
-                      onSelectedItemChanged: (int selectedItem) {
-                        setState(() {
-                          _selectedCycle = selectedItem;
-                        });
-                      },
-                      children: List<Widget>.generate(_medCounts.length, (int index) {
-                        return Center(child: Text(_medCounts[index]));
-                      }),
-                    ),
-                  ),
-              child: Row(
-                children: [
-                  const SizedBox(width: 140),
-                  Text(
-                    _medCounts[_selectedCycle],
-                    style: const TextStyle(fontSize: 15.0, color: dark_gray),
-                  ),
-                  const SizedBox(width: 120),
-                  const Icon(
-                    CupertinoIcons.chevron_down,
-                    size: 15,
-                    color: black,
-                  ),
-                ],
-              )),
+            minSize: 0.0,
+            padding: EdgeInsets.fromLTRB(13, 9, 8, 9),
+            color: bright_gray,
+            onPressed: () => _showDialog(
+              CupertinoPicker(
+                magnification: 1.22,
+                squeeze: 1.2,
+                useMagnifier: true,
+                itemExtent: _kItemExtent,
+                scrollController: FixedExtentScrollController(
+                  initialItem: widget.selectedCycle,
+                ),
+                onSelectedItemChanged: (int selectedItem) {
+                  setState(() {
+                    widget.selectedCycle = selectedItem;
+                  widget.onMedCycleChanged?.call(widget.selectedCycle);
+
+                  });
+                },
+                children:
+                    List<Widget>.generate(_medCounts.length, (int index) {
+                  return Center(child: Text(_medCounts[index]));
+                }),
+              ),
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 140
+                ),
+                Text(
+                  _medCounts[widget.selectedCycle],
+                  style: const TextStyle(fontSize: 15.0, color: dark_gray),
+                ),
+                SizedBox(width: 120),
+                Icon(
+                  CupertinoIcons.chevron_down,
+                  size: 15,
+                  color: black,
+                ),
+              ],
+            )
+          ),
         ],
       ),
     );

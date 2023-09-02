@@ -36,7 +36,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: RegisterMedPageManual(),
+
+      home: MedicationInfo(),
+
     );
   }
 }

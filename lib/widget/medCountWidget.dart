@@ -21,23 +21,29 @@ class MedCountPickerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
+    return CupertinoApp(
       theme: CupertinoThemeData(brightness: Brightness.light),
-      home: MedCountPickerWidget(),
+      home: MedCountPickerWidget(
+        selectedCount: 0,
+      ),
     );
   }
 }
 
+typedef CountChangedCallback = void Function(int newCount);
+
 class MedCountPickerWidget extends StatefulWidget {
-  const MedCountPickerWidget({super.key});
+  int selectedCount;
+  final CountChangedCallback? onCountChanged; // Define the callback function.
+
+  MedCountPickerWidget(
+      {super.key, required this.selectedCount, this.onCountChanged});
 
   @override
   State<MedCountPickerWidget> createState() => _MedCountPickerWidgetState();
 }
 
 class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
-  int _selectedCount = 0;
-
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
       context: context,
@@ -53,20 +59,24 @@ class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
           child: Column(children: [
             Expanded(
               flex: 6,
-              child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                CupertinoButton(
-                  child: const Text('취소', style: TextStyle(color: Colors.red)),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                CupertinoButton(
-                  child: const Text('완료'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
-              ]),
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CupertinoButton(
+                      child:
+                          const Text('취소', style: TextStyle(color: Colors.red)),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    CupertinoButton(
+                      child: const Text('완료'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ]),
             ),
             Expanded(flex: 20, child: child),
           ]),
@@ -86,7 +96,7 @@ class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
         children: <Widget>[
           CupertinoButton(
               minSize: 0.0,
-              padding: const EdgeInsets.fromLTRB(13, 9, 8, 9),
+              padding: EdgeInsets.fromLTRB(13, 9, 8, 9),
               color: bright_gray,
               onPressed: () => _showDialog(
                     CupertinoPicker(
@@ -95,14 +105,16 @@ class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
                       useMagnifier: true,
                       itemExtent: _kItemExtent,
                       scrollController: FixedExtentScrollController(
-                        initialItem: _selectedCount,
+                        initialItem: widget.selectedCount,
                       ),
                       onSelectedItemChanged: (int selectedItem) {
                         setState(() {
-                          _selectedCount = selectedItem;
+                          widget.selectedCount = selectedItem;
+                          widget.onCountChanged?.call(widget.selectedCount);
                         });
                       },
-                      children: List<Widget>.generate(_medCounts.length, (int index) {
+                      children:
+                          List<Widget>.generate(_medCounts.length, (int index) {
                         return Center(child: Text(_medCounts[index]));
                       }),
                     ),
@@ -110,11 +122,11 @@ class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
               child: Row(
                 children: [
                   Text(
-                    _medCounts[_selectedCount],
+                    _medCounts[widget.selectedCount],
                     style: const TextStyle(fontSize: 15.0, color: dark_gray),
                   ),
-                  const SizedBox(width: 6),
-                  const Icon(
+                  SizedBox(width: 6),
+                  Icon(
                     CupertinoIcons.chevron_down,
                     size: 15,
                     color: black,
