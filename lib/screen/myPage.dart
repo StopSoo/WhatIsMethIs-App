@@ -5,6 +5,7 @@ import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/components/component.dart';
 import 'package:flutter_application/widget/imagePickerWidgetInMypage.dart';
 import 'dart:io';
+import 'package:flutter_application/widget/kakaoLoginWidget.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});

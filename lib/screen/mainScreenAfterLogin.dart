@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/screen/medication_info.dart';
 import 'package:flutter_application/screen/myPage.dart';
 import 'package:flutter_application/widget/findMedWidget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -71,7 +72,15 @@ class HomeScreen extends StatelessWidget {
             Row(
               children: <Widget>[
                 CupertinoButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return MedicationInfo();
+                        },
+                      )
+                    );
+                  },
                   minSize: 0,
                   padding: EdgeInsets.all(0),
                   child: Text(
@@ -84,7 +93,15 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 28, width: 10),
                 CupertinoButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return MedicationInfo();
+                        },
+                      )
+                    );
+                  },
                   minSize: 0,
                   padding: EdgeInsets.all(0),
                   child: Column(

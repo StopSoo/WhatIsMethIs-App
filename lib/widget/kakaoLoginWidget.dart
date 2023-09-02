@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/screen/mainScreenAfterLogin.dart';
@@ -45,13 +44,20 @@ class _KakaoLoginState extends State<KakaoLogin> {
 
       setState(() {
         _loginPlatform = LoginPlatform.kakao;
+        // 메인 화면으로 이동
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => MyHomePage_after(),
+          )
+        );
       });
 
     } catch (error) {
       print('카카오톡으로 로그인 실패 $error');
     }
   }
-
+  
+  // 로그아웃 사용 시 사용할 것
   void signOut() async {
     switch (_loginPlatform) {
       case LoginPlatform.kakao:
@@ -68,16 +74,24 @@ class _KakaoLoginState extends State<KakaoLogin> {
 
   @override
   Widget build(BuildContext context) {
-    return _loginPlatform != LoginPlatform.none
-      ? _logoutButton()
-      : Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _loginButton(
-            signInWithKakao,
-          )
-        ],
-      );
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _loginButton(
+          signInWithKakao,
+        )
+      ],
+    );
+    // _loginPlatform != LoginPlatform.none
+    //   ? _logoutButton()
+    //   : Row(
+    //     mainAxisAlignment: MainAxisAlignment.center,
+    //     children: [
+    //       _loginButton(
+    //         signInWithKakao,
+    //       )
+    //     ],
+    //   );
   }
 
   Widget _loginButton(VoidCallback onTap) {
@@ -90,19 +104,10 @@ class _KakaoLoginState extends State<KakaoLogin> {
         ),
       ), 
       onPressed: onTap
-      // () {
-      //   onTap;
-      //   // Navigator.of(context).push(
-      //   //   MaterialPageRoute(
-      //   //     builder: (BuildContext context) {
-      //   //       return MyHomePage_after();
-      //   //     },
-      //   //   )
-      //   // );
-      // },
     );
   }
 
+  // 로그아웃 사용 시 사용할 것
   Widget _logoutButton() {
     return ElevatedButton(
       onPressed: signOut,
