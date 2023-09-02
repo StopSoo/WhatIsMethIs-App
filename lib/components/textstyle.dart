@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 
 const TextStyle headerTextStyle = TextStyle(
-    fontFamily: 'NotoSans',
-    color: CupertinoColors.black,
-    fontWeight: FontWeight.w700,
-    fontSize: 17,
-  );
+  fontFamily: 'NotoSans',
+  color: CupertinoColors.black,
+  fontWeight: FontWeight.w700,
+  fontSize: 17,
+);
 
 const TextStyle defaultTextStyle = TextStyle(
   fontFamily: 'Inter',

@@ -1,4 +1,4 @@
-class Medicine{
+class Medicine {
   String entpName;
   String itemName;
   String itemSeq;
@@ -28,6 +28,6 @@ class Medicine{
     this.openDe,
     this.updateDe,
     this.itemImage,
-    this.bizrno
+    this.bizrno,
   );
 }

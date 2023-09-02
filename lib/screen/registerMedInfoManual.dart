@@ -25,7 +25,7 @@ class _RegisterMedPageManualState extends State<RegisterMedPageManual> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Scaffold(
+      child: const Scaffold(
           resizeToAvoidBottomInset: false,
           body: SingleChildScrollView(
             child: Column(children: <Widget>[
@@ -37,6 +37,9 @@ class _RegisterMedPageManualState extends State<RegisterMedPageManual> {
 }
 
 class RegisterMedManual extends StatefulWidget {
+  const RegisterMedManual({super.key});
+
+  @override
   _RegisterMedManualState createState() => _RegisterMedManualState();
 }
 
@@ -55,25 +58,25 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
     return safeAreaPage(
       Colors.white,
       Colors.white,
-      Container(
+      SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: <Widget>[
-            defaultHeader('복약 정보 등록하기', context, SizedBox(width: 30)),
-            ImagePickerWidget(),
+            defaultHeader('복약 정보 등록하기', context, const SizedBox(width: 30)),
+            const ImagePickerWidget(),
             Container(
-                padding: EdgeInsets.fromLTRB(80, 18, 0, 0),
+                padding: const EdgeInsets.fromLTRB(80, 18, 0, 0),
                 child: Row(
                   children: [
                     Container(
                         child: Container(
-                      padding: EdgeInsets.fromLTRB(20, 6, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(20, 6, 0, 0),
                       width: 168,
                       height: 40,
                       decoration: BoxDecoration(color: bright_gray, borderRadius: BorderRadius.circular(12)),
-                      child: TextField(
+                      child: const TextField(
                         keyboardType: TextInputType.multiline,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             hintText: '약 이름',
                             hintStyle: TextStyle(color: dark_gray, fontSize: 16),
                             border: InputBorder.none, // 텍스트 박스 아래 줄 제거
@@ -81,23 +84,23 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                       ),
                     )),
 
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     // 약 개수 선택 위젯
-                    MedCountPickerWidget()
+                    const MedCountPickerWidget()
                   ],
                 )),
             // 복용 기간
             Container(
-                padding: EdgeInsets.fromLTRB(45, 27, 0, 0),
+                padding: const EdgeInsets.fromLTRB(45, 27, 0, 0),
                 alignment: Alignment.centerLeft,
-                child: Text('복용 기간',
+                child: const Text('복용 기간',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ))),
             Container(
               alignment: Alignment.center,
-              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 DatePickerWidget(),
                 SizedBox(width: 2),
                 Text('~', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
@@ -105,50 +108,50 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                 DatePickerWidget(),
               ]),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             // 복약 시간
             Container(
-                padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
                 alignment: Alignment.centerLeft,
-                child: Text('복약 시간',
+                child: const Text('복약 시간',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ))),
-            SizedBox(height: 7),
+            const SizedBox(height: 7),
             Container(
               alignment: Alignment.center,
-              child: MedTimeControlWidget(),
+              child: const MedTimeControlWidget(),
             ),
-            SizedBox(height: 7),
+            const SizedBox(height: 7),
             Container(
               alignment: Alignment.center,
-              child: MedTimeBeAfControlWidget(),
+              child: const MedTimeBeAfControlWidget(),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             // 복약 주기
             Container(
-                padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
                 alignment: Alignment.centerLeft,
-                child: Text('복약 주기',
+                child: const Text('복약 주기',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ))),
-            SizedBox(height: 10),
-            MedCyclePickerWidget(),
-            SizedBox(
+            const SizedBox(height: 10),
+            const MedCyclePickerWidget(),
+            const SizedBox(
               height: 10,
             ),
             // 복약 알림
             Row(
               children: [
                 Container(
-                    padding: EdgeInsets.fromLTRB(45, 0, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(45, 0, 10, 0),
                     alignment: Alignment.centerLeft,
-                    child: Text('복약 알림',
+                    child: const Text('복약 알림',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -164,32 +167,32 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                 )
               ],
             ),
-            SizedBox(height: 8),
-            DatePickerExample(),
-            SizedBox(
+            const SizedBox(height: 8),
+            const DatePickerExample(),
+            const SizedBox(
               height: 13,
             ),
             Container(
-                padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
                 alignment: Alignment.centerLeft,
-                child: Text('설명',
+                child: const Text('설명',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ))),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Container(
-                padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
                   width: 324,
                   height: 219,
                   decoration: BoxDecoration(color: bright_gray, borderRadius: BorderRadius.circular(12)),
-                  child: TextField(
+                  child: const TextField(
                     scrollPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     keyboardType: TextInputType.multiline,
                     maxLines: null, // 자동 줄바꿈
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         hintText: '약에 대한 설명을 입력하세요.',
                         border: InputBorder.none, // 텍스트 박스 아래 줄 제거
                         labelStyle: TextStyle(color: dark_gray),
@@ -197,7 +200,7 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                   ),
                 )),
             // 여유 공간
-            SizedBox(height: 30)
+            const SizedBox(height: 30)
           ],
         ),
       ),

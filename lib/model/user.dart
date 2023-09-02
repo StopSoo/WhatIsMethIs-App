@@ -1,4 +1,4 @@
-class User{
+class User {
   String name;
   String age;
   String phoneNumber;
@@ -16,7 +16,6 @@ class User{
     this.emergencyContact2,
     this.emergencyContact3,
     this.refreshToken,
-    this.deviceToken
+    this.deviceToken,
   );
-
 }

@@ -13,102 +13,72 @@ class MyHomePage_before extends StatefulWidget {
 }
 
 class _MyHomePage_beforeState extends State<MyHomePage_before> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PleaseLogin()
-    );
+    return const Scaffold(body: PleaseLogin());
   }
 }
 
 class PleaseLogin extends StatelessWidget {
+  const PleaseLogin({super.key});
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.topCenter,
-      // 전체 Container에 왼쪽 패딩 적용
-      padding: EdgeInsets.fromLTRB(33, 80, 20, 0),
-      child: Column(
-        children: <Widget>[
+        alignment: Alignment.topCenter,
+        // 전체 Container에 왼쪽 패딩 적용
+        padding: const EdgeInsets.fromLTRB(33, 80, 20, 0),
+        child: Column(children: <Widget>[
           // 로고와 마이 페이지
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end, 
-            children: <Widget>[
-              Image.asset(
-                alignment: Alignment.topLeft,
-                'assets/images/icon_logo.png',
-                fit: BoxFit.contain,
-                height: 45),
-              Spacer(),
-              CupertinoButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(builder: (context) => MyPage())
-                  );
-                },
-                child: Icon(
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+            Image.asset(alignment: Alignment.topLeft, 'assets/images/icon_logo.png', fit: BoxFit.contain, height: 45),
+            const Spacer(),
+            CupertinoButton(
+              onPressed: () {
+                Navigator.push(context, CupertinoPageRoute(builder: (context) => const MyPage()));
+              },
+              child: const Icon(
                 CupertinoIcons.person,
                 size: 28,
                 color: black,
-                ),
               ),
-            ]
-          ),
-          SizedBox(
-            height: 20, 
-            width: 200
-          ),
+            ),
+          ]),
+          const SizedBox(height: 20, width: 200),
           // 오늘의 복약 정보
           Row(
             children: <Widget>[
               CupertinoButton(
                 onPressed: () {},
                 minSize: 0,
-                padding: EdgeInsets.all(0),
-                child: Text(
+                padding: const EdgeInsets.all(0),
+                child: const Text(
                   '오늘의 복약 정보',
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: black
-                  ),
+                  style: TextStyle(fontSize: 24, color: black),
                 ),
               ),
-              SizedBox(height: 28, width: 10),
+              const SizedBox(height: 28, width: 10),
               CupertinoButton(
-                onPressed: () {},
-                minSize: 0,
-                padding: EdgeInsets.all(0),
-                child: Column(
-                  children: [
+                  onPressed: () {},
+                  minSize: 0,
+                  padding: const EdgeInsets.all(0),
+                  child: const Column(children: [
                     Icon(
                       CupertinoIcons.chevron_forward,
                       size: 28,
                       color: black,
                     ),
-                  ]
-                ) 
-              ),
+                  ])),
             ],
           ),
           Container(
-            width: 330,
-            padding: EdgeInsets.fromLTRB(35, 121, 38, 161),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Text('로그인 후에 복약 정보를 등록해 보세요 💊',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontFamily: 'Inter-Regular',
-                  fontWeight: FontWeight.w500
-                )
-              )
-            )
-          ),
+              width: 330,
+              padding: const EdgeInsets.fromLTRB(35, 121, 38, 161),
+              child: const Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text('로그인 후에 복약 정보를 등록해 보세요 💊', style: TextStyle(fontSize: 15, fontFamily: 'Inter-Regular', fontWeight: FontWeight.w500)))),
           // 알약 찾기 위젯
-          FindMedWidget()
-        ] 
-      )
-    );
+          const FindMedWidget()
+        ]));
   }
 }

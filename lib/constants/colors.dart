@@ -21,8 +21,7 @@ const String mainFont = 'Inter-Medium';
 
 const Color real_black = Color.fromRGBO(0, 0, 0, 1);
 
-const Color redColor = Color(0xFFFF6161); 
+const Color redColor = Color(0xFFFF6161);
 
 // fontColor
-const Color fontBlueColor = Color(0xFF007AFF); 
-
+const Color fontBlueColor = Color(0xFF007AFF);

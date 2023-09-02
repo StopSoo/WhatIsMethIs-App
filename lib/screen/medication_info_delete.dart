@@ -13,30 +13,8 @@ class MedicationInfoDelete extends StatefulWidget {
 }
 
 class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
-  List<String> lunch = [
-    "아침",
-    "점심",
-    "아침",
-    "점심",
-    "아침",
-    "저녁",
-    "아침",
-    "점심",
-    "아침",
-    "점심"
-  ];
-  List<String> after = [
-    "식후",
-    "식후",
-    "식전",
-    "식후",
-    "식전",
-    "식후",
-    "식후",
-    "식후",
-    "식전",
-    "식후"
-  ];
+  List<String> lunch = ["아침", "점심", "아침", "점심", "아침", "저녁", "아침", "점심", "아침", "점심"];
+  List<String> after = ["식후", "식후", "식전", "식후", "식전", "식후", "식후", "식후", "식전", "식후"];
   List<String> itemName = [
     "타이레놀6시간이알서방정",
     "타이레놀7시간이알서방정",
@@ -79,20 +57,21 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          defaultHeader("복약 정보 삭제하기", context, 
-            CupertinoButton(
+          defaultHeader(
+              "복약 정보 삭제하기",
+              context,
+              CupertinoButton(
                 minSize: 0,
-                padding: EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
                 onPressed: () {
                   //delete
                 },
                 child: Icon(
-                    CupertinoIcons.trash,
-                    color: Colors.black.withOpacity(0.9),
-                    size: 28,
-                  ),
-              )
-            ),
+                  CupertinoIcons.trash,
+                  color: Colors.black.withOpacity(0.9),
+                  size: 28,
+                ),
+              )),
           Expanded(
             child: ListView.builder(
                 shrinkWrap: true,
@@ -115,25 +94,22 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
         print(_isChecked[index]);
       },
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            CupertinoCheckbox(
-              onChanged: null,
-              value: _isChecked[index],
-              shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              activeColor: more_green,
-              inactiveColor: more_green,
-            ),
-            pillShortInfoBox(images[index], lunch[index], after[index],
-                itemName[index], cnt[index]),
-          ],
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          CupertinoCheckbox(
+            onChanged: null,
+            value: _isChecked[index],
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            activeColor: more_green,
+            inactiveColor: more_green,
+          ),
+          pillShortInfoBox(images[index], lunch[index], after[index], itemName[index], cnt[index]),
+        ],
       ),
     );
   }
 
-  Padding pillShortInfoBox(
-      String image, String lunch, String after, String itemName, int cnt) {
+  Padding pillShortInfoBox(String image, String lunch, String after, String itemName, int cnt) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 20, 8, 20),
       child: Row(
@@ -162,9 +138,17 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
               const SizedBox(height: 5),
               Row(
                 children: [
-                  Text(itemName, style: darkGrayTextStyle(15), softWrap: true,),
+                  Text(
+                    itemName,
+                    style: darkGrayTextStyle(15),
+                    softWrap: true,
+                  ),
                   const SizedBox(width: 15),
-                  Text("${cnt}정", style: darkGrayTextStyle(15), softWrap: true,),
+                  Text(
+                    "$cnt정",
+                    style: darkGrayTextStyle(15),
+                    softWrap: true,
+                  ),
                 ],
               )
             ],

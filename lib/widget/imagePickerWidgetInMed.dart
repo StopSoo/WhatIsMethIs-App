@@ -1,7 +1,6 @@
 // image picker in medicine page
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
@@ -93,8 +92,8 @@ String convertBase64(XFile image) {
   // return base64Image;
 }
 
-Future<void> sendImageToServer(XFile _image) async {
-  File image = File(_image.path);
+Future<void> sendImageToServer(XFile image_) async {
+  File image = File(image_.path);
   // 이미지 압축
   File compressedImage = await compressImage(image);
 
@@ -133,7 +132,7 @@ Future<void> sendImageToServer(XFile _image) async {
 Future<File> compressImage(File file) async {
   final result = await FlutterImageCompress.compressAndGetFile(
     file.absolute.path,
-    file.absolute.path + ".temp.jpg",
+    "${file.absolute.path}.temp.jpg",
     quality: 88, // 품질을 조정하여 이미지 크기를 줄입니다.
     minWidth: 400, // 최소 가로 크기
     minHeight: 300, // 최소 세로 크기

@@ -51,10 +51,8 @@ class _SearchState extends State<Search> {
           Expanded(
             child: ListView.separated(
                 shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) =>
-                    pillInfoBox(width, pillNames[index], images[index]),
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(
+                itemBuilder: (BuildContext context, int index) => pillInfoBox(width, pillNames[index], images[index]),
+                separatorBuilder: (BuildContext context, int index) => const Divider(
                       height: 1,
                       color: bright_gray,
                     ),
@@ -79,7 +77,7 @@ class _SearchState extends State<Search> {
             Center(
               child: CupertinoButton(
                 minSize: 0,
-                padding: EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -119,8 +117,8 @@ class _SearchState extends State<Search> {
                     ),
                   )
                 : Expanded(
-                    child: Container(),
                     flex: 0,
+                    child: Container(),
                   ),
           ],
         ),
@@ -134,20 +132,17 @@ class _SearchState extends State<Search> {
       width: width,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              roundFitWidthImage_Small(width, image),
-              const SizedBox(
-                width: 20,
-              ),
-              Text(
-                pillName,
-                style: darkGrayTextStyle(15),
-                softWrap: true,
-              )
-            ]),
+        child: Row(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.center, children: [
+          roundFitWidthImage_Small(width, image),
+          const SizedBox(
+            width: 20,
+          ),
+          Text(
+            pillName,
+            style: darkGrayTextStyle(15),
+            softWrap: true,
+          )
+        ]),
       ),
     );
   }

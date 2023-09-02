@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 enum LoginPlatform {
-  kakao,  // 로그인 
-  none,   // 로그아웃
+  kakao, // 로그인
+  none, // 로그아웃
 }
 
 class KakaoLogin extends StatefulWidget {
@@ -40,17 +40,15 @@ class _KakaoLoginState extends State<KakaoLogin> {
       setState(() {
         _loginPlatform = LoginPlatform.kakao;
         // 메인 화면으로 이동
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (BuildContext context) => MyHomePage_after(),
-          )
-        );
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => const MyHomePage_after(),
+        ));
       });
     } catch (error) {
       print('카카오톡으로 로그인 실패 $error');
     }
   }
-  
+
   // 로그아웃 사용 시 사용할 것
   void signOut() async {
     switch (_loginPlatform) {
@@ -90,15 +88,12 @@ class _KakaoLoginState extends State<KakaoLogin> {
 
   Widget _loginButton(VoidCallback onTap) {
     return CupertinoButton(
-      child: Container(
-        width: 240,
-        height: 36,
-        child: Image.asset(
-          'assets/images/kakao_login_large_wide.png'
-        ),
-      ), 
-      onPressed: onTap
-    );
+        onPressed: onTap,
+        child: Container(
+          width: 240,
+          height: 36,
+          child: Image.asset('assets/images/kakao_login_large_wide.png'),
+        ));
   }
 
   // 로그아웃 사용 시 사용할 것

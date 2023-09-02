@@ -34,55 +34,51 @@ class _ImagePickerWidgetMPState extends State<ImagePickerWidgetMP> {
 
   Widget _buildPhotoArea() {
     return _image != null
-      ? CupertinoButton(
-        onPressed: () {
-          getImage(ImageSource.gallery);
-        },
-        child: Container(
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle
-          ),
-          child: Image.file(File(_image!.path)), //가져온 이미지를 화면에 띄워주는 코드
-        ),
-      )
-      : CupertinoButton(
-        onPressed: () {
-          getImage(ImageSource.gallery);
-        },
-        child: Container(
-          color: white,
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-          child: Stack(
-            children: [
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 0,
-                      blurRadius: 5.0,
-                      offset: Offset(0, 10), // changes position of shadow
-                    ),
-                  ],
-                  color: white
-                ),
+        ? CupertinoButton(
+            onPressed: () {
+              getImage(ImageSource.gallery);
+            },
+            child: Container(
+              width: 80,
+              height: 80,
+              decoration: const BoxDecoration(shape: BoxShape.circle),
+              child: Image.file(File(_image!.path)), //가져온 이미지를 화면에 띄워주는 코드
+            ),
+          )
+        : CupertinoButton(
+            onPressed: () {
+              getImage(ImageSource.gallery);
+            },
+            child: Container(
+              color: white,
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Stack(
+                children: [
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 0,
+                            blurRadius: 5.0,
+                            offset: const Offset(0, 10), // changes position of shadow
+                          ),
+                        ],
+                        color: white),
+                  ),
+                  Container(
+                      margin: const EdgeInsets.fromLTRB(26, 26, 26, 26),
+                      child: const Icon(
+                        CupertinoIcons.photo_on_rectangle,
+                        size: 28,
+                        color: dark_gray,
+                      ))
+                ],
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(26, 26, 26, 26),
-                child: Icon(
-                  CupertinoIcons.photo_on_rectangle,
-                  size: 28,
-                  color: dark_gray,
-                )
-              )
-            ],
-          ),
-        ),
-      );
+            ),
+          );
   }
 }

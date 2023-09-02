@@ -14,30 +14,8 @@ class MedicationInfo extends StatefulWidget {
 }
 
 class _MedicationInfoState extends State<MedicationInfo> {
-  List<String> lunch = [
-    "아침",
-    "점심",
-    "아침",
-    "점심",
-    "아침",
-    "저녁",
-    "아침",
-    "점심",
-    "아침",
-    "점심"
-  ];
-  List<String> after = [
-    "식후",
-    "식후",
-    "식전",
-    "식후",
-    "식전",
-    "식후",
-    "식후",
-    "식후",
-    "식전",
-    "식후"
-  ];
+  List<String> lunch = ["아침", "점심", "아침", "점심", "아침", "저녁", "아침", "점심", "아침", "점심"];
+  List<String> after = ["식후", "식후", "식전", "식후", "식전", "식후", "식후", "식후", "식전", "식후"];
   List<String> itemName = [
     "타이레놀6시간이알서방정",
     "타이레놀7시간이알서방정",
@@ -73,10 +51,12 @@ class _MedicationInfoState extends State<MedicationInfo> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          defaultHeader("복약 정보 조회하기", context,
+          defaultHeader(
+            "복약 정보 조회하기",
+            context,
             CupertinoButton(
               minSize: 0,
-              padding: EdgeInsets.all(0),
+              padding: const EdgeInsets.all(0),
               onPressed: () {
                 _showActionSheet(context);
               },
@@ -92,16 +72,14 @@ class _MedicationInfoState extends State<MedicationInfo> {
                 shrinkWrap: true,
                 itemCount: lunch.length,
                 itemBuilder: (BuildContext context, int index) =>
-                    pillShortInfoBox(images[index], lunch[index], after[index],
-                        itemName[index], cnt[index])),
+                    pillShortInfoBox(images[index], lunch[index], after[index], itemName[index], cnt[index])),
           ),
         ],
       ),
     );
   }
 
-  CupertinoButton pillShortInfoBox(
-      String image, String lunch, String after, String itemName, int cnt) {
+  CupertinoButton pillShortInfoBox(String image, String lunch, String after, String itemName, int cnt) {
     return CupertinoButton(
       onPressed: () => {
         //Todo: Navigate to pillDetail
@@ -133,9 +111,17 @@ class _MedicationInfoState extends State<MedicationInfo> {
               const SizedBox(height: 5),
               Row(
                 children: [
-                  Text(itemName, style: darkGrayTextStyle(15), softWrap: true,),
+                  Text(
+                    itemName,
+                    style: darkGrayTextStyle(15),
+                    softWrap: true,
+                  ),
                   const SizedBox(width: 15),
-                  Text( "${cnt}정", style: darkGrayTextStyle(15), softWrap: true,),
+                  Text(
+                    "$cnt정",
+                    style: darkGrayTextStyle(15),
+                    softWrap: true,
+                  ),
                 ],
               )
             ],
@@ -167,9 +153,7 @@ class _MedicationInfoState extends State<MedicationInfo> {
           CupertinoActionSheetAction(
             isDestructiveAction: true,
             onPressed: () {
-              Navigator.push(
-                  context,
-                  CupertinoPageRoute(builder: (context) => MedicationInfoDelete()));
+              Navigator.push(context, CupertinoPageRoute(builder: (context) => const MedicationInfoDelete()));
             },
             child: const Text('복약 정보 삭제하기', style: defaultactionSheetTextStyle),
           ),
@@ -183,5 +167,4 @@ class _MedicationInfoState extends State<MedicationInfo> {
       ),
     );
   }
-  
 }

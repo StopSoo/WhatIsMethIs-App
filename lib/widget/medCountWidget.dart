@@ -1,5 +1,4 @@
 // 알약 개수 체크 위젯
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
@@ -51,42 +50,26 @@ class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
         color: CupertinoColors.systemBackground.resolveFrom(context),
         child: SafeArea(
           top: false,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 6,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CupertinoButton(
-                      child: Text(
-                        '취소',
-                        style: TextStyle(
-                          color: Colors.red
-                        )
-                      ),
-                      onPressed: (){
-                        Navigator.pop(context);
-                      },
-                    ),
-                    CupertinoButton(
-                      child: Text(
-                        '완료'
-                      ),
-                      onPressed: (){
-                        Navigator.pop(context);
-                      },
-                    )
-                  ]
+          child: Column(children: [
+            Expanded(
+              flex: 6,
+              child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                CupertinoButton(
+                  child: const Text('취소', style: TextStyle(color: Colors.red)),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-              ),
-              Expanded(
-                flex: 20,
-                child: child
-              ),
-            ]
-          ),
+                CupertinoButton(
+                  child: const Text('완료'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ]),
+            ),
+            Expanded(flex: 20, child: child),
+          ]),
         ),
       ),
     );
@@ -102,44 +85,42 @@ class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           CupertinoButton(
-            minSize: 0.0,
-            padding: EdgeInsets.fromLTRB(13, 9, 8, 9),
-            color: bright_gray,
-            onPressed: () => _showDialog(
-              CupertinoPicker(
-                magnification: 1.22,
-                squeeze: 1.2,
-                useMagnifier: true,
-                itemExtent: _kItemExtent,
-                scrollController: FixedExtentScrollController(
-                  initialItem: _selectedCount,
-                ),
-                onSelectedItemChanged: (int selectedItem) {
-                  setState(() {
-                    _selectedCount = selectedItem;
-                  });
-                },
-                children:
-                    List<Widget>.generate(_medCounts.length, (int index) {
-                  return Center(child: Text(_medCounts[index]));
-                }),
-              ),
-            ),
-            child: Row(
-              children: [
-                Text(
-                  _medCounts[_selectedCount],
-                  style: const TextStyle(fontSize: 15.0, color: dark_gray),
-                ),
-                SizedBox(width: 6),
-                Icon(
-                  CupertinoIcons.chevron_down,
-                  size: 15,
-                  color: black,
-                ),
-              ],
-            )
-          ),
+              minSize: 0.0,
+              padding: const EdgeInsets.fromLTRB(13, 9, 8, 9),
+              color: bright_gray,
+              onPressed: () => _showDialog(
+                    CupertinoPicker(
+                      magnification: 1.22,
+                      squeeze: 1.2,
+                      useMagnifier: true,
+                      itemExtent: _kItemExtent,
+                      scrollController: FixedExtentScrollController(
+                        initialItem: _selectedCount,
+                      ),
+                      onSelectedItemChanged: (int selectedItem) {
+                        setState(() {
+                          _selectedCount = selectedItem;
+                        });
+                      },
+                      children: List<Widget>.generate(_medCounts.length, (int index) {
+                        return Center(child: Text(_medCounts[index]));
+                      }),
+                    ),
+                  ),
+              child: Row(
+                children: [
+                  Text(
+                    _medCounts[_selectedCount],
+                    style: const TextStyle(fontSize: 15.0, color: dark_gray),
+                  ),
+                  const SizedBox(width: 6),
+                  const Icon(
+                    CupertinoIcons.chevron_down,
+                    size: 15,
+                    color: black,
+                  ),
+                ],
+              )),
         ],
       ),
     );

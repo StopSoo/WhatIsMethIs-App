@@ -1,6 +1,6 @@
 import 'medicine.dart';
 
-class Medication{
+class Medication {
   Medicine? medicine;
   String? medicineName;
   String? medicineImage;
@@ -24,7 +24,6 @@ class Medication{
     this.takeBeforeAfter,
     this.takeCycle,
     this.notificationTime,
-    this.description
+    this.description,
   );
-  
 }

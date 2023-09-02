@@ -19,7 +19,7 @@ class DatePickerApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('ko', 'KO'),
+        Locale('ko', 'KO'),
       ],
       theme: CupertinoThemeData(brightness: Brightness.light),
       home: DatePickerExample(),
@@ -53,29 +53,22 @@ class _DatePickerExampleState extends State<DatePickerExample> {
             child: Column(children: [
               Expanded(
                 flex: 6,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CupertinoButton(
-                      child: Text('취소', style: TextStyle(color: Colors.red)),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    CupertinoButton(
-                      child: Text('완료'),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    )
-                  ]
-                ),
+                child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  CupertinoButton(
+                    child: const Text('취소', style: TextStyle(color: Colors.red)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  CupertinoButton(
+                    child: const Text('완료'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ]),
               ),
-              Expanded(
-                flex: 20, 
-                child: child
-              ),
+              Expanded(flex: 20, child: child),
             ])),
       ),
     );
@@ -83,12 +76,12 @@ class _DatePickerExampleState extends State<DatePickerExample> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: 330,
         height: 50,
         child: CupertinoPageScaffold(
           child: DefaultTextStyle(
-            style: TextStyle(
+            style: const TextStyle(
               color: white,
               fontSize: 15.0,
             ),
@@ -112,8 +105,7 @@ class _DatePickerExampleState extends State<DatePickerExample> {
                         child: Center(
                           child: Text(
                             dateFormat.format(time),
-                            style: const TextStyle(
-                                fontSize: 15.0, color: dark_gray),
+                            style: const TextStyle(fontSize: 15.0, color: dark_gray),
                           ),
                         ),
                       ),
@@ -123,8 +115,7 @@ class _DatePickerExampleState extends State<DatePickerExample> {
               ),
             ),
           ),
-        )
-      );
+        ));
   }
 }
 
@@ -136,16 +127,12 @@ class _DatePickerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Container(
-        decoration: BoxDecoration(
-          color: bright_gray,
-          borderRadius: BorderRadius.circular(12)
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: children,
-        ),
-      )
-    );
+        child: Container(
+      decoration: BoxDecoration(color: bright_gray, borderRadius: BorderRadius.circular(12)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: children,
+      ),
+    ));
   }
 }

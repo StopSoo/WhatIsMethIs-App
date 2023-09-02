@@ -27,8 +27,7 @@ class MedTimeBeAfControlWidget extends StatefulWidget {
   const MedTimeBeAfControlWidget({super.key});
 
   @override
-  State<MedTimeBeAfControlWidget> createState() =>
-      _MedTimeBeAfControlWidgetState();
+  State<MedTimeBeAfControlWidget> createState() => _MedTimeBeAfControlWidgetState();
 }
 
 class _MedTimeBeAfControlWidgetState extends State<MedTimeBeAfControlWidget> {
@@ -49,23 +48,17 @@ class _MedTimeBeAfControlWidgetState extends State<MedTimeBeAfControlWidget> {
       },
       children: <Time, Widget>{
         Time.before: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 33),
+          padding: const EdgeInsets.symmetric(horizontal: 33),
           child: Text(
             '식전',
-            style: TextStyle(
-              color: _selectedSegment == Time.before ? white : dark_gray,
-              fontSize: 15
-            ),
+            style: TextStyle(color: _selectedSegment == Time.before ? white : dark_gray, fontSize: 15),
           ),
         ),
         Time.after: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 33),
+          padding: const EdgeInsets.symmetric(horizontal: 33),
           child: Text(
             '식후',
-            style: TextStyle(
-              color: _selectedSegment == Time.after ? white : dark_gray,
-              fontSize: 15
-            ),
+            style: TextStyle(color: _selectedSegment == Time.after ? white : dark_gray, fontSize: 15),
           ),
         ),
       },

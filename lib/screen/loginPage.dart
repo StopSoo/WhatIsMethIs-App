@@ -148,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 15),
                 // 카카오 로그인 버튼
-                KakaoLogin()
+                const KakaoLogin()
                 // 애플 로그인 버튼
               ],
             ),

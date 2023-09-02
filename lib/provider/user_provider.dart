@@ -2,16 +2,16 @@ import 'package:flutter/cupertino.dart';
 
 import '../model/user.dart';
 
-class UserProvider with ChangeNotifier{
-  User _user = User("", "", "", "", "", "", "", "");
+class UserProvider with ChangeNotifier {
+  final User _user = User("", "", "", "", "", "", "", "");
 
-  User getUserData(){
+  User getUserData() {
     return _user;
   }
 
-  void setUserData(User user){
+  void setUserData(User user) {
     _user.name = user.name;
-    _user.age=user.age;
+    _user.age = user.age;
     _user.phoneNumber = user.phoneNumber;
     _user.emergencyContact1 = user.emergencyContact1;
     _user.emergencyContact2 = user.emergencyContact2;

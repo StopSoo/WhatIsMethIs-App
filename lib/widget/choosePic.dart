@@ -14,9 +14,9 @@ class ImagePickerScreen extends StatefulWidget {
 class _ImagePickerScreenState extends State<ImagePickerScreen> {
   final ImagePicker _picker = ImagePicker();
   final List<XFile?> _pickedImages = [];
-  
+
   // 카메라, 갤러리에서 이미지 1개 불러오기
-  // ImageSource.galley , ImageSource.camera 
+  // ImageSource.galley , ImageSource.camera
   void getImage(ImageSource source) async {
     final XFile? image = await _picker.pickImage(source: source);
 
@@ -24,16 +24,14 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
       _pickedImages.add(image);
     });
   }
-  
+
   // 이미지 여러개 불러오기
   void getMultiImage() async {
-    final List<XFile>? images = await _picker.pickMultiImage();
+    final List<XFile> images = await _picker.pickMultiImage();
 
-    if (images != null) {
-      setState(() {
-        _pickedImages.addAll(images);
-      });
-    }
+    setState(() {
+      _pickedImages.addAll(images);
+    });
   }
 
   @override
@@ -53,7 +51,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
       ),
     );
   }
-  
+
   // 화면 상단 버튼
   Widget _imageLoadButtons() {
     return Padding(
@@ -85,7 +83,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
       ),
     );
   }
-  
+
   // 불러온 이미지 gridView
   Widget _gridPhoto() {
     return Expanded(
@@ -94,10 +92,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
               ),
-              children: _pickedImages
-                  .where((element) => element != null)
-                  .map((e) => _gridPhotoItem(e!))
-                  .toList(),
+              children: _pickedImages.where((element) => element != null).map((e) => _gridPhotoItem(e!)).toList(),
             )
           : const SizedBox(),
     );

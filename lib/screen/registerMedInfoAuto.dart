@@ -19,32 +19,31 @@ class RegisterMedPageAuto extends StatefulWidget {
 }
 
 class _RegisterMedPageAutoState extends State<RegisterMedPageAuto> {
-
   @override
   Widget build(BuildContext context) {
     return safeAreaPage(
-    Colors.white,
-    Colors.white,
+      Colors.white,
+      Colors.white,
       GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
+        child: const Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: SingleChildScrollView(
+              child: Column(children: <Widget>[
                 RegisterMed(),
-              ]
-            ),
-          )
-        ),
+              ]),
+            )),
       ),
     );
   }
 }
 
 class RegisterMed extends StatefulWidget {
+  const RegisterMed({super.key});
+
+  @override
   _RegisterMedState createState() => _RegisterMedState();
 }
 
@@ -62,109 +61,94 @@ class _RegisterMedState extends State<RegisterMed> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(color: white),
+      decoration: const BoxDecoration(color: white),
       child: Column(
         children: <Widget>[
-          defaultHeader('복약 정보 등록하기', context, SizedBox(width: 30)),
+          defaultHeader('복약 정보 등록하기', context, const SizedBox(width: 30)),
           // 갤러리에서 사진 선택하는 위젯
-          ImagePickerWidget(),  
+          const ImagePickerWidget(),
           Container(
-            padding: EdgeInsets.fromLTRB(80, 10, 0, 0),
-            child: Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  child: Text('타이레놀8시간이알서방정',
-                      style: TextStyle(
-                        fontSize: 15,
-                      )),
-                ),
-                SizedBox(width: 12),
-                MedCountPickerWidget()
-              ],
-            )
-          ),
+              padding: const EdgeInsets.fromLTRB(80, 10, 0, 0),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: const Text('타이레놀8시간이알서방정',
+                        style: TextStyle(
+                          fontSize: 15,
+                        )),
+                  ),
+                  const SizedBox(width: 12),
+                  const MedCountPickerWidget()
+                ],
+              )),
           // 복용 기간
           Container(
-            padding: EdgeInsets.fromLTRB(45, 27, 0, 0),
-            alignment: Alignment.centerLeft,
-            child: Text('복용 기간',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              )
-            )
-          ),
-          Container(
-            alignment: Alignment.center,
-            child:
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center, 
-                children: [
-                  DatePickerWidget(),
-                  SizedBox(width: 2),
-                  Text(
-                    '~',
-                    style: TextStyle(
-                      fontSize: 12, 
-                      fontWeight: FontWeight.w700
-                    )
-                  ),
-                  SizedBox(width: 2),
-                  DatePickerWidget(),
-                ]
-              ),
-          ),
-          SizedBox(height: 15),
-          // 복약 시간
-          Container(
-              padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
+              padding: const EdgeInsets.fromLTRB(45, 27, 0, 0),
               alignment: Alignment.centerLeft,
-              child: Text('복약 시간',
+              child: const Text('복용 기간',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ))),
-          SizedBox(height: 7),
           Container(
             alignment: Alignment.center,
-            child: MedTimeControlWidget(),
+            child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              DatePickerWidget(),
+              SizedBox(width: 2),
+              Text('~', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+              SizedBox(width: 2),
+              DatePickerWidget(),
+            ]),
           ),
-          SizedBox(height: 7),
+          const SizedBox(height: 15),
+          // 복약 시간
+          Container(
+              padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
+              alignment: Alignment.centerLeft,
+              child: const Text('복약 시간',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ))),
+          const SizedBox(height: 7),
           Container(
             alignment: Alignment.center,
-            child: MedTimeBeAfControlWidget(),
+            child: const MedTimeControlWidget(),
           ),
-          SizedBox(
+          const SizedBox(height: 7),
+          Container(
+            alignment: Alignment.center,
+            child: const MedTimeBeAfControlWidget(),
+          ),
+          const SizedBox(
             height: 15,
           ),
           // 복약 주기
           Container(
-              padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
+              padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
               alignment: Alignment.centerLeft,
-              child: Text('복약 주기',
+              child: const Text('복약 주기',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ))),
-          SizedBox(height: 10),
-          MedCyclePickerWidget(),
-          SizedBox(
+          const SizedBox(height: 10),
+          const MedCyclePickerWidget(),
+          const SizedBox(
             height: 10,
           ),
           // 복약 알림
           Row(
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(45, 0, 10, 0),
-                alignment: Alignment.centerLeft,
-                child: Text('복약 알림',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  )
-                )
-              ),
+                  padding: const EdgeInsets.fromLTRB(45, 0, 10, 0),
+                  alignment: Alignment.centerLeft,
+                  child: const Text('복약 알림',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ))),
               CupertinoSwitch(
                 value: _isChecked,
                 activeColor: CupertinoColors.activeGreen,
@@ -176,45 +160,38 @@ class _RegisterMedState extends State<RegisterMed> {
               )
             ],
           ),
-          SizedBox(height: 8),
-          DatePickerExample(),
-          SizedBox(
+          const SizedBox(height: 8),
+          const DatePickerExample(),
+          const SizedBox(
             height: 13,
           ),
           Container(
-              padding: EdgeInsets.fromLTRB(45, 0, 0, 0),
+              padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
               alignment: Alignment.centerLeft,
-              child: Text('설명',
+              child: const Text('설명',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ))),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Container(
-            padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-            child: Container(
-              padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
-              width: 324,
-              height: 219,
-              decoration: BoxDecoration(
-                color: bright_gray,
-                borderRadius: BorderRadius.circular(12)
-              ),
-              child: TextField(
-                scrollPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                keyboardType: TextInputType.multiline,
-                maxLines: null, // 자동 줄바꿈
-                decoration: const InputDecoration(
-                  hintText: '약에 대한 설명을 입력하세요.',
-                  border: InputBorder.none, // 텍스트 박스 아래 줄 제거
-                  labelStyle: TextStyle(color: dark_gray),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none
-                  )
+              padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+                width: 324,
+                height: 219,
+                decoration: BoxDecoration(color: bright_gray, borderRadius: BorderRadius.circular(12)),
+                child: const TextField(
+                  scrollPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null, // 자동 줄바꿈
+                  decoration: InputDecoration(
+                      hintText: '약에 대한 설명을 입력하세요.',
+                      border: InputBorder.none, // 텍스트 박스 아래 줄 제거
+                      labelStyle: TextStyle(color: dark_gray),
+                      focusedBorder: OutlineInputBorder(borderSide: BorderSide.none)),
                 ),
-              ),
-            )
-          ),
+              )),
         ],
       ),
     );

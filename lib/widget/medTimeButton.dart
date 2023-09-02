@@ -50,32 +50,24 @@ class _MedTimeControlWidgetState extends State<MedTimeControlWidget> {
       },
       children: <Time, Widget>{
         Time.breakfast: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 33),
+          padding: const EdgeInsets.symmetric(horizontal: 33),
           child: Text(
             '아침',
-            style: TextStyle(
-              color: _selectedSegment == Time.breakfast ? white : dark_gray,
-              fontSize: 15
-            ),
+            style: TextStyle(color: _selectedSegment == Time.breakfast ? white : dark_gray, fontSize: 15),
           ),
         ),
         Time.lunch: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 33),
+          padding: const EdgeInsets.symmetric(horizontal: 33),
           child: Text(
             '점심',
-            style: TextStyle(
-              color: _selectedSegment == Time.lunch ? white : dark_gray,
-              fontSize: 15
-            ),          ),
+            style: TextStyle(color: _selectedSegment == Time.lunch ? white : dark_gray, fontSize: 15),
+          ),
         ),
         Time.dinner: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 33),
+          padding: const EdgeInsets.symmetric(horizontal: 33),
           child: Text(
             '저녁',
-            style: TextStyle(
-              color: _selectedSegment == Time.dinner ? white : dark_gray,
-              fontSize: 15
-            ),
+            style: TextStyle(color: _selectedSegment == Time.dinner ? white : dark_gray, fontSize: 15),
           ),
         ),
       },
