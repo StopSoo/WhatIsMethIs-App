@@ -92,38 +92,36 @@ String convertBase64(XFile image) {
   // return base64Image;
 }
 
-Future<void> sendImageToServer(XFile image) async {
-  // 이미지를 Base64로 변환
-  String base64Image = convertBase64(image);
-
-  // dotenv에서 baseUrl fetch
+Future<void> sendImageToServer(XFile _image) async {
+  File image = File(_image.path);
   final baseUrl = dotenv.env['BASE_URL']!;
 
-  // HTTP 헤더 설정
-  Map<String, String> headers = {
-    "Content-type": "application/json",
-  };
+  // url 생성
+  final uri = Uri.parse("$baseUrl/app/medicines/identify");
 
-  // request body
-  String body = json.encode({
-    "files": [base64Image]
-  });
+  var client = http.Client();
+  try {
+    // MultipartFile 생성
+    final file = await http.MultipartFile.fromPath("files", image.path);
 
-  // POST request
-  final response = await http.post(
-    Uri.parse("${baseUrl}/app/medicines/identify"),
-    headers: headers,
-    body: body,
-  );
+    // MultipartRequest 생성
+    final request = http.MultipartRequest('POST', uri);
+    request.files.add(file);
 
-  if (response.statusCode == 200) {
-    // 서버에서의 응답 처리
-    var responseBody = json.decode(response.body);
-    print(responseBody);
-    // 필요한 경우 응답 본문 처리
-  } else {
-    // 에러 처리
-    print("Request failed with status: ${response.statusCode}.");
-    print(response.body);
+    // 서버로 요청 보내기
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      // 성공적으로 요청이 완료됨
+      final responseBody = await http.Response.fromStream(response);
+      print(responseBody.body);
+    } else {
+      // 요청 실패
+      print("Request failed with status: ${response.statusCode}.");
+    }
+  } catch (e) {
+    Exception(e);
+  } finally {
+    client.close();
   }
 }
