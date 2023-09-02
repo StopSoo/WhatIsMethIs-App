@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:http/http.dart' as http;
 
 class ImagePickerWidget extends StatefulWidget {
   const ImagePickerWidget({Key? key}) : super(key: key);
@@ -24,7 +26,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
     if (pickedFile != null) {
       setState(() {
         _image = XFile(pickedFile.path);
-        convertBase64(_image!);
+        sendImageToServer(_image!);
       });
     }
   }
@@ -88,4 +90,40 @@ String convertBase64(XFile image) {
   // List<int> imageBytes = File(image.path).readAsBytesSync();
   // String base64Image = base64Encode(imageBytes);
   // return base64Image;
+}
+
+Future<void> sendImageToServer(XFile image) async {
+  // 이미지를 Base64로 변환
+  String base64Image = convertBase64(image);
+
+  // dotenv에서 baseUrl fetch
+  final baseUrl = dotenv.env['BASE_URL']!;
+
+  // HTTP 헤더 설정
+  Map<String, String> headers = {
+    "Content-type": "application/json",
+  };
+
+  // request body
+  String body = json.encode({
+    "files": [base64Image]
+  });
+
+  // POST request
+  final response = await http.post(
+    Uri.parse("${baseUrl}/app/medicines/identify"),
+    headers: headers,
+    body: body,
+  );
+
+  if (response.statusCode == 200) {
+    // 서버에서의 응답 처리
+    var responseBody = json.decode(response.body);
+    print(responseBody);
+    // 필요한 경우 응답 본문 처리
+  } else {
+    // 에러 처리
+    print("Request failed with status: ${response.statusCode}.");
+    print(response.body);
+  }
 }
