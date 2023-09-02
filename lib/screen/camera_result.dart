@@ -45,7 +45,7 @@ class _CameraResultState extends State<CameraResult> {
       Colors.white,
       Colors.white,
       _medicine.itemSeq == null
-          ? CupertinoActivityIndicator()
+          ? const Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

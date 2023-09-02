@@ -73,29 +73,33 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                       padding: const EdgeInsets.fromLTRB(20, 6, 0, 0),
                       width: 168,
                       height: 40,
-                      decoration: BoxDecoration(color: bright_gray, borderRadius: BorderRadius.circular(12)),
+                      decoration: BoxDecoration(
+                          color: bright_gray,
+                          borderRadius: BorderRadius.circular(12)),
                       child: const TextField(
                         keyboardType: TextInputType.multiline,
                         decoration: InputDecoration(
                             hintText: '약 이름',
-                            hintStyle: TextStyle(color: dark_gray, fontSize: 16),
+                            hintStyle:
+                                TextStyle(color: dark_gray, fontSize: 16),
                             border: InputBorder.none, // 텍스트 박스 아래 줄 제거
-                            focusedBorder: OutlineInputBorder(borderSide: BorderSide.none)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
                       ),
+                    )),
+
+                    const SizedBox(width: 12),
+                    // 약 개수 선택 위젯
+                    MedCountPickerWidget(
+                      selectedCount: 0,
                     )
-                  ),
-                  
-                  SizedBox(width: 12),
-                  // 약 개수 선택 위젯
-                  MedCountPickerWidget(selectedCount: 0,)
-                ],
-              )
-            ),
+                  ],
+                )),
             // 복용 기간
             Container(
-                padding: EdgeInsets.fromLTRB(45, 27, 0, 0),
+                padding: const EdgeInsets.fromLTRB(45, 27, 0, 0),
                 alignment: Alignment.centerLeft,
-                child: Text('복용 기간',
+                child: const Text('복용 기간',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -107,11 +111,11 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                 DatePickerWidget(
                   selectedDate: DateTime.now(),
                 ),
-                SizedBox(width: 2),
-                Text('~',
+                const SizedBox(width: 2),
+                const Text('~',
                     style:
                         TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
-                SizedBox(width: 2),
+                const SizedBox(width: 2),
                 DatePickerWidget(
                   selectedDate: DateTime.now(),
                 ),
@@ -150,7 +154,9 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                       fontWeight: FontWeight.w500,
                     ))),
             const SizedBox(height: 10),
-            const MedCyclePickerWidget(selectedCycle: 0,),
+            MedCyclePickerWidget(
+              selectedCycle: 0,
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -177,7 +183,9 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
               ],
             ),
             const SizedBox(height: 8),
-            const DatePickerExample(time: DateTime.now(),),
+            DatePickerExample(
+              time: DateTime.now(),
+            ),
             const SizedBox(
               height: 13,
             ),
@@ -196,7 +204,9 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                   padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
                   width: 324,
                   height: 219,
-                  decoration: BoxDecoration(color: bright_gray, borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration(
+                      color: bright_gray,
+                      borderRadius: BorderRadius.circular(12)),
                   child: const TextField(
                     scrollPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     keyboardType: TextInputType.multiline,
@@ -205,7 +215,8 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                         hintText: '약에 대한 설명을 입력하세요.',
                         border: InputBorder.none, // 텍스트 박스 아래 줄 제거
                         labelStyle: TextStyle(color: dark_gray),
-                        focusedBorder: OutlineInputBorder(borderSide: BorderSide.none)),
+                        focusedBorder:
+                            OutlineInputBorder(borderSide: BorderSide.none)),
                   ),
                 )),
             // 여유 공간

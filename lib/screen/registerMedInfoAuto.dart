@@ -12,7 +12,8 @@ import 'package:flutter_application/widget/medTimeButton.dart';
 import 'package:flutter_application/widget/imagePickerWidgetInMed.dart';
 
 class RegisterMedPageAuto extends StatefulWidget {
-  RegisterMedPageAuto({super.key, required this.medicineName, required this.medicineId});
+  RegisterMedPageAuto(
+      {super.key, required this.medicineName, required this.medicineId});
 
   String medicineName;
   String medicineId;
@@ -80,7 +81,7 @@ class _RegisterMedState extends State<RegisterMed> {
                           fontSize: 15,
                         )),
                   ),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   MedCountPickerWidget(
                     selectedCount: 0,
                   )
@@ -97,12 +98,17 @@ class _RegisterMedState extends State<RegisterMed> {
                   ))),
           Container(
             alignment: Alignment.center,
-            child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              DatePickerWidget(),
-              SizedBox(width: 2),
-              Text('~', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
-              SizedBox(width: 2),
-              DatePickerWidget(),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              DatePickerWidget(
+                selectedDate: DateTime.now(),
+              ),
+              const SizedBox(width: 2),
+              const Text('~',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+              const SizedBox(width: 2),
+              DatePickerWidget(
+                selectedDate: DateTime.now(),
+              ),
             ]),
           ),
           const SizedBox(height: 15),
@@ -137,9 +143,11 @@ class _RegisterMedState extends State<RegisterMed> {
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ))),
-          SizedBox(height: 10),
-          MedCyclePickerWidget(selectedCycle: 0,),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
+          MedCyclePickerWidget(
+            selectedCycle: 0,
+          ),
+          const SizedBox(height: 10),
           // 복약 알림
           Row(
             children: [
@@ -162,9 +170,11 @@ class _RegisterMedState extends State<RegisterMed> {
               )
             ],
           ),
-          SizedBox(height: 8),
-          DatePickerExample(time: DateTime.now(),),
-          SizedBox(
+          const SizedBox(height: 8),
+          DatePickerExample(
+            time: DateTime.now(),
+          ),
+          const SizedBox(
             height: 13,
           ),
           Container(
@@ -182,7 +192,9 @@ class _RegisterMedState extends State<RegisterMed> {
                 padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
                 width: 324,
                 height: 219,
-                decoration: BoxDecoration(color: bright_gray, borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(
+                    color: bright_gray,
+                    borderRadius: BorderRadius.circular(12)),
                 child: const TextField(
                   scrollPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   keyboardType: TextInputType.multiline,
@@ -191,7 +203,8 @@ class _RegisterMedState extends State<RegisterMed> {
                       hintText: '약에 대한 설명을 입력하세요.',
                       border: InputBorder.none, // 텍스트 박스 아래 줄 제거
                       labelStyle: TextStyle(color: dark_gray),
-                      focusedBorder: OutlineInputBorder(borderSide: BorderSide.none)),
+                      focusedBorder:
+                          OutlineInputBorder(borderSide: BorderSide.none)),
                 ),
               )),
         ],

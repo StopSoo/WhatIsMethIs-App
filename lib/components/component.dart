@@ -109,6 +109,5 @@ Padding pillDetailBox(String title, String? content) {
           fit: BoxFit.fitWidth,
         ) : Center(child: Text("등록된 약물 사진이 없어요😥", style: darkGrayTextStyle(15.0),))
       ),
-    ),
-  );
+    );
 }
