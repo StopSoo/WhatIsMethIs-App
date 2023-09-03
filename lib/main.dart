@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/screen/mainScreenAfterLogin.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-import 'screen/medication_info.dart';
 
 void main() async {
   await dotenv.load();
@@ -18,19 +17,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
+    return CupertinoApp(
       // datePickerWidget 언어 한글로 변경
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale('ko', 'KO'),
       ],
       // debug 로고 제거
       debugShowCheckedModeBanner: false,
-      theme: CupertinoThemeData(
+      theme: const CupertinoThemeData(
         textTheme: CupertinoTextThemeData(
           textStyle: TextStyle(
             fontFamily: 'Inter',
@@ -38,8 +37,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: MedicationInfo(),
-
+      home: HomeScreen(),
     );
   }
 }
