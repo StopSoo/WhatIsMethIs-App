@@ -220,7 +220,7 @@ class _MedicationInfoDeleteState extends State<MedicationInfoDelete> {
               Row(
                 children: [
                   Text(
-                    itemName,
+                    itemName.length > 10 ? '${itemName.substring(0, 10)}...' : itemName, // Row 오버플로우 방지
                     style: darkGrayTextStyle(15),
                     softWrap: true,
                   ),

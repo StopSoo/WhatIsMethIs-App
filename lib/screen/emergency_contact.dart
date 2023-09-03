@@ -208,7 +208,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: gray,
+            backgroundColor: bright_gray,
             radius: 38,
             child: image == null
                 ? const CircleAvatar(
@@ -278,7 +278,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: gray,
+          color: bright_gray,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -328,6 +328,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
             Expanded(
               child: Center(
                 child: CupertinoSearchTextField(
+                  backgroundColor: bright_gray,
                   placeholder: "유저 아이디를 검색하세요",
                   focusNode: focusNode,
                   controller: controller,
