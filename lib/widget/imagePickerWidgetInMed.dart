@@ -100,7 +100,7 @@ Future<void> sendImageToServer(XFile image_) async {
   final baseUrl = dotenv.env['BASE_URL']!;
 
   // url 생성
-  final uri = Uri.parse("$baseUrl/app/medicines/identify");
+  final uri = Uri.parse("$baseUrl/medicines/identify");
 
   var client = http.Client();
   try {
