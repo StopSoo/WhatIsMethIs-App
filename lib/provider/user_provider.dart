@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import '../model/user.dart';
 
 class UserProvider with ChangeNotifier {
-  final User _user = User(1, "", null, "name", "age", "phoneNumber", "loginCode", null, null, null, null, null);
+  final User _user = User(1, "", null, "name", null, "age", "phoneNumber", "loginCode", null, null, null, null, null);
 
   User getUserData() {
     return _user;

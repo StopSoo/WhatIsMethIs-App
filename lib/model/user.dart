@@ -9,6 +9,7 @@ class User {
   String email;
   String? password;
   String name;
+  String? image;
   String age;
   String phoneNumber;
   String loginCode;
@@ -23,6 +24,7 @@ class User {
     this.email,
     this.password,
     this.name,
+    this.image,
     this.age,
     this.phoneNumber,
     this.loginCode,
