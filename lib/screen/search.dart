@@ -191,8 +191,6 @@ class _SearchState extends State<Search> {
           CupertinoPageRoute(
             builder: (context) => NameResult(
               itemSeq: itemSeq,
-              // TODO: 나중에 해결
-              imagePicked: null,
             ),
           ),
         );

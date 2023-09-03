@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/controller/identifyMedicine_controller.dart';
 import 'package:flutter_application/model/medicine.dart';
+import 'package:flutter_application/screen/camera_result.dart';
 import 'package:flutter_application/screen/emergency_contact.dart';
-import 'package:flutter_application/screen/name_result.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tuple/tuple.dart';
@@ -51,9 +51,9 @@ class _FindMedWidgetState extends State<FindMedWidget> {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => NameResult(
+                          builder: (context) => CameraResult(
                             itemSeq: medicineRes.itemSeq!,
-                            imagePicked: imageRes,
+                            image: imageRes,
                           ),
                         ),
                       );
@@ -145,11 +145,11 @@ class _FindMedWidgetState extends State<FindMedWidget> {
                 CupertinoButton(
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => EmergencyContact(),
-                        ),
-                      );
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => EmergencyContact(),
+                      ),
+                    );
                   },
                   child: Stack(
                     children: [

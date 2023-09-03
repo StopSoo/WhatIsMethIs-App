@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/controller/medicine_controller.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../components/component.dart';
 import '../model/medicine.dart';
@@ -10,8 +9,7 @@ import 'registerMedInfoAuto.dart';
 
 class NameResult extends StatefulWidget {
   final String itemSeq;
-  final XFile? imagePicked;
-  const NameResult({Key? key, required this.itemSeq, required this.imagePicked}) : super(key: key);
+  const NameResult({Key? key, required this.itemSeq}) : super(key: key);
 
   @override
   _NameResultState createState() => _NameResultState();
@@ -20,7 +18,6 @@ class NameResult extends StatefulWidget {
 class _NameResultState extends State<NameResult> {
   final MedicineController _medicineController = MedicineController();
   late Medicine _medicine = Medicine(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-  late XFile? imagePicked;
 
   @override
   void initState() {
@@ -30,10 +27,8 @@ class _NameResultState extends State<NameResult> {
 
   Future<void> _loadMedicineInfo() async {
     Medicine medicine = await _medicineController.fetchMedicineInfo(widget.itemSeq);
-    XFile? imagePicked = widget.imagePicked;
     setState(() {
       _medicine = medicine;
-      this.imagePicked = imagePicked;
     });
   }
 
@@ -68,10 +63,6 @@ class _NameResultState extends State<NameResult> {
                         size: 28,
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: roundFitWidthImageWithFile(width, imagePicked),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
