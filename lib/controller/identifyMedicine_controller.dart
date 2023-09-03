@@ -8,6 +8,8 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:tuple/tuple.dart';
 
 // make function to convert image to base64
 String convertBase64(XFile image) {
@@ -80,14 +82,37 @@ Future<File> compressImage(File file) async {
   return resultImage;
 }
 
-Future<Medicine?> getImageFromCamera() async {
+Future<Tuple2<XFile?, Medicine?>> getImageFromCamera(double width) async {
   final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
 
   if (pickedFile != null) {
-    Medicine? medicine = await sendImageToServer(pickedFile);
-    return medicine;
+    final XFile? croppedFile = await _cropImage(pickedFile, width);
+    if (croppedFile != null) {
+      Medicine? medicine = await sendImageToServer(croppedFile);
+      return Tuple2(croppedFile, medicine);
+    } else {
+      print('이미지를 자르지 않았습니다.');
+      return Tuple2(null, null);
+    }
   } else {
     print('사진을 선택하지 않았습니다.');
+    return Tuple2(null, null);
+  }
+}
+
+Future<XFile?> _cropImage(XFile imageFile, double width) async {
+  CroppedFile? croppedFile = await ImageCropper().cropImage(
+    sourcePath: imageFile.path,
+    aspectRatio: CropAspectRatio(
+      ratioX: width,
+      ratioY: width * 0.6,
+    ),
+  );
+
+  if (croppedFile == null) {
     return null;
   }
+  XFile? resFile = XFile(croppedFile.path);
+
+  return resFile;
 }
