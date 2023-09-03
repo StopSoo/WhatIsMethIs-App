@@ -80,7 +80,7 @@ Future<File> compressImage(File file) async {
   return resultImage;
 }
 
-Future<Medicine?> getImageFromCamera() async {
+Future<Medicine?> getImageFromCamera(double width) async {
   final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
 
   if (pickedFile != null) {

@@ -25,6 +25,7 @@ class _FindMedWidgetState extends State<FindMedWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return SizedBox(
       width: double.infinity,
       height: 400,
@@ -38,7 +39,7 @@ class _FindMedWidgetState extends State<FindMedWidget> {
                 CupertinoButton(
                   onPressed: () async {
                     // TODO: 알약 찾기 카메라 페이지
-                    Medicine? medicineRes = await getImageFromCamera();
+                    Medicine? medicineRes = await getImageFromCamera(width);
 
                     if (medicineRes != null) {
                       // ignore: use_build_context_synchronously
