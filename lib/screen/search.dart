@@ -44,10 +44,9 @@ class _SearchState extends State<Search> {
     setState(() {
       _isFirstLoadRunning = true;
     });
-    print("page: ${_page}");
+    print("page: $_page");
 
-    List<Medicine> medInfos =
-        await _medicineController.fetchAllMedicineListInfo(_page);
+    List<Medicine> medInfos = await _medicineController.fetchAllMedicineListInfo(_page);
     setState(() {
       medcineList.addAll(medInfos);
       _isFirstLoadRunning = false;
@@ -55,18 +54,14 @@ class _SearchState extends State<Search> {
   }
 
   Future<void> _loadMoreMedicineList() async {
-    if (_hasNextPage &&
-        !_isFirstLoadRunning &&
-        !_isLoadMoreRunning &&
-        _scrollController.position.extentAfter < 100) {
+    if (_hasNextPage && !_isFirstLoadRunning && !_isLoadMoreRunning && _scrollController.position.extentAfter < 100) {
       setState(() {
         _isLoadMoreRunning = true;
         _page += 1;
       });
 
-      print("page: ${_page}");
-      List<Medicine> medInfos =
-          await _medicineController.fetchAllMedicineListInfo(_page);
+      print("page: $_page");
+      List<Medicine> medInfos = await _medicineController.fetchAllMedicineListInfo(_page);
 
       if (medInfos.isNotEmpty) {
         setState(() {
@@ -84,9 +79,8 @@ class _SearchState extends State<Search> {
     }
   }
 
-  Future<void> _loadMedicineListWithName(String _itemName) async {
-    List<Medicine> medInfos =
-        await _medicineController.fetchMedicineListInfoWithName(_itemName);
+  Future<void> _loadMedicineListWithName(String itemName) async {
+    List<Medicine> medInfos = await _medicineController.fetchMedicineListInfoWithName(itemName);
     setState(() {
       medcineList = [];
       medcineList.addAll(medInfos);
@@ -106,13 +100,9 @@ class _SearchState extends State<Search> {
             child: ListView.separated(
                 controller: _scrollController,
                 shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) => pillInfoBox(
-                    width,
-                    medcineList[index].itemSeq!,
-                    medcineList[index].itemName,
-                    medcineList[index].itemImage),
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(
+                itemBuilder: (BuildContext context, int index) =>
+                    pillInfoBox(width, medcineList[index].itemSeq!, medcineList[index].itemName, medcineList[index].itemImage),
+                separatorBuilder: (BuildContext context, int index) => const Divider(
                       height: 1,
                       color: bright_gray,
                     ),
@@ -193,38 +183,38 @@ class _SearchState extends State<Search> {
     );
   }
 
-  CupertinoButton pillInfoBox(
-      double width, String itemSeq, String? pillName, String? image) {
+  CupertinoButton pillInfoBox(double width, String itemSeq, String? pillName, String? image) {
     return CupertinoButton(
       onPressed: () {
         Navigator.push(
-            context,
-            CupertinoPageRoute(
-                builder: (context) => NameResult(
-                      itemSeq: itemSeq,
-                    )));
+          context,
+          CupertinoPageRoute(
+            builder: (context) => NameResult(
+              itemSeq: itemSeq,
+              // TODO: 나중에 해결
+              imagePicked: null,
+            ),
+          ),
+        );
       },
       child: Container(
         color: Colors.white,
         width: width,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                roundFitWidthImage_Small(width, image),
-                const SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: Text(
-                    pillName ?? '',
-                    style: darkGrayTextStyle(15),
-                    softWrap: true,
-                  ),
-                )
-              ]),
+          child: Row(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.center, children: [
+            roundFitWidthImage_Small(width, image),
+            const SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: Text(
+                pillName ?? '',
+                style: darkGrayTextStyle(15),
+                softWrap: true,
+              ),
+            )
+          ]),
         ),
       ),
     );

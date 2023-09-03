@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/controller/medicine_controller.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../components/component.dart';
 import '../model/medicine.dart';
@@ -9,7 +10,8 @@ import 'registerMedInfoAuto.dart';
 
 class NameResult extends StatefulWidget {
   final String itemSeq;
-  const NameResult({Key? key, required this.itemSeq}) : super(key: key);
+  final XFile? imagePicked;
+  const NameResult({Key? key, required this.itemSeq, required this.imagePicked}) : super(key: key);
 
   @override
   _NameResultState createState() => _NameResultState();
@@ -17,8 +19,8 @@ class NameResult extends StatefulWidget {
 
 class _NameResultState extends State<NameResult> {
   final MedicineController _medicineController = MedicineController();
-  late Medicine _medicine = Medicine(null, null, null, null, null, null, null,
-      null, null, null, null, null, null, null);
+  late Medicine _medicine = Medicine(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+  late XFile? imagePicked;
 
   @override
   void initState() {
@@ -27,13 +29,14 @@ class _NameResultState extends State<NameResult> {
   }
 
   Future<void> _loadMedicineInfo() async {
-    Medicine medicine =
-        await _medicineController.fetchMedicineInfo(widget.itemSeq);
+    Medicine medicine = await _medicineController.fetchMedicineInfo(widget.itemSeq);
+    XFile? imagePicked = widget.imagePicked;
     setState(() {
       _medicine = medicine;
+      this.imagePicked = imagePicked;
     });
   }
-  
+
   //TODO: 일정 시간 로딩 후 식별 결과 없음 표시
   @override
   Widget build(BuildContext context) {
@@ -56,11 +59,8 @@ class _NameResultState extends State<NameResult> {
                       padding: EdgeInsets.all(0),
                       onPressed: () {
                         //복약정보 등록 확인(?) 팝업
-                        _showAlert(
-                            "'${_medicine.itemName}'을(를) 복약 정보에 등록하시겠습니까?",
-                            "'${_medicine.itemName}'을(를) 복약 정보에 등록하기 위해 복약 정보 등록페이지로 이동합니다.",
-                            _medicine.itemName!,
-                            _medicine.itemSeq!);
+                        _showAlert("'${_medicine.itemName}'을(를) 복약 정보에 등록하시겠습니까?", "'${_medicine.itemName}'을(를) 복약 정보에 등록하기 위해 복약 정보 등록페이지로 이동합니다.",
+                            _medicine.itemName!, _medicine.itemSeq!);
                       },
                       child: const Icon(
                         CupertinoIcons.rectangle_stack_badge_plus,
@@ -68,6 +68,10 @@ class _NameResultState extends State<NameResult> {
                         size: 28,
                       ),
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: roundFitWidthImageWithFile(width, imagePicked),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -108,9 +112,10 @@ class _NameResultState extends State<NameResult> {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) =>
-                                RegisterMedPageAuto(medicineName: medicineName, medicineId: medicineId,)));
-
+                            builder: (context) => RegisterMedPageAuto(
+                                  medicineName: medicineName,
+                                  medicineId: medicineId,
+                                )));
                   })
             ],
           );

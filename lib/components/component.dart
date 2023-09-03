@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'textstyle.dart';
 
@@ -67,47 +70,79 @@ Widget defaultHeader(String centerText, BuildContext context, Widget rightWidget
 }
 
 Padding pillDetailBox(String title, String? content) {
-    if(content == null){
-      return Padding(padding: EdgeInsets.zero);
-    }
-    
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: blackTextStyle(15),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            content,
-            style: darkGrayTextStyle(15),
-          )
-        ],
-      ),
-    );
+  if (content == null) {
+    return Padding(padding: EdgeInsets.zero);
   }
 
-  Container roundFitWidthImage(double width, String? image) {
-    return Container(
-      width: width,
-          height: width * (0.5),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(
-            color: main_color_green,
-          )),
-      child: ClipRRect(
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 16.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: blackTextStyle(15),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          content,
+          style: darkGrayTextStyle(15),
+        )
+      ],
+    ),
+  );
+}
+
+Container roundFitWidthImage(double width, String? image) {
+  return Container(
+    width: width,
+    height: width * (0.5),
+    decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        child: image != null?
-        Image.network(
-          image,
-          width: width,
-          height: width * (0.5),
-          fit: BoxFit.fitWidth,
-        ) : Center(child: Text("등록된 약물 사진이 없어요😥", style: darkGrayTextStyle(15.0),))
-      ),
-    );
+        border: Border.all(
+          color: main_color_green,
+        )),
+    child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: image != null
+            ? Image.network(
+                image,
+                width: width,
+                height: width * (0.5),
+                fit: BoxFit.fitWidth,
+              )
+            : Center(
+                child: Text(
+                "등록된 약물 사진이 없어요😥",
+                style: darkGrayTextStyle(15.0),
+              ))),
+  );
+}
+
+Container roundFitWidthImageWithFile(double width, XFile? image) {
+  return Container(
+    width: width,
+    height: width * (0.5),
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(
+          color: main_color_green,
+        )),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(10.0),
+      child: image != null
+          ? Image(
+              image: FileImage(File(image.path)),
+              width: width,
+              height: width * 0.5,
+              fit: BoxFit.fitWidth,
+            )
+          : Center(
+              child: Text(
+                "등록된 약물 사진이 없어요😥",
+                style: darkGrayTextStyle(15.0),
+              ),
+            ),
+    ),
+  );
 }
