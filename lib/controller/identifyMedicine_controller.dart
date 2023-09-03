@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:flutter_application/model/base_response.dart';
+import 'package:flutter_application/model/medicine.dart';
+import 'package:flutter_application/model/medicine_info_list_res.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -19,7 +22,7 @@ String convertBase64(XFile image) {
   // return base64Image;
 }
 
-Future<void> sendImageToServer(XFile image_) async {
+Future<Medicine?> sendImageToServer(XFile image_) async {
   File image = File(image_.path);
   // 이미지 압축
   File compressedImage = await compressImage(image);
@@ -44,13 +47,20 @@ Future<void> sendImageToServer(XFile image_) async {
     if (response.statusCode == 200) {
       // 성공적으로 요청이 완료됨
       final responseBody = await http.Response.fromStream(response);
-      print(responseBody.body);
+      // print(responseBody.body);
+      BaseResponse res = BaseResponse.fromJson(json.decode(responseBody.body));
+      MedicineInfoListRes medicineInfoListRes = MedicineInfoListRes.fromJson(res.result);
+      Medicine medicine = medicineInfoListRes.medicines[0];
+      print(medicine.toJson().toString());
+      return medicine;
     } else {
       // 요청 실패
       print("Request failed with status: ${response.statusCode}.");
+      return null;
     }
   } catch (e) {
     Exception(e);
+    return null;
   } finally {
     client.close();
   }
@@ -70,19 +80,14 @@ Future<File> compressImage(File file) async {
   return resultImage;
 }
 
-Future getImageFromCamera() async {
+Future<Medicine?> getImageFromCamera() async {
   final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
 
   if (pickedFile != null) {
-    sendImageToServer(pickedFile);
+    Medicine? medicine = await sendImageToServer(pickedFile);
+    return medicine;
   } else {
     print('사진을 선택하지 않았습니다.');
+    return null;
   }
-  // setState(() {
-  //   if (pickedFile != null) {
-  //     _image = File(pickedFile.path);
-  //   } else {
-  //     print('사진을 선택하지 않았습니다.');
-  //   }
-  // });
 }

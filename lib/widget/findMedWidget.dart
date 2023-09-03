@@ -2,6 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/controller/identifyMedicine_controller.dart';
+import 'package:flutter_application/model/medicine.dart';
+import 'package:flutter_application/screen/name_result.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class FindMedWidget extends StatefulWidget {
@@ -34,9 +36,19 @@ class _FindMedWidgetState extends State<FindMedWidget> {
             child: Row(
               children: [
                 CupertinoButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // TODO: 알약 찾기 카메라 페이지
-                    getImageFromCamera();
+                    Medicine? medicineRes = await getImageFromCamera();
+
+                    if (medicineRes != null) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => NameResult(itemSeq: medicineRes.itemSeq!),
+                        ),
+                      );
+                    }
                   },
                   minSize: 0,
                   padding: const EdgeInsets.all(0),
