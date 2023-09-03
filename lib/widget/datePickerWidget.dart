@@ -25,13 +25,11 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         Container(
           width: 150,
           height: 40,
-          decoration: BoxDecoration(
-              color: bright_gray, borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(color: bright_gray, borderRadius: BorderRadius.circular(12)),
         ),
         Container(
           padding: EdgeInsets.fromLTRB(19, 9, 0, 0),
-          child: Text(
-              '${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일',
+          child: Text('${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일',
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: dark_gray,
@@ -58,24 +56,20 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         children: [
           Expanded(
             flex: 3,
-            child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CupertinoButton(
-                    child:
-                        const Text('취소', style: TextStyle(color: Colors.red)),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoButton(
-                    child: const Text('완료'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ]),
+            child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              CupertinoButton(
+                child: const Text('취소', style: TextStyle(color: Colors.red)),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              CupertinoButton(
+                child: const Text('완료'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ]),
           ),
           Expanded(
             flex: 15,
