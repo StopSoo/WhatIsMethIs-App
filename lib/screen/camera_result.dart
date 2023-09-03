@@ -11,6 +11,7 @@ import '../controller/medicine_controller.dart';
 import '../model/medicine.dart';
 
 class CameraResult extends StatefulWidget {
+  //TODO: itemSeq(String) -> 이미지(File)로 변경
   String itemSeq;
   CameraResult({Key? key, required this.itemSeq}) : super(key: key);
 
@@ -20,7 +21,7 @@ class CameraResult extends StatefulWidget {
 
 class _CameraResultState extends State<CameraResult> {
   final MedicineController _medicineController = MedicineController();
-  late Medicine _medicine = Medicine(null, null, null, null, null, null, null,
+  Medicine _medicine = Medicine(null, null, null, null, null, null, null,
       null, null, null, null, null, null, null);
 
   @override

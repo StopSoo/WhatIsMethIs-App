@@ -1,9 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application/controller/user_controller.dart';
+import 'package:flutter_application/model/user.dart';
+import 'package:flutter_application/model/emergency_contact_req.dart';
+import 'package:flutter_application/provider/user_provider.dart';
 
 import '../constants/colors.dart';
 import '../components/component.dart';
 import '../components/textstyle.dart';
+
+import 'package:provider/provider.dart';
 
 class EmergencyContact extends StatefulWidget {
   const EmergencyContact({Key? key}) : super(key: key);
@@ -16,11 +22,72 @@ class _EmergencyContactState extends State<EmergencyContact> {
   TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
   bool _deleteBox = false;
+  late int contactCount;
 
-  List<String> images = List.generate(3, (index) => 'assets/images/test_cat.jpg');
-  List<String> names = List.generate(3, (index) => 'Name ${index + 1}');
-  List<String> ids = List.generate(3, (index) => 'Item id${index + 1}');
-  List<bool> contacts = [false, true, true];
+  UserController _userController = UserController();
+  late UserProvider _userProvider;
+  User _user = User(null, "email", null, "name", null, "age", "phoneNumber",
+      "loginCode", null, null, null, null, null);
+  List<User> _contactList = [];
+  List<bool> _isContactList = [];
+
+  //비상연락망 등록 및 수정 API request용
+  EmergencyContactReq contactReq = EmergencyContactReq(null, null, null);
+
+  @override
+  void initState() {
+    super.initState();
+    _userProvider = Provider.of<UserProvider>(context, listen: false);
+    _loadUserInfo();
+  }
+
+  //사용자 정보 가져오는 함수 - 로그인 구현 시 사라질 예정
+  Future<void> _loadUserInfo() async {
+    User user = await _userController.fetchUserInfo(4);
+    setState(() {
+      _user = user;
+    });
+  }
+
+  //사용자에게 등록된 비상연락망 가져오기
+  Future<void> _updateMyEmergencyContact(String? phoneNumber) async {
+    if (phoneNumber == null) {
+      return;
+    }
+
+    User? user =
+        await _userController.fetchUserInfoWithPhoneNumber(phoneNumber);
+    if (user != null) {
+      setState(() {
+        _contactList.add(user);
+        _isContactList.add(true);
+      });
+    } else {
+      setState(() {
+        _isContactList.add(false);
+      });
+    }
+  }
+
+  bool _isPhoneNumberInContactList(String phoneNumber) {
+    return _contactList.any((user) => user.phoneNumber == phoneNumber);
+  }
+
+  bool isPhoneNumberInMyEmergencyContactList(String phoneNumber) {
+    if (_userProvider.getUserData().emergencyContact1 == phoneNumber ||
+        _userProvider.getUserData().emergencyContact2 == phoneNumber ||
+        _userProvider.getUserData().emergencyContact3 == phoneNumber) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void setRequest() {
+    contactReq.contact1 = _userProvider.getUserData().emergencyContact1;
+    contactReq.contact2 = _userProvider.getUserData().emergencyContact2;
+    contactReq.contact3 = _userProvider.getUserData().emergencyContact3;
+  }
 
   @override
   void dispose() {
@@ -30,16 +97,38 @@ class _EmergencyContactState extends State<EmergencyContact> {
 
   @override
   Widget build(BuildContext context) {
+    //로그인 구현시 사라질 예정..
+    _userProvider.setUserData(_user);
+
+    var emergencyContacts = [
+      _userProvider.getUserData().emergencyContact1,
+      _userProvider.getUserData().emergencyContact2,
+      _userProvider.getUserData().emergencyContact3,
+    ];
+
+    contactCount =
+        emergencyContacts.where((phoneNumber) => phoneNumber != null).length;
+    setRequest();
+
+    for (final phoneNumber in emergencyContacts) {
+      if (phoneNumber != null && !_isPhoneNumberInContactList(phoneNumber)) {
+        _updateMyEmergencyContact(phoneNumber);
+      }
+    }
+
     return safeAreaPage(
       Colors.white,
       Colors.white,
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          defaultHeader("비상 연락망", context, const Center(child: SizedBox(width: 28))),
+          defaultHeader(
+              "비상 연락망", context, const Center(child: SizedBox(width: 28))),
           searchField(),
           if (!_deleteBox) descriptionBox(),
-          contactListView(),
+          _user.id == null
+              ? const Center(child: CupertinoActivityIndicator())
+              : contactListView(),
         ],
       ),
     );
@@ -48,18 +137,17 @@ class _EmergencyContactState extends State<EmergencyContact> {
   Expanded contactListView() {
     return Expanded(
       child: ListView.builder(
-        itemCount: images.length,
+        itemCount: _contactList.length,
         itemBuilder: (context, index) {
-          final id = ids[index];
-          final image = images[index];
-          final name = names[index];
-          final isContact = contacts[index];
+          final image = _contactList[index].image;
+          final name = _contactList[index].name;
+          final phoneNumber = _contactList[index].phoneNumber;
 
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-            child: isContact
+            child: _isContactList[index]
                 ? Dismissible(
-                    key: Key(id),
+                    key: Key(phoneNumber),
                     direction: DismissDirection.endToStart,
                     background: Container(
                       decoration: BoxDecoration(
@@ -68,28 +156,50 @@ class _EmergencyContactState extends State<EmergencyContact> {
                       ),
                       alignment: Alignment.centerRight,
                       padding: const EdgeInsets.only(right: 26),
-                      child: const Icon(CupertinoIcons.trash, color: Colors.white),
+                      child:
+                          const Icon(CupertinoIcons.trash, color: Colors.white),
                     ),
-                    onDismissed: (direction) {
-                      if (direction == DismissDirection.endToStart && isContact) {
-                        setState(() {
-                          images.removeAt(index);
-                          ids.removeAt(index);
-                          names.removeAt(index);
-                          contacts.removeAt(index);
-                        });
+                    onDismissed: (direction) async {
+                      if (direction == DismissDirection.endToStart &&
+                          _isContactList[index]) {
+                        //삭제
+                        if (index == 0) {
+                          contactReq.contact1 = null;
+                          _userProvider.getUserData().emergencyContact1 = null;
+                        } else if (index == 1) {
+                          contactReq.contact2 = null;
+                          _userProvider.getUserData().emergencyContact2 = null;
+                        } else if (index == 2) {
+                          contactReq.contact3 = null;
+                          _userProvider.getUserData().emergencyContact3 = null;
+                        } else {
+                          //예외처리
+                        }
+
+                        await _userController.patchEmergencyContact(contactReq);
+
+                        //** TODO 새로고침
+                        Navigator.pop(context);
+
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => EmergencyContact()));
+                        //------------------**
                       }
                     },
-                    child: contactBox(image, name, id, isContact),
+                    child: contactBox(
+                        image, name, phoneNumber, _isContactList[index]),
                   )
-                : contactBox(image, name, id, isContact),
+                : contactBox(image, name, phoneNumber, _isContactList[index]),
           );
         },
       ),
     );
   }
 
-  Container contactBox(String image, String name, String id, bool isContact) {
+  Container contactBox(
+      String? image, String name, String phoneNumber, bool isContact) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 11),
       decoration: BoxDecoration(
@@ -100,8 +210,12 @@ class _EmergencyContactState extends State<EmergencyContact> {
           CircleAvatar(
             backgroundColor: gray,
             radius: 38,
-            child: image.isEmpty
-                ? const Text("💊")
+            child: image == null
+                ? const CircleAvatar(
+                    backgroundColor: main_color_green,
+                    radius: 36,
+                    child: Text("💊"),
+                  )
                 : CircleAvatar(
                     backgroundImage: NetworkImage(image),
                     radius: 36,
@@ -114,7 +228,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
               children: [
                 Text(name, style: darkGrayTextStyle(15)),
                 const SizedBox(height: 5),
-                Text(id, style: greenTextStyle(13)),
+                Text(phoneNumber, style: greenTextStyle(13)),
               ],
             ),
           ),
@@ -122,7 +236,31 @@ class _EmergencyContactState extends State<EmergencyContact> {
             CupertinoButton(
               minSize: 0,
               padding: const EdgeInsets.all(0),
-              onPressed: () {},
+              onPressed: () async {
+                if (contactCount == 0) {
+                  contactReq.contact1 = phoneNumber;
+                  _userProvider.getUserData().emergencyContact1 = phoneNumber;
+                } else if (contactCount == 1) {
+                  contactReq.contact2 = phoneNumber;
+                  _userProvider.getUserData().emergencyContact2 = phoneNumber;
+                } else if (contactCount == 2) {
+                  contactReq.contact3 = phoneNumber;
+                  _userProvider.getUserData().emergencyContact3 = phoneNumber;
+                } else {
+                  //비상연락망 지우라고 팝업 띄우기
+                }
+
+                await _userController.patchEmergencyContact(contactReq);
+
+                //** TODO 새로고침
+                Navigator.pop(context);
+
+                Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                        builder: (context) => EmergencyContact()));
+                //------------------**
+              },
               child: const Icon(
                 CupertinoIcons.plus_app,
                 color: bright_green,
@@ -156,7 +294,8 @@ class _EmergencyContactState extends State<EmergencyContact> {
                   },
                   minSize: 0,
                   padding: const EdgeInsets.fromLTRB(0, 10, 16, 0),
-                  child: const Icon(CupertinoIcons.xmark_circle_fill, color: CupertinoColors.secondaryLabel),
+                  child: const Icon(CupertinoIcons.xmark_circle_fill,
+                      color: CupertinoColors.secondaryLabel),
                 ),
               ],
             ),
@@ -198,8 +337,22 @@ class _EmergencyContactState extends State<EmergencyContact> {
                       focusNode.requestFocus();
                     });
                   },
-                  onSubmitted: (value) {
-                    // Todo: call contactSearchAPI
+                  onSubmitted: (value) async {
+                    final user = await _userController
+                        .fetchUserInfoWithPhoneNumber(value);
+                    final isContact =
+                        isPhoneNumberInMyEmergencyContactList(value);
+
+                    while (_contactList.length > contactCount) {
+                      _contactList.removeLast();
+                      _isContactList.removeLast();
+                    }
+
+                    setState(() {
+                      _contactList.add(user);
+                      _isContactList.add(isContact);
+                    });
+
                     controller.clear();
                   },
                 ),

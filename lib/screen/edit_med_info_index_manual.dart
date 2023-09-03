@@ -6,6 +6,7 @@ import 'package:flutter_application/screen/get_med_info_index_auto.dart';
 import '../components/component.dart';
 import 'package:flutter_application/constants/colors.dart';
 
+import '../components/decorations.dart';
 import '../components/textstyle.dart';
 import '../widget/medTimeBeAfNonChanged.dart';
 import '../widget/medTimeNonChanged.dart';
@@ -16,16 +17,16 @@ import 'package:flutter_application/widget/medCycleWidget.dart';
 
 import 'package:intl/intl.dart';
 
-class EditMedInfoIndexAuto extends StatefulWidget {
+class EditMedInfoIndexManual extends StatefulWidget {
   final int medicationId;
-  const EditMedInfoIndexAuto({Key? key, required this.medicationId})
+  const EditMedInfoIndexManual({Key? key, required this.medicationId})
       : super(key: key);
 
   @override
-  _EditMedInfoIndexAutoState createState() => _EditMedInfoIndexAutoState();
+  _EditMedInfoIndexManualState createState() => _EditMedInfoIndexManualState();
 }
 
-class _EditMedInfoIndexAutoState extends State<EditMedInfoIndexAuto> {
+class _EditMedInfoIndexManualState extends State<EditMedInfoIndexManual> {
   @override
   Widget build(BuildContext context) {
     return safeAreaPage(
@@ -39,7 +40,7 @@ class _EditMedInfoIndexAutoState extends State<EditMedInfoIndexAuto> {
             resizeToAvoidBottomInset: false,
             body: SingleChildScrollView(
               child: Column(children: <Widget>[
-                EditMed(medicationId: widget.medicationId),
+                EditMedManual(medicationId: widget.medicationId),
               ]),
             )),
       ),
@@ -47,17 +48,18 @@ class _EditMedInfoIndexAutoState extends State<EditMedInfoIndexAuto> {
   }
 }
 
-class EditMed extends StatefulWidget {
+class EditMedManual extends StatefulWidget {
   final int medicationId;
 
-  const EditMed({super.key, required this.medicationId});
+  const EditMedManual({super.key, required this.medicationId});
 
   @override
-  _EditMedState createState() => _EditMedState();
+  _EditMedManualState createState() => _EditMedManualState();
 }
 
-class _EditMedState extends State<EditMed> {
+class _EditMedManualState extends State<EditMedManual> {
   final MedicationController _medicationController = MedicationController();
+  late final TextEditingController _nameController;
   late final TextEditingController _descriptionController;
 
   late bool _isChecked; // 복약 알림 - switch
@@ -75,6 +77,9 @@ class _EditMedState extends State<EditMed> {
     setState(() {
       _medication = medication;
       _isChecked = medication.notificationTime != null;
+
+      _nameController =
+          TextEditingController(text: medication.medicineName ?? '');
       _descriptionController =
           TextEditingController(text: medication.description ?? '');
     });
@@ -164,12 +169,22 @@ class _EditMedState extends State<EditMed> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Center(
-                            child: Text(_medication.medicineName ?? '',
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                )),
+                          width: 168,
+                          height: 40,
+                          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          decoration: medInfoIndexDecoration(),
+                          child: TextField(
+                            controller: _nameController,
+                            style:
+                                const TextStyle(color: dark_gray, fontSize: 16),
+                            keyboardType: TextInputType.multiline,
+                            decoration: const InputDecoration(
+                                hintText: '약 이름',
+                                hintStyle:
+                                    TextStyle(color: dark_gray, fontSize: 16),
+                                border: InputBorder.none, // 텍스트 박스 아래 줄 제거
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none)),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -305,7 +320,6 @@ class _EditMedState extends State<EditMed> {
                   onTimePickerChanged: (newTime) {
                     setState(() {
                       _medication.notificationTime = time2String(newTime);
-                      print(newTime);
                     });
                   },
                 ),
