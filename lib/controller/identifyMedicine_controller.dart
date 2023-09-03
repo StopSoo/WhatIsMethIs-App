@@ -70,14 +70,19 @@ Future<File> compressImage(File file) async {
   return resultImage;
 }
 
-Future getImage() async {
+Future getImageFromCamera() async {
   final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
 
-  setState(() {
-    if (pickedFile != null) {
-      _image = File(pickedFile.path);
-    } else {
-      print('사진을 선택하지 않았습니다.');
-    }
-  });
+  if (pickedFile != null) {
+    sendImageToServer(pickedFile);
+  } else {
+    print('사진을 선택하지 않았습니다.');
+  }
+  // setState(() {
+  //   if (pickedFile != null) {
+  //     _image = File(pickedFile.path);
+  //   } else {
+  //     print('사진을 선택하지 않았습니다.');
+  //   }
+  // });
 }

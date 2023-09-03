@@ -1,6 +1,7 @@
 // 알약 찾기 가로 스크롤 위젯 & 스크롤 바 구현
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/controller/identifyMedicine_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class FindMedWidget extends StatefulWidget {
@@ -33,7 +34,10 @@ class _FindMedWidgetState extends State<FindMedWidget> {
             child: Row(
               children: [
                 CupertinoButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // TODO: 알약 찾기 카메라 페이지
+                    getImageFromCamera();
+                  },
                   minSize: 0,
                   padding: const EdgeInsets.all(0),
                   child: Stack(
