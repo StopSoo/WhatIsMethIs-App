@@ -112,6 +112,7 @@ class _MedicationInfoState extends State<MedicationInfo> {
               minSize: 0,
               padding: const EdgeInsets.all(0),
               onPressed: () {
+                _showActionSheet(context);
               },
               child: Icon(
                 CupertinoIcons.ellipsis,
@@ -147,18 +148,18 @@ class _MedicationInfoState extends State<MedicationInfo> {
     );
   }
 
-  CupertinoButton medicationShortInfoBox(String medicineId, int medicationId,
+  Widget medicationShortInfoBox(String medicineId, int medicationId,
       String? image, String lunch, String after, String itemName, int cnt) {
     return CupertinoButton(
       onPressed: () => {
-        //TODO: 복약 정보 1개 조회 - 추후 자동/수동 구분하기
+        
         if(medicineId == "0"){
           Navigator.push(
                   context,
                   CupertinoPageRoute(
                       builder: (context) => GetMedInfoIndexManual(medicationId: medicationId,
                           )))
-
+    
         } else{
           Navigator.push(
                   context,
@@ -197,7 +198,7 @@ class _MedicationInfoState extends State<MedicationInfo> {
               Row(
                 children: [
                   Text(
-                    itemName,
+                    itemName.length > 15 ? '${itemName.substring(0, 15)}...' : itemName, // Row 오버플로우 방지
                     style: darkGrayTextStyle(15),
                     softWrap: true,
                   ),
