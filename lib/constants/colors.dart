@@ -11,7 +11,6 @@ const dot_green = Color(0xFFD0F5BE);
 const charcoal = Color(0xFF272727);
 const black = Color(0xFF000000);
 const white = Color(0xFFFFFFFF);
-const gray = Color(0xFFDADADA);
 const dark_gray = Color(0xFF6D6D6D);
 const bright_gray = Color(0xFFF5F5F5);
 const bar_gray = Color(0xFFF2F2F2);

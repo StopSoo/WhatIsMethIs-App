@@ -97,7 +97,7 @@ class _CameraResultState extends State<CameraResult> {
                   const Divider(
                     thickness: 1,
                     height: 1,
-                    color: gray,
+                    color: bright_gray,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
