@@ -13,10 +13,10 @@ import '../controller/medicine_controller.dart';
 import '../model/medicine.dart';
 
 class CameraResult extends StatefulWidget {
-  //TODO: itemSeq(String) -> 이미지(File)로 변경
   String itemSeq;
   XFile? image;
-  CameraResult({Key? key, required this.itemSeq, required this.image}) : super(key: key);
+  CameraResult({Key? key, required this.itemSeq, required this.image})
+      : super(key: key);
 
   @override
   _CameraResultState createState() => _CameraResultState();
@@ -24,7 +24,8 @@ class CameraResult extends StatefulWidget {
 
 class _CameraResultState extends State<CameraResult> {
   final MedicineController _medicineController = MedicineController();
-  Medicine _medicine = Medicine(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+  Medicine _medicine = Medicine(null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null);
   XFile? _imageRes;
 
   @override
@@ -34,7 +35,8 @@ class _CameraResultState extends State<CameraResult> {
   }
 
   Future<void> _loadMedicineInfo() async {
-    Medicine medicine = await _medicineController.fetchMedicineInfo(widget.itemSeq);
+    Medicine medicine =
+        await _medicineController.fetchMedicineInfo(widget.itemSeq);
     setState(() {
       _medicine = medicine;
       _imageRes = widget.image;
@@ -63,8 +65,12 @@ class _CameraResultState extends State<CameraResult> {
                         padding: const EdgeInsets.all(0),
                         onPressed: () {
                           //복약정보 등록 확인(?) 팝업
-                          _showAlert("'${_medicine.itemName}'을(를) 복약 정보에 등록하시겠습니까?", "'${_medicine.itemName}'을(를) 복약 정보에 등록하기 위해 복약 정보 등록페이지로 이동합니다.",
-                              _medicine.itemName!, _medicine.itemSeq!);
+                          _showAlert(
+                              "'${_medicine.itemName}'을(를) 복약 정보에 등록하시겠습니까?",
+                              "'${_medicine.itemName}'을(를) 복약 정보에 등록하기 위해 복약 정보 등록페이지로 이동합니다.",
+                              _medicine.itemName!,
+                              _medicine.itemSeq!,
+                              _medicine.itemImage);
                         },
                         child: const Icon(
                           CupertinoIcons.rectangle_stack_badge_plus,
@@ -85,7 +91,8 @@ class _CameraResultState extends State<CameraResult> {
                         Center(
                           child: Text(
                             "사진을 눌러 다시 찍기",
-                            style: customTextStyle(16, Colors.white, FontWeight.w600),
+                            style: customTextStyle(
+                                16, Colors.white, FontWeight.w600),
                           ),
                         ),
                       ],
@@ -120,7 +127,6 @@ class _CameraResultState extends State<CameraResult> {
       borderRadius: BorderRadius.circular(10.0),
       child: Stack(
         children: [
-          //사용자가 찍은 사진 - 추후에 Image.asset -> 다른걸로 변경
           Image(
             image: FileImage(File(image!.path)),
             width: width,
@@ -139,7 +145,8 @@ class _CameraResultState extends State<CameraResult> {
     );
   }
 
-  void _showAlert(String title, String message, String medicineName, String medicineId) {
+  void _showAlert(String title, String message, String medicineName,
+      String medicineId, String? medicineImage) {
     showCupertinoDialog(
         context: context,
         builder: (context) {
@@ -162,6 +169,7 @@ class _CameraResultState extends State<CameraResult> {
                             builder: (context) => RegisterMedPageAuto(
                                   medicineName: medicineName,
                                   medicineId: medicineId,
+                                  medicineImage: medicineImage,
                                 )));
                   })
             ],

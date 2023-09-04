@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/components/functions.dart';
 import 'package:flutter_application/model/medication.dart';
 import '../components/component.dart';
 import 'package:flutter_application/constants/colors.dart';
@@ -9,8 +10,6 @@ import '../components/textstyle.dart';
 import '../controller/medication_controller.dart';
 import '../widget/medTimeBeAfNonChanged.dart';
 import '../widget/medTimeNonChanged.dart';
-
-import 'package:intl/intl.dart';
 
 class GetMedInfoIndexManual extends StatefulWidget {
   final int medicationId;
@@ -301,22 +300,6 @@ class _MedInfoIndexManualState extends State<MedInfoIndexManual> {
               ),
             ),
     );
-  }
-
-  String formatDate(String inputDate) {
-    DateTime dateTime = DateTime.parse(inputDate);
-
-    String formattedDate = DateFormat.yMMMMd('ko_KR').format(dateTime);
-
-    return formattedDate;
-  }
-
-  String formatTime(String inputTime) {
-    DateTime dateTime = DateFormat("HH:mm:ss").parse(inputTime);
-
-    String formattedTime = DateFormat.jm('ko_KR').format(dateTime);
-
-    return formattedTime;
   }
 
   void _showActionSheet(BuildContext context) {

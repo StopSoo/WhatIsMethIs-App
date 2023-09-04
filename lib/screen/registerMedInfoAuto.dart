@@ -1,22 +1,31 @@
 // 복약 정보 등록하기 : 자동
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/components/functions.dart';
+import 'package:flutter_application/components/textstyle.dart';
+import 'package:flutter_application/controller/medication_controller.dart';
+import 'package:flutter_application/model/medication.dart';
+import 'package:flutter_application/screen/medication_info.dart';
+import 'package:flutter_application/widget/medTimeBeAfNonChanged.dart';
+import 'package:flutter_application/widget/medTimeNonChanged.dart';
 import '../components/component.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/widget/datePickerWidget.dart';
 import 'package:flutter_application/widget/timePickerWidget.dart';
 import 'package:flutter_application/widget/medCountWidget.dart';
 import 'package:flutter_application/widget/medCycleWidget.dart';
-import 'package:flutter_application/widget/medTimeBeAfButton.dart';
-import 'package:flutter_application/widget/medTimeButton.dart';
-import 'package:flutter_application/widget/imagePickerWidgetInMed.dart';
 
 class RegisterMedPageAuto extends StatefulWidget {
-  RegisterMedPageAuto(
-      {super.key, required this.medicineName, required this.medicineId});
+  final String medicineName;
+  final String medicineId;
+  final String? medicineImage;
 
-  String medicineName;
-  String medicineId;
+  RegisterMedPageAuto(
+      {super.key,
+      required this.medicineName,
+      required this.medicineId,
+      required this.medicineImage});
+
   @override
   State<RegisterMedPageAuto> createState() => _RegisterMedPageAutoState();
 }
@@ -31,11 +40,15 @@ class _RegisterMedPageAutoState extends State<RegisterMedPageAuto> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: const Scaffold(
+        child: Scaffold(
             resizeToAvoidBottomInset: false,
             body: SingleChildScrollView(
               child: Column(children: <Widget>[
-                RegisterMed(),
+                RegisterMed(
+                  medicineId: widget.medicineId,
+                  medicineName: widget.medicineName,
+                  medicineImage: widget.medicineImage,
+                ),
               ]),
             )),
       ),
@@ -44,7 +57,14 @@ class _RegisterMedPageAutoState extends State<RegisterMedPageAuto> {
 }
 
 class RegisterMed extends StatefulWidget {
-  const RegisterMed({super.key});
+  final String medicineName;
+  final String medicineId;
+  final String? medicineImage;
+  const RegisterMed(
+      {super.key,
+      required this.medicineName,
+      required this.medicineId,
+      this.medicineImage});
 
   @override
   _RegisterMedState createState() => _RegisterMedState();
@@ -52,12 +72,78 @@ class RegisterMed extends StatefulWidget {
 
 class _RegisterMedState extends State<RegisterMed> {
   bool _isChecked = false; // 복약 알림 - switch
+  MedicationController _medicationController = MedicationController();
+
+  //기본값 적용
+  Medication _medication = Medication(null, null, null, null, 1,
+      date2String(DateTime.now()), date2String(DateTime.now()),
+      "BREAKFAST",  "BEFORE",
+      1,  null, null);
+
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
     // 초기화
     super.initState();
-    _isChecked = false;
+    _isChecked = _medication.notificationTime != null;
+  }
+
+  // 완료 버튼을 누를 때 실행되는 함수
+  Future<void> _onCompleteButtonPressed() async {
+    // ** 필수 정보 입력되지 않은 경우 팝업 표시 하고 종료 -> 추후 적용 예정
+    // if (_medication.takeCapacity == null ||
+    //     _medication.takeStartDate == null ||
+    //     _medication.takeEndDate == null ||
+    //     _medication.takeMealTime == null ||
+    //     _medication.takeBeforeAfter == null ||
+    //     _medication.takeCycle == null) {
+
+    //   await showCupertinoDialog<void>(
+    //     context: context,
+    //     builder: (BuildContext context) {
+    //       return CupertinoAlertDialog(
+    //         title: Text('복약 정보를 등록할 수 없어요😥'),
+    //         content: Text(
+    //             '복약 정보를 입력해주세요.\n*1회 복용량,\n*복용 기간,\n*복약 시간,\n*복약 주기는 필수값입니다.'),
+    //         actions: <Widget>[
+    //           CupertinoDialogAction(
+    //             onPressed: () {
+    //               Navigator.of(context).pop();
+    //             },
+    //             child: Text('확인'),
+    //           ),
+    //         ],
+    //       );
+    //     },
+    //   );
+    //   return; // 함수 종료
+    // }
+
+    setState(() {
+      // _medication 설정
+      _medication.medicineId = widget.medicineId;
+      _medication.medicineName = widget.medicineName;
+      _medication.medicineImage = widget.medicineImage;
+      _medication.description = _descriptionController.text;
+
+      if (!_isChecked) {
+        _medication.notificationTime = null;
+      }
+    });
+
+    // 등록 API 호출
+    await _medicationController.registerMedicationInfoIndex(_medication);
+
+    //TODO: pushNamedAndRemoveUntil로 변경하기
+    // 수정하는 페이지와 팝업으로 뒤로 가기 안되게 일단 pop...
+    Navigator.pop(context);
+
+    // 수정된 복약 정보 페이지로 이동
+    Navigator.push(
+      context,
+      CupertinoPageRoute(builder: (context) => MedicationInfo()),
+    );
   }
 
   @override
@@ -67,23 +153,61 @@ class _RegisterMedState extends State<RegisterMed> {
       decoration: const BoxDecoration(color: white),
       child: Column(
         children: <Widget>[
-          defaultHeader('복약 정보 등록하기', context, const SizedBox(width: 30)),
-          // 갤러리에서 사진 선택하는 위젯
-          const ImagePickerWidget(),
+          defaultHeader(
+              '복약 정보 등록하기',
+              context,
+              Center(
+                child: CupertinoButton(
+                  minSize: 0,
+                  padding: const EdgeInsets.all(0),
+                  onPressed: _onCompleteButtonPressed,
+                  child: Center(
+                    child: Text(
+                      "완료",
+                      style: greenTextStyle(15.0),
+                    ),
+                  ),
+                ),
+              )),
+          //** 약 이미지
           Container(
-              padding: const EdgeInsets.fromLTRB(80, 10, 0, 0),
+            padding: const EdgeInsets.only(top: 18.0),
+            child: CircleAvatar(
+              backgroundColor: main_color_green,
+              radius: 40,
+              child: widget.medicineImage == null
+                  ? const Text("💊")
+                  : CircleAvatar(
+                      backgroundImage: NetworkImage(widget.medicineImage!),
+                      radius: 38,
+                    ),
+            ),
+          ),
+          Container(
+              padding: const EdgeInsets.fromLTRB(0, 18, 0, 0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: const Text('타이레놀8시간이알서방정',
-                        style: TextStyle(
-                          fontSize: 15,
-                        )),
+                    child: Center(
+                      child: Text(widget.medicineName,
+                          style: const TextStyle(
+                            fontSize: 15,
+                          )),
+                    ),
                   ),
                   const SizedBox(width: 12),
                   MedCountPickerWidget(
-                    selectedCount: 0,
+                    selectedCount: _medication.takeCapacity == null
+                        ? 0
+                        : (_medication.takeCapacity! - 1),
+                    onCountChanged: (index) {
+                      //사용자가 수정한 인덱스 값이라 +1
+                      setState(() {
+                        _medication.takeCapacity = index + 1;
+                      });
+                    },
                   )
                 ],
               )),
@@ -100,15 +224,27 @@ class _RegisterMedState extends State<RegisterMed> {
             alignment: Alignment.center,
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               DatePickerWidget(
-                selectedDate: DateTime.now(),
-              ),
+                  selectedDate: _medication.takeStartDate == null
+                      ? DateTime.now()
+                      : string2Date(_medication.takeStartDate!),
+                  onDateChanged: (newDate) {
+                    setState(() {
+                      _medication.takeStartDate = date2String(newDate);
+                    });
+                  }),
               const SizedBox(width: 2),
               const Text('~',
                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
               const SizedBox(width: 2),
               DatePickerWidget(
-                selectedDate: DateTime.now(),
-              ),
+                  selectedDate: _medication.takeEndDate == null
+                      ? DateTime.now()
+                      : string2Date(_medication.takeEndDate!),
+                  onDateChanged: (newDate) {
+                    setState(() {
+                      _medication.takeEndDate = date2String(newDate);
+                    });
+                  }),
             ]),
           ),
           const SizedBox(height: 15),
@@ -124,16 +260,28 @@ class _RegisterMedState extends State<RegisterMed> {
           const SizedBox(height: 7),
           Container(
             alignment: Alignment.center,
-            child: const MedTimeControlWidget(),
+            child: MedTimeNotChangedWidget(
+              selectedSegment: _medication.takeMealTime ?? "BREAKFAST",
+              onMedTimeChanged: (newMedtime) {
+                setState(() {
+                  _medication.takeMealTime = newMedtime;
+                });
+              },
+            ),
           ),
           const SizedBox(height: 7),
           Container(
             alignment: Alignment.center,
-            child: const MedTimeBeAfControlWidget(),
+            child: MedTimeBeAfNotChangedWidget(
+              selectedSegment: _medication.takeBeforeAfter ?? "BEFORE",
+              onMedTimeChanged: (newMedtime) {
+                setState(() {
+                  _medication.takeBeforeAfter = newMedtime;
+                });
+              },
+            ),
           ),
-          const SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
           // 복약 주기
           Container(
               padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
@@ -145,7 +293,14 @@ class _RegisterMedState extends State<RegisterMed> {
                   ))),
           const SizedBox(height: 10),
           MedCyclePickerWidget(
-            selectedCycle: 0,
+            selectedCycle: _medication.takeCycle == null
+                ? 0
+                : (_medication.takeCycle! - 1),
+            onMedCycleChanged: (newCycle) {
+              setState(() {
+                _medication.takeCycle = newCycle + 1;
+              });
+            },
           ),
           const SizedBox(height: 10),
           // 복약 알림
@@ -164,7 +319,7 @@ class _RegisterMedState extends State<RegisterMed> {
                 activeColor: CupertinoColors.activeGreen,
                 onChanged: (bool? value) {
                   setState(() {
-                    _isChecked = value ?? false;
+                    _isChecked = !_isChecked;
                   });
                 },
               )
@@ -172,11 +327,16 @@ class _RegisterMedState extends State<RegisterMed> {
           ),
           const SizedBox(height: 8),
           DatePickerExample(
-            time: DateTime.now(),
+            time: _medication.notificationTime == null
+                ? DateTime.now()
+                : string2Time(_medication.notificationTime!),
+            onTimePickerChanged: (newTime) {
+              setState(() {
+                _medication.notificationTime = time2String(newTime);
+              });
+            },
           ),
-          const SizedBox(
-            height: 13,
-          ),
+          const SizedBox(height: 13),
           Container(
               padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
               alignment: Alignment.centerLeft,
@@ -195,7 +355,8 @@ class _RegisterMedState extends State<RegisterMed> {
                 decoration: BoxDecoration(
                     color: bright_gray,
                     borderRadius: BorderRadius.circular(12)),
-                child: const TextField(
+                child: TextField(
+                  controller: _descriptionController,
                   scrollPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   keyboardType: TextInputType.multiline,
                   maxLines: null, // 자동 줄바꿈
@@ -207,6 +368,8 @@ class _RegisterMedState extends State<RegisterMed> {
                           OutlineInputBorder(borderSide: BorderSide.none)),
                 ),
               )),
+          // 여유 공간
+          const SizedBox(height: 30)
         ],
       ),
     );

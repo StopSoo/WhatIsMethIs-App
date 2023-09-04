@@ -17,7 +17,8 @@ class NameResult extends StatefulWidget {
 
 class _NameResultState extends State<NameResult> {
   final MedicineController _medicineController = MedicineController();
-  late Medicine _medicine = Medicine(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+  late Medicine _medicine = Medicine(null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null);
 
   @override
   void initState() {
@@ -26,7 +27,8 @@ class _NameResultState extends State<NameResult> {
   }
 
   Future<void> _loadMedicineInfo() async {
-    Medicine medicine = await _medicineController.fetchMedicineInfo(widget.itemSeq);
+    Medicine medicine =
+        await _medicineController.fetchMedicineInfo(widget.itemSeq);
     setState(() {
       _medicine = medicine;
     });
@@ -54,8 +56,12 @@ class _NameResultState extends State<NameResult> {
                       padding: EdgeInsets.all(0),
                       onPressed: () {
                         //복약정보 등록 확인(?) 팝업
-                        _showAlert("'${_medicine.itemName}'을(를) 복약 정보에 등록하시겠습니까?", "'${_medicine.itemName}'을(를) 복약 정보에 등록하기 위해 복약 정보 등록페이지로 이동합니다.",
-                            _medicine.itemName!, _medicine.itemSeq!);
+                        _showAlert(
+                            "'${_medicine.itemName}'을(를) 복약 정보에 등록하시겠습니까?",
+                            "'${_medicine.itemName}'을(를) 복약 정보에 등록하기 위해 복약 정보 등록페이지로 이동합니다.",
+                            _medicine.itemName!,
+                            _medicine.itemSeq!,
+                            _medicine.itemImage);
                       },
                       child: const Icon(
                         CupertinoIcons.rectangle_stack_badge_plus,
@@ -83,7 +89,8 @@ class _NameResultState extends State<NameResult> {
     );
   }
 
-  void _showAlert(String title, String message, String medicineName, String medicineId) {
+  void _showAlert(String title, String message, String medicineName,
+      String medicineId, String? medicineImage) {
     showCupertinoDialog(
         context: context,
         builder: (context) {
@@ -106,6 +113,7 @@ class _NameResultState extends State<NameResult> {
                             builder: (context) => RegisterMedPageAuto(
                                   medicineName: medicineName,
                                   medicineId: medicineId,
+                                  medicineImage: medicineImage,
                                 )));
                   })
             ],
