@@ -114,20 +114,16 @@ class _EditMedManualState extends State<EditMedManual> {
                           // 수정 API 호출
                           await _editMedicationInfo(
                               widget.medicationId, _medication);
-
-                          //TODO: pushNamedAndRemoveUntil로 변경하기
-                          //수정하는 페이지와 팝업으로 뒤로 가기 안되게 일단 pop...
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-
-                          // 수정된 복약 정보 페이지로 이동
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => GetMedInfoIndexAuto(
-                                        medicationId: widget.medicationId,
-                                      )));
+                          // pushAndRemoveUntil 수정 완료 => 확인 필요 !
+                          Navigator.of(context).pushAndRemoveUntil(
+                            CupertinoPageRoute(
+                              builder: (context) => GetMedInfoIndexAuto(
+                                medicationId: widget.medicationId,
+                              )
+                            ),
+                            // 스택에 남아 있던 페이지들 삭제 
+                            (route) => false,
+                          );
                         },
                         child: Center(
                           child: Text(

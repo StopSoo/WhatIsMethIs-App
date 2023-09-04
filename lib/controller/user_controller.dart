@@ -24,7 +24,6 @@ class UserController {
   }
   //전화번호로 유저 조회
   Future<User> fetchUserInfoWithPhoneNumber(String phoneNumber) async {
-   
     String _url = '${baseUrl}/users/phoneNumber?value=${phoneNumber}';
     final response = await http.get(Uri.parse(_url));
 

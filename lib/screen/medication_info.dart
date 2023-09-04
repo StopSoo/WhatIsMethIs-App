@@ -123,18 +123,20 @@ class _MedicationInfoState extends State<MedicationInfo> {
           ),
           Expanded(
             child: ListView.builder(
-                controller: _scrollController,
-                shrinkWrap: true,
-                itemCount: _medInfoList.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    medicationShortInfoBox(
-                      _medInfoList[index].medicineId!,
-                      _medInfoList[index].medicationId!,
-                        _medInfoList[index].medicineImage,
-                        mealTime[_medInfoList[index].takeMealTime]!,
-                        beforeAfterTime[_medInfoList[index].takeBeforeAfter]!,
-                        _medInfoList[index].medicineName  ?? '',
-                        _medInfoList[index].takeCapacity  ?? 0)),
+              controller: _scrollController,
+              shrinkWrap: true,
+              itemCount: _medInfoList.length,
+              itemBuilder: (BuildContext context, int index) =>
+                medicationShortInfoBox(
+                  _medInfoList[index].medicineId!,
+                  _medInfoList[index].medicationId!,
+                    _medInfoList[index].medicineImage,
+                    mealTime[_medInfoList[index].takeMealTime]!,
+                    beforeAfterTime[_medInfoList[index].takeBeforeAfter]!,
+                    _medInfoList[index].medicineName  ?? '',
+                    _medInfoList[index].takeCapacity  ?? 0
+              )
+            ),
           ),
           if (_isLoadMoreRunning == true)
             Container(

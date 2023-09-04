@@ -39,7 +39,10 @@ class HomeScreen extends StatelessWidget {
               const Spacer(),
               CupertinoButton(
                 onPressed: () {
-                  Navigator.push(context, CupertinoPageRoute(builder: (context) => const MyPage()));
+                  Navigator.push(
+                    context, 
+                    CupertinoPageRoute(builder: (context) => const MyPage())
+                  );
                 },
                 child: const Icon(
                   CupertinoIcons.person,

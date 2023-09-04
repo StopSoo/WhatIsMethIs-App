@@ -62,7 +62,8 @@ class _EditMedState extends State<EditMed> {
 
   late bool _isChecked; // 복약 알림 - switch
   Medication _medication = Medication(
-      null, null, null, null, null, null, null, null, null, null, null, null);
+      null, null, null, null, null, null, null, null, null, null, null, null
+    );
   @override
   void initState() {
     super.initState();
@@ -109,20 +110,16 @@ class _EditMedState extends State<EditMed> {
                           // 수정 API 호출
                           await _editMedicationInfo(
                               widget.medicationId, _medication);
-
-                          //TODO: pushNamedAndRemoveUntil로 변경하기
-                          //수정하는 페이지와 팝업으로 뒤로 가기 안되게 일단 pop...
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-
-                          // 수정된 복약 정보 페이지로 이동
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => GetMedInfoIndexAuto(
-                                        medicationId: widget.medicationId,
-                                      )));
+                          // pushAndRemoveUntil 수정
+                          Navigator.of(context).pushAndRemoveUntil(
+                            CupertinoPageRoute(
+                              builder: (context) => GetMedInfoIndexAuto(
+                                medicationId: widget.medicationId,
+                              )
+                            ),
+                            // 스택에 남아 있던 페이지들 삭제 후 MedicationInfo로 넘어감
+                            (route) => route.settings.name == '/MedicationInfo',
+                          );
                         },
                         child: Center(
                           child: Text(
