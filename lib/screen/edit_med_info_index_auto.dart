@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/components/functions.dart';
 import 'package:flutter_application/controller/medication_controller.dart';
 import 'package:flutter_application/model/medication.dart';
 import 'package:flutter_application/screen/get_med_info_index_auto.dart';
@@ -13,8 +14,6 @@ import 'package:flutter_application/widget/datePickerWidget.dart';
 import 'package:flutter_application/widget/timePickerWidget.dart';
 import 'package:flutter_application/widget/medCountWidget.dart';
 import 'package:flutter_application/widget/medCycleWidget.dart';
-
-import 'package:intl/intl.dart';
 
 class EditMedInfoIndexAuto extends StatefulWidget {
   final int medicationId;
@@ -105,6 +104,10 @@ class _EditMedState extends State<EditMed> {
                           setState(() {
                             _medication.description =
                                 _descriptionController.text;
+
+                                if(_isChecked == false){
+                                  _medication.notificationTime = null;
+                                }
                           });
                           // 수정 API 호출
                           await _editMedicationInfo(
@@ -347,29 +350,5 @@ class _EditMedState extends State<EditMed> {
           );
   }
 
-  DateTime string2Date(String inputDate) {
-    DateTime dateTime = DateTime.parse(inputDate);
 
-    return dateTime;
-  }
-
-  String date2String(DateTime dateTime) {
-    String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
-
-    return formattedDate;
-  }
-
-  String time2String(DateTime dateTime) {
-    String formattedTime = DateFormat("HH:mm:ss").format(dateTime);
-
-    return formattedTime;
-  }
-
-  DateTime string2Time(String inputTime) {
-    //더미 날짜
-    String dummyDate = "2023-09-03";
-    DateTime dateTime = DateTime.parse("$dummyDate $inputTime");
-
-    return dateTime;
-  }
 }
