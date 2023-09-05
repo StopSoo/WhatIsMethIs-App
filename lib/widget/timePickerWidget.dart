@@ -1,6 +1,6 @@
 // 복약 알림 시간 설정 위젯
+import 'package:flutter_application/components/functions.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
@@ -22,27 +22,32 @@ class DatePickerApp extends StatelessWidget {
         Locale('ko', 'KO'),
       ],
       theme: CupertinoThemeData(brightness: Brightness.light),
-      home: DatePickerExample(time: DateTime.now(),),
+      home: DatePickerExample(
+        time: DateTime.now(),
+        isChecked: true,
+      ),
     );
   }
 }
 
 typedef TimePickerChangedCallback = void Function(DateTime newTime);
 
-
 class DatePickerExample extends StatefulWidget {
+  bool isChecked;
   DateTime time;
   TimePickerChangedCallback? onTimePickerChanged;
 
-  DatePickerExample({super.key, required this.time, this.onTimePickerChanged});
+  DatePickerExample(
+      {super.key,
+      required this.isChecked,
+      required this.time,
+      this.onTimePickerChanged});
 
   @override
   State<DatePickerExample> createState() => _DatePickerExampleState();
 }
 
 class _DatePickerExampleState extends State<DatePickerExample> {
-  DateFormat dateFormat = DateFormat('aa hh:mm');
-
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
       context: context,
@@ -58,20 +63,24 @@ class _DatePickerExampleState extends State<DatePickerExample> {
             child: Column(children: [
               Expanded(
                 flex: 6,
-                child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  CupertinoButton(
-                    child: const Text('취소', style: TextStyle(color: Colors.red)),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoButton(
-                    child: const Text('완료'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ]),
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CupertinoButton(
+                        child: const Text('취소',
+                            style: TextStyle(color: Colors.red)),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      CupertinoButton(
+                        child: const Text('완료'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ]),
               ),
               Expanded(flex: 20, child: child),
             ])),
@@ -97,6 +106,8 @@ class _DatePickerExampleState extends State<DatePickerExample> {
                   _DatePickerItem(
                     children: <Widget>[
                       CupertinoButton(
+                        minSize: 0.0,
+                        padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
                         onPressed: () => _showDialog(
                           CupertinoDatePicker(
                             initialDateTime: widget.time,
@@ -106,14 +117,18 @@ class _DatePickerExampleState extends State<DatePickerExample> {
                               setState(() {
                                 widget.time = newTime;
                                 widget.onTimePickerChanged?.call(widget.time);
-                              } );
+                              });
                             },
                           ),
                         ),
                         child: Center(
                           child: Text(
-                            dateFormat.format(widget.time),
-                            style: const TextStyle(fontSize: 15.0, color: dark_gray),
+                            formatTime(time2String(widget.time)),
+                            style: TextStyle(
+                                fontSize: 15.0,
+                                color: widget.isChecked == true
+                                    ? CupertinoColors.black
+                                    : dark_gray),
                           ),
                         ),
                       ),
@@ -136,7 +151,8 @@ class _DatePickerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: Container(
-      decoration: BoxDecoration(color: bright_gray, borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(
+          color: bright_gray, borderRadius: BorderRadius.circular(12)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: children,

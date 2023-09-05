@@ -15,7 +15,9 @@ class MyHomePage_before extends StatefulWidget {
 class _MyHomePage_beforeState extends State<MyHomePage_before> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: PleaseLogin());
+    return const Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: SingleChildScrollView(child: PleaseLogin()));
   }
 }
 
@@ -31,11 +33,16 @@ class PleaseLogin extends StatelessWidget {
         child: Column(children: <Widget>[
           // 로고와 마이 페이지
           Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-            Image.asset(alignment: Alignment.topLeft, 'assets/images/icon_logo.png', fit: BoxFit.contain, height: 45),
+            Image.asset(
+                alignment: Alignment.topLeft,
+                'assets/images/icon_logo.png',
+                fit: BoxFit.contain,
+                height: 45),
             const Spacer(),
             CupertinoButton(
               onPressed: () {
-                Navigator.push(context, CupertinoPageRoute(builder: (context) => const MyPage()));
+                Navigator.push(context,
+                    CupertinoPageRoute(builder: (context) => const MyPage()));
               },
               child: const Icon(
                 CupertinoIcons.person,
@@ -76,7 +83,11 @@ class PleaseLogin extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(35, 121, 38, 161),
               child: const Align(
                   alignment: Alignment.bottomCenter,
-                  child: Text('로그인 후에 복약 정보를 등록해 보세요 💊', style: TextStyle(fontSize: 15, fontFamily: 'Inter-Regular', fontWeight: FontWeight.w500)))),
+                  child: Text('로그인 후에 복약 정보를 등록해 보세요 💊',
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'Inter-Regular',
+                          fontWeight: FontWeight.w500)))),
           // 알약 찾기 위젯
           const FindMedWidget()
         ]));

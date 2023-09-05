@@ -43,7 +43,7 @@ Widget defaultHeader(String centerText, BuildContext context, Widget rightWidget
               minSize: 0,
               padding: const EdgeInsets.all(0),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(context, true);
               },
               child: const Icon(
                 CupertinoIcons.chevron_back,

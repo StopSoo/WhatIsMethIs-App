@@ -123,7 +123,8 @@ class _MedCountPickerWidgetState extends State<MedCountPickerWidget> {
                 children: [
                   Text(
                     _medCounts[widget.selectedCount],
-                    style: const TextStyle(fontSize: 15.0, color: dark_gray),
+                    style: const TextStyle(
+                        fontSize: 15.0, color: CupertinoColors.black),
                   ),
                   SizedBox(width: 6),
                   Icon(

@@ -36,7 +36,7 @@ class _EditMedInfoIndexManualState extends State<EditMedInfoIndexManual> {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             body: SingleChildScrollView(
               child: Column(children: <Widget>[
                 EditMedManual(medicationId: widget.medicationId),
@@ -114,19 +114,8 @@ class _EditMedManualState extends State<EditMedManual> {
                           await _editMedicationInfo(
                               widget.medicationId, _medication);
 
-                          //TODO: pushNamedAndRemoveUntil로 변경하기
-                          //수정하는 페이지와 팝업으로 뒤로 가기 안되게 일단 pop...
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-
-                          // 수정된 복약 정보 페이지로 이동
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => GetMedInfoIndexAuto(
-                                        medicationId: widget.medicationId,
-                                      )));
+                          //GetMedInfo로 되돌아가기
+                          Navigator.pop(context, true);
                         },
                         child: Center(
                           child: Text(
@@ -149,11 +138,7 @@ class _EditMedManualState extends State<EditMedManual> {
                       backgroundColor: main_color_green,
                       radius: 40,
                       child: _medication.medicineImage == null
-                          ? const Icon(
-                              CupertinoIcons.photo_on_rectangle,
-                              size: 28,
-                              color: dark_green,
-                            )
+                          ? const Text("💊")
                           : CircleAvatar(
                               backgroundImage:
                                   NetworkImage(_medication.medicineImage!),
@@ -284,7 +269,7 @@ class _EditMedManualState extends State<EditMedManual> {
                   selectedCycle: _medication.takeCycle! - 1,
                   onMedCycleChanged: (newCycle) {
                     setState(() {
-                      _medication.takeCycle = newCycle;
+                      _medication.takeCycle = newCycle + 1;
                     });
                   },
                 ),
@@ -320,7 +305,7 @@ class _EditMedManualState extends State<EditMedManual> {
                     setState(() {
                       _medication.notificationTime = time2String(newTime);
                     });
-                  },
+                  }, isChecked: _isChecked,
                 ),
                 const SizedBox(height: 13),
                 Container(

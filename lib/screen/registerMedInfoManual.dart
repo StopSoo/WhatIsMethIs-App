@@ -30,7 +30,7 @@ class _RegisterMedPageManualState extends State<RegisterMedPageManual> {
         FocusScope.of(context).unfocus();
       },
       child: const Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           body: SingleChildScrollView(
             child: Column(children: <Widget>[
               RegisterMedManual(),
@@ -107,10 +107,6 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
     // 등록 API 호출
     await _medicationController.registerMedicationInfoIndex(_medication);
 
-    //TODO: pushNamedAndRemoveUntil로 변경하기
-    // 수정하는 페이지와 팝업으로 뒤로 가기 안되게 일단 pop...
-    Navigator.pop(context);
-
     // 복약 정보 리스트 페이지로 이동
     Navigator.push(
       context,
@@ -165,7 +161,6 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                           borderRadius: BorderRadius.circular(12)),
                       child: TextField(
                         controller: _nameController,
-                        style: darkGrayTextStyle(15),
                         keyboardType: TextInputType.multiline,
                         decoration: InputDecoration(
                             hintText: '약 이름',
@@ -311,8 +306,9 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
               onTimePickerChanged: (newTime) {
                 setState(() {
                   _medication.notificationTime = time2String(newTime);
+                  print(time2String(newTime));
                 });
-              },
+              }, isChecked: _isChecked,
             ),
             const SizedBox(height: 13),
             Container(

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/screen/mainScreenAfterLogin.dart';
 import 'package:flutter_application/provider/user_provider.dart';
+import 'package:flutter_application/screen/mainScreenBeforeLogin.dart';
+import 'package:flutter_application/screen/medication_info.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -44,6 +46,13 @@ class MyApp extends StatelessWidget {
       ),
 
       home: MyHomePage_after(),
+
+      initialRoute: '/MyHomePage_after',  // 개발용 initRoute, 추후에 변경해야 함
+      routes: {
+        '/MyHomePage_before': (context) => MyHomePage_before(),
+        '/MyHomePage_after': (context) => MyHomePage_after(),
+        '/MedicationInfo': (context) => MedicationInfo(),
+      },
     );
   }
 }

@@ -53,6 +53,8 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
   Medication _medication = Medication(
       null, null, null, null, null, null, null, null, null, null, null, null);
 
+  //rebuild 확인용 변수
+  bool _shouldRebuild = false;
   @override
   void initState() {
     super.initState();
@@ -69,6 +71,12 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
 
   @override
   Widget build(BuildContext context) {
+    //복약 정보 수정하기에서 되돌아왔을 때 화면 rebuild
+    if (_shouldRebuild) {
+      _shouldRebuild = false; 
+      // 복약 정보 다시 받기
+      _loadMedicationInfo(widget.medicationId);
+    }
     return safeAreaPage(
       Colors.white,
       Colors.white,
@@ -226,16 +234,13 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
                             fontWeight: FontWeight.w500,
                           ))),
                   const SizedBox(height: 10),
-
                   Container(
                       width: 330,
                       height: 40,
                       decoration: medInfoIndexDecoration(),
                       padding: const EdgeInsets.fromLTRB(13, 9, 8, 9),
-                      child: const Center(
-                        child: Text(
-                          "7일",
-                        ),
+                      child: Center(
+                        child: Text('${_medication.takeCycle}일'),
                       )),
                   const SizedBox(height: 10),
                   // 복약 알림
@@ -312,14 +317,19 @@ class _MedInfoIndexAutoState extends State<MedInfoIndexAuto> {
       builder: (BuildContext context) => CupertinoActionSheet(
         actions: <CupertinoActionSheetAction>[
           CupertinoActionSheetAction(
-            onPressed: () {
+            onPressed: () async {
               //Todo: Navigate to 복약정보 수정
-              Navigator.push(
+              final result = await Navigator.pushReplacement(
                   context,
                   CupertinoPageRoute(
                       builder: (context) => EditMedInfoIndexAuto(
                             medicationId: widget.medicationId,
                           )));
+              if (result != null && result == true) {
+                setState(() {
+                  _shouldRebuild = true;
+                });
+              }
             },
             child: const Text('복약 정보 수정하기', style: defaultactionSheetTextStyle),
           ),

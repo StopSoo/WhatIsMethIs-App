@@ -40,11 +40,15 @@ class _MedicationInfoState extends State<MedicationInfo> {
   late ScrollController _scrollController;
   List<Medication> _medInfoList = [];
 
+  //rebuild 확인용 변수
+  bool _shouldRebuild = false;
+
   @override
   void initState() {
     super.initState();
     _loadInitMedicationInfoList();
-    _scrollController = ScrollController()..addListener(_loadMoreMedicationInfoList);
+    _scrollController = ScrollController()
+      ..addListener(_loadMoreMedicationInfoList);
   }
 
   @override
@@ -59,12 +63,12 @@ class _MedicationInfoState extends State<MedicationInfo> {
     });
     print("page: ${_page}");
 
-    List<Medication> medInfos = await _medicationController.fetchMedicationInfo(_page);
+    List<Medication> medInfos =
+        await _medicationController.fetchMedicationInfo(_page);
     setState(() {
       _medInfoList.addAll(medInfos);
       _isFirstLoadRunning = false;
     });
-
   }
 
   Future<void> _loadMoreMedicationInfoList() async {
@@ -78,8 +82,9 @@ class _MedicationInfoState extends State<MedicationInfo> {
       });
 
       print("page: ${_page}");
-      
-      List<Medication> medInfos = await _medicationController.fetchMedicationInfo(_page);
+
+      List<Medication> medInfos =
+          await _medicationController.fetchMedicationInfo(_page);
 
       if (medInfos.isNotEmpty) {
         setState(() {
@@ -99,6 +104,17 @@ class _MedicationInfoState extends State<MedicationInfo> {
 
   @override
   Widget build(BuildContext context) {
+    //되돌아왔을 때 화면 rebuild
+    if (_shouldRebuild) {
+      _shouldRebuild = false;
+      _page = 0;
+      _hasNextPage = true;
+      _isFirstLoadRunning = false;
+      _isLoadMoreRunning = false;
+      _medInfoList = [];
+      // 복약 정보 리스트 다시 받기
+      _loadInitMedicationInfoList();
+    }
     return safeAreaPage(
       Colors.white,
       Colors.white,
@@ -128,13 +144,13 @@ class _MedicationInfoState extends State<MedicationInfo> {
                 itemCount: _medInfoList.length,
                 itemBuilder: (BuildContext context, int index) =>
                     medicationShortInfoBox(
-                      _medInfoList[index].medicineId!,
-                      _medInfoList[index].medicationId!,
+                        _medInfoList[index].medicineId!,
+                        _medInfoList[index].medicationId!,
                         _medInfoList[index].medicineImage,
                         mealTime[_medInfoList[index].takeMealTime]!,
                         beforeAfterTime[_medInfoList[index].takeBeforeAfter]!,
-                        _medInfoList[index].medicineName  ?? '',
-                        _medInfoList[index].takeCapacity  ?? 0)),
+                        _medInfoList[index].medicineName ?? '',
+                        _medInfoList[index].takeCapacity ?? 0)),
           ),
           if (_isLoadMoreRunning == true)
             Container(
@@ -150,25 +166,29 @@ class _MedicationInfoState extends State<MedicationInfo> {
 
   Widget medicationShortInfoBox(String medicineId, int medicationId,
       String? image, String lunch, String after, String itemName, int cnt) {
+    dynamic result;
     return CupertinoButton(
-      onPressed: () => {
-        
-        if(medicineId == "0"){
-          Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                      builder: (context) => GetMedInfoIndexManual(medicationId: medicationId,
-                          )))
-    
-        } else{
-          Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                      builder: (context) => GetMedInfoIndexAuto(medicationId: medicationId,
-                          )))
+      onPressed: () async {
+        if (medicineId == "0") {
+          result = await Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) => GetMedInfoIndexManual(
+                        medicationId: medicationId,
+                      )));
+        } else {
+          result = await Navigator.push(
+              context,
+              CupertinoPageRoute(
+                  builder: (context) => GetMedInfoIndexAuto(
+                        medicationId: medicationId,
+                      )));
         }
-        
-        
+        if (result != null && result == true) {
+          setState(() {
+            _shouldRebuild = true;
+          });
+        }
       },
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
       child: Row(
@@ -198,7 +218,9 @@ class _MedicationInfoState extends State<MedicationInfo> {
               Row(
                 children: [
                   Text(
-                    itemName.length > 15 ? '${itemName.substring(0, 15)}...' : itemName, // Row 오버플로우 방지
+                    itemName.length > 15
+                        ? '${itemName.substring(0, 15)}...'
+                        : itemName, // Row 오버플로우 방지
                     style: darkGrayTextStyle(15),
                     softWrap: true,
                   ),
@@ -228,8 +250,7 @@ class _MedicationInfoState extends State<MedicationInfo> {
               Navigator.push(
                   context,
                   CupertinoPageRoute(
-                      builder: (context) => RegisterMedPageManual(
-                          )));
+                      builder: (context) => RegisterMedPageManual()));
             },
             child: const Text('복약 정보 등록하기', style: defaultactionSheetTextStyle),
           ),
@@ -237,7 +258,10 @@ class _MedicationInfoState extends State<MedicationInfo> {
           CupertinoActionSheetAction(
             isDestructiveAction: true,
             onPressed: () {
-              Navigator.push(context, CupertinoPageRoute(builder: (context) => const MedicationInfoDelete()));
+              Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) => const MedicationInfoDelete()));
             },
             child: const Text('복약 정보 삭제하기', style: defaultactionSheetTextStyle),
           ),

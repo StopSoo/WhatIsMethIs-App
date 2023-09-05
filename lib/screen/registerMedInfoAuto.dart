@@ -41,7 +41,7 @@ class _RegisterMedPageAutoState extends State<RegisterMedPageAuto> {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             body: SingleChildScrollView(
               child: Column(children: <Widget>[
                 RegisterMed(
@@ -134,10 +134,6 @@ class _RegisterMedState extends State<RegisterMed> {
 
     // 등록 API 호출
     await _medicationController.registerMedicationInfoIndex(_medication);
-
-    //TODO: pushNamedAndRemoveUntil로 변경하기
-    // 수정하는 페이지와 팝업으로 뒤로 가기 안되게 일단 pop...
-    Navigator.pop(context);
 
     // 수정된 복약 정보 페이지로 이동
     Navigator.push(
@@ -326,15 +322,17 @@ class _RegisterMedState extends State<RegisterMed> {
             ],
           ),
           const SizedBox(height: 8),
-          DatePickerExample(
-            time: _medication.notificationTime == null
-                ? DateTime.now()
-                : string2Time(_medication.notificationTime!),
-            onTimePickerChanged: (newTime) {
-              setState(() {
-                _medication.notificationTime = time2String(newTime);
-              });
-            },
+          Expanded(
+            child: DatePickerExample(
+              time: _medication.notificationTime == null
+                  ? DateTime.now()
+                  : string2Time(_medication.notificationTime!),
+              onTimePickerChanged: (newTime) {
+                setState(() {
+                  _medication.notificationTime = time2String(newTime);
+                });
+              }, isChecked: _isChecked,
+            ),
           ),
           const SizedBox(height: 13),
           Container(
