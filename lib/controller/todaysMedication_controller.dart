@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter_application/model/base_response.dart';
 import 'package:flutter_application/model/medication.dart';
-import 'package:flutter_application/model/todays_medication_list_res.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -27,10 +26,11 @@ class TodaysMedicationController {
       var responseBody = utf8.decode(response.bodyBytes);
       Map responseMap = jsonDecode(responseBody);
       var BrmedicationInfo = BaseResponse.fromJson(responseMap);
-      var medList = TodaysMedicationInfoListRes.fromJson(BrmedicationInfo.result);
-      return medList.medicationShortInfos;
+      var medList= BrmedicationInfo.result.map((item) => Medication.fromJson(item)).toList();
+      return medList;
     } else {
       throw Exception("복약 정보 리스트를 불러오는데 실패했습니다.");
     }
   }
 }
+

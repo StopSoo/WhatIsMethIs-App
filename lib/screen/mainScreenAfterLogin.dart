@@ -2,6 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
+import 'package:flutter_application/controller/medication_controller.dart';
+import 'package:flutter_application/controller/todaysMedication_controller.dart';
+import 'package:flutter_application/model/medication.dart';
 import 'package:flutter_application/screen/medication_info.dart';
 import 'package:flutter_application/screen/myPage.dart';
 import 'package:flutter_application/widget/findMedWidget.dart';
@@ -16,16 +19,51 @@ class MyHomePage_after extends StatefulWidget {
 class _MyHomePage_afterState extends State<MyHomePage_after> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(resizeToAvoidBottomInset: false, body: SingleChildScrollView(child: HomeScreen()));
+    return Scaffold(
+      resizeToAvoidBottomInset: false, 
+      body: SingleChildScrollView(
+        child: HomeScreen(medicationId: 17)
+      )
+    );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  final int medicationId;
+
+  HomeScreen({required this.medicationId, super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   // 알약 찾기 위젯 번호
   int currentIndexPage = 0;
 
-  HomeScreen({super.key});
+  final TodaysMedicationController _medicationController = TodaysMedicationController();
 
+  Medication _medication1 = Medication(
+    null, null, null, null, null, null, null, null, null, null, null, null
+  );
+  Medication _medication2 = Medication(
+    null, null, null, null, null, null, null, null, null, null, null, null
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMedicationInfo(widget.medicationId);
+  }
+
+  Future<void> _loadMedicationInfo(int medicationId) async {
+    List<Medication> medication =
+      await _medicationController.fetchMedicationInfo(currentIndexPage);
+    setState(() {
+      _medication1 = medication[0] as Medication;
+      _medication2 = medication[1] as Medication;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -108,22 +146,25 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 80, width: 18),
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          '점심 직후',
-                          style: TextStyle(fontSize: 15),
+                          _medication1.takeBeforeAfter ?? '',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: black,
+                          ),
                         ),
                         SizedBox(height: 6),
                         Row(children: <Widget>[
                           Text(
-                            '타이레놀8시간이알서방정',
+                            _medication1.medicineName ?? '',
                             style: TextStyle(fontSize: 15),
                           ),
                           SizedBox(width: 17),
                           Text(
-                            '1정',
+                            _medication1.takeCapacity.toString() ?? '',
                             style: TextStyle(fontSize: 15),
                           )
                         ]),
