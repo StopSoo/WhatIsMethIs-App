@@ -16,7 +16,9 @@ class MyHomePage_after extends StatefulWidget {
 class _MyHomePage_afterState extends State<MyHomePage_after> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(resizeToAvoidBottomInset: false, body: SingleChildScrollView(child: HomeScreen()));
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: SingleChildScrollView(child: HomeScreen()));
   }
 }
 
@@ -35,11 +37,16 @@ class HomeScreen extends StatelessWidget {
           children: <Widget>[
             // 로고와 마이 페이지
             Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-              Image.asset(alignment: Alignment.topLeft, 'assets/images/icon_logo.png', fit: BoxFit.contain, height: 45),
+              Image.asset(
+                  alignment: Alignment.topLeft,
+                  'assets/images/icon_logo.png',
+                  fit: BoxFit.contain,
+                  height: 45),
               const Spacer(),
               CupertinoButton(
                 onPressed: () {
-                  Navigator.push(context, CupertinoPageRoute(builder: (context) => const MyPage()));
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => const MyPage()));
                 },
                 child: const Icon(
                   CupertinoIcons.person,
@@ -54,7 +61,7 @@ class HomeScreen extends StatelessWidget {
               children: <Widget>[
                 CupertinoButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
+                    Navigator.of(context).push(CupertinoPageRoute(
                       builder: (BuildContext context) {
                         return const MedicationInfo();
                       },
@@ -70,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 28, width: 10),
                 CupertinoButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).push(CupertinoPageRoute(
                         builder: (BuildContext context) {
                           return const MedicationInfo();
                         },
@@ -99,9 +106,13 @@ class HomeScreen extends StatelessWidget {
                         Container(
                           width: 80,
                           height: 80,
-                          decoration: const BoxDecoration(shape: BoxShape.circle, color: main_color_green),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: main_color_green),
                         ),
-                        Container(margin: const EdgeInsets.fromLTRB(29, 26, 28, 29), child: const Text('💊', style: TextStyle(fontSize: 24)))
+                        Container(
+                            margin: const EdgeInsets.fromLTRB(29, 26, 28, 29),
+                            child: const Text('💊',
+                                style: TextStyle(fontSize: 24)))
                       ],
                     ),
                     const SizedBox(height: 80, width: 18),
@@ -139,9 +150,13 @@ class HomeScreen extends StatelessWidget {
                         Container(
                           width: 80,
                           height: 80,
-                          decoration: const BoxDecoration(shape: BoxShape.circle, color: main_color_green),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: main_color_green),
                         ),
-                        Container(margin: const EdgeInsets.fromLTRB(29, 26, 28, 29), child: const Text('💊', style: TextStyle(fontSize: 24)))
+                        Container(
+                            margin: const EdgeInsets.fromLTRB(29, 26, 28, 29),
+                            child: const Text('💊',
+                                style: TextStyle(fontSize: 24)))
                       ],
                     ),
                     const SizedBox(height: 80, width: 18),
@@ -171,27 +186,29 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Container(
-                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                CupertinoButton(
-                  onPressed: () {},
-                  minSize: 0,
-                  padding: const EdgeInsets.all(0),
-                  child: const Text(
-                    '더보기',
-                    style: TextStyle(fontSize: 15, color: black),
-                  ),
-                ),
-                const SizedBox(height: 22, width: 4),
-                CupertinoButton(
-                    onPressed: () {},
-                    minSize: 0,
-                    padding: const EdgeInsets.all(0),
-                    child: const Icon(
-                      CupertinoIcons.chevron_down,
-                      size: 25,
-                      color: black,
-                    )),
-              ]))
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                    CupertinoButton(
+                      onPressed: () {},
+                      minSize: 0,
+                      padding: const EdgeInsets.all(0),
+                      child: const Text(
+                        '더보기',
+                        style: TextStyle(fontSize: 15, color: black),
+                      ),
+                    ),
+                    const SizedBox(height: 22, width: 4),
+                    CupertinoButton(
+                        onPressed: () {},
+                        minSize: 0,
+                        padding: const EdgeInsets.all(0),
+                        child: const Icon(
+                          CupertinoIcons.chevron_down,
+                          size: 25,
+                          color: black,
+                        )),
+                  ]))
             ])),
             const SizedBox(height: 56),
             // 알약 찾기 위젯

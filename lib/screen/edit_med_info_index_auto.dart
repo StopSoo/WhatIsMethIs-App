@@ -35,7 +35,7 @@ class _EditMedInfoIndexAutoState extends State<EditMedInfoIndexAuto> {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             body: SingleChildScrollView(
               child: Column(children: <Widget>[
                 EditMed(medicationId: widget.medicationId),
@@ -105,27 +105,16 @@ class _EditMedState extends State<EditMed> {
                             _medication.description =
                                 _descriptionController.text;
 
-                                if(_isChecked == false){
-                                  _medication.notificationTime = null;
-                                }
+                            if (_isChecked == false) {
+                              _medication.notificationTime = null;
+                            }
                           });
                           // 수정 API 호출
                           await _editMedicationInfo(
                               widget.medicationId, _medication);
 
-                          //TODO: pushNamedAndRemoveUntil로 변경하기
-                          //수정하는 페이지와 팝업으로 뒤로 가기 안되게 일단 pop...
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-
-                          // 수정된 복약 정보 페이지로 이동
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => GetMedInfoIndexAuto(
-                                        medicationId: widget.medicationId,
-                                      )));
+                          //GetMedInfo로 되돌아가기
+                          Navigator.pop(context, true);
                         },
                         child: Center(
                           child: Text(
@@ -148,11 +137,7 @@ class _EditMedState extends State<EditMed> {
                       backgroundColor: main_color_green,
                       radius: 40,
                       child: _medication.medicineImage == null
-                          ? const Icon(
-                              CupertinoIcons.photo_on_rectangle,
-                              size: 28,
-                              color: dark_green,
-                            )
+                          ? const Text("💊")
                           : CircleAvatar(
                               backgroundImage:
                                   NetworkImage(_medication.medicineImage!),
@@ -273,7 +258,7 @@ class _EditMedState extends State<EditMed> {
                   selectedCycle: _medication.takeCycle! - 1,
                   onMedCycleChanged: (newCycle) {
                     setState(() {
-                      _medication.takeCycle = newCycle;
+                      _medication.takeCycle = newCycle + 1;
                     });
                   },
                 ),
@@ -310,7 +295,7 @@ class _EditMedState extends State<EditMed> {
                       _medication.notificationTime = time2String(newTime);
                       print(newTime);
                     });
-                  },
+                  }, isChecked: _isChecked,
                 ),
                 const SizedBox(height: 13),
                 Container(
@@ -349,6 +334,4 @@ class _EditMedState extends State<EditMed> {
             ),
           );
   }
-
-
 }

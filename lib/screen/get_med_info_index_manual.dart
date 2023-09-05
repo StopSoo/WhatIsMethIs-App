@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/components/functions.dart';
 import 'package:flutter_application/model/medication.dart';
+import 'package:flutter_application/screen/edit_med_info_index_manual.dart';
 import '../components/component.dart';
 import 'package:flutter_application/constants/colors.dart';
 
@@ -52,6 +53,9 @@ class _MedInfoIndexManualState extends State<MedInfoIndexManual> {
   Medication _medication = Medication(
       null, null, null, null, null, null, null, null, null, null, null, null);
 
+ //rebuild 확인용 변수
+  bool _shouldRebuild = false;
+
   @override
   void initState() {
     super.initState();
@@ -68,6 +72,12 @@ class _MedInfoIndexManualState extends State<MedInfoIndexManual> {
 
   @override
   Widget build(BuildContext context) {
+    //복약 정보 수정하기에서 되돌아왔을 때 화면 rebuild
+    if (_shouldRebuild) {
+      _shouldRebuild = false;
+      // 복약 정보 다시 받기
+      _loadMedicationInfo(widget.medicationId);
+    }
     return safeAreaPage(
       Colors.white,
       Colors.white,
@@ -230,9 +240,9 @@ class _MedInfoIndexManualState extends State<MedInfoIndexManual> {
                       height: 40,
                       decoration: medInfoIndexDecoration(),
                       padding: const EdgeInsets.fromLTRB(13, 9, 8, 9),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          "7일",
+                          "${_medication.takeCapacity}정",
                         ),
                       )),
                   const SizedBox(height: 10),
@@ -308,9 +318,19 @@ class _MedInfoIndexManualState extends State<MedInfoIndexManual> {
       builder: (BuildContext context) => CupertinoActionSheet(
         actions: <CupertinoActionSheetAction>[
           CupertinoActionSheetAction(
-            onPressed: () {
+            onPressed: () async {
               //Todo: Navigate to 복약정보 수정
-              Navigator.pop(context);
+              final result = await Navigator.pushReplacement(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) => EditMedInfoIndexManual(
+                            medicationId: widget.medicationId,
+                          )));
+              if (result != null && result == true) {
+                setState(() {
+                  _shouldRebuild = true;
+                });
+              }
             },
             child: const Text('복약 정보 수정하기', style: defaultactionSheetTextStyle),
           ),

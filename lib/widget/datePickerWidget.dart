@@ -32,7 +32,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           child: Text('${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일',
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: dark_gray,
+                color: CupertinoColors.black,
                 fontSize: 15,
               )),
         )
