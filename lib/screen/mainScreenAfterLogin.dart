@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/controller/medicine_controller.dart';
-import 'package:flutter_application/model/medicine_info_list_res.dart';
+import 'package:flutter_application/model/medication.dart';
 import 'package:flutter_application/screen/medication_info.dart';
 import 'package:flutter_application/screen/myPage.dart';
 import 'package:flutter_application/widget/findMedWidget.dart';
@@ -35,7 +35,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   // 알약 찾기 위젯 번호
   int currentIndexPage = 0;
-  MedicineInfoListRes? medicineInfoListRes;
+  List<Medication>? medicineInfoListRes;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> fetchTodayMedicineData() async {
-    MedicineInfoListRes? result = await fetchTodayMedicine();
+    List<Medication>? result = await fetchTodayMedicine();
     setState(() {
       medicineInfoListRes = result;
     });

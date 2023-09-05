@@ -1,4 +1,5 @@
 import 'package:flutter_application/model/base_response.dart';
+import 'package:flutter_application/model/medication.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -52,19 +53,24 @@ class MedicineController {
   }
 }
 
-Future<MedicineInfoListRes?> fetchTodayMedicine() async {
+Future<List<Medication>?> fetchTodayMedicine() async {
   final String baseUrl = dotenv.get("BASE_URL");
+  final String accessToken = dotenv.get("ACCESS_TOKEN");
 
-  final response = await http.get(Uri.parse("$baseUrl/medications/today"));
+  Map<String, String> headers = {'Content-Type': 'application/json', 'Accept': 'application/json', 'X-ACCESS-TOKEN': accessToken};
+
+  final response = await http.get(Uri.parse("$baseUrl/medications/today"), headers: headers);
 
   if (response.statusCode == 200) {
     BaseResponse res = BaseResponse.fromJson(json.decode(response.body));
 
-    MedicineInfoListRes medicineInfoListRes = MedicineInfoListRes.fromJson(res.result);
+    List<dynamic> jsonResponse = res.result;
 
-    print(medicineInfoListRes.toJson().toString());
+    List<Medication> medicineListRes = jsonResponse.map((data) => Medication.fromJson(data)).toList();
 
-    return medicineInfoListRes;
+    print(medicineListRes.toString());
+
+    return medicineListRes;
   } else {
     print(response.body);
 
