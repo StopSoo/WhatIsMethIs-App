@@ -106,10 +106,6 @@ class _EditMedManualState extends State<EditMedManual> {
                         minSize: 0,
                         padding: const EdgeInsets.all(0),
                         onPressed: () async {
-                          setState(() {
-                            _medication.description =
-                                _descriptionController.text;
-                          });
                           // 수정 API 호출
                           await _editMedicationInfo(
                               widget.medicationId, _medication);
@@ -158,6 +154,11 @@ class _EditMedManualState extends State<EditMedManual> {
                           padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                           decoration: medInfoIndexDecoration(),
                           child: TextField(
+                            onChanged: (text) {
+                              setState(() {
+                                _medication.medicineName = text;
+                              });
+                            },
                             controller: _nameController,
                             style:
                                 const TextStyle(color: dark_gray, fontSize: 16),
@@ -305,7 +306,8 @@ class _EditMedManualState extends State<EditMedManual> {
                     setState(() {
                       _medication.notificationTime = time2String(newTime);
                     });
-                  }, isChecked: _isChecked,
+                  },
+                  isChecked: _isChecked,
                 ),
                 const SizedBox(height: 13),
                 Container(
@@ -327,6 +329,11 @@ class _EditMedManualState extends State<EditMedManual> {
                           color: bright_gray,
                           borderRadius: BorderRadius.circular(12)),
                       child: TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            _medication.description = text;
+                          });
+                        },
                         controller: _descriptionController,
                         style: const TextStyle(color: dark_gray, fontSize: 16),
                         scrollPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),

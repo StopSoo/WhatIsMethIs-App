@@ -125,7 +125,6 @@ class _RegisterMedState extends State<RegisterMed> {
       _medication.medicineId = widget.medicineId;
       _medication.medicineName = widget.medicineName;
       _medication.medicineImage = widget.medicineImage;
-      _medication.description = _descriptionController.text;
 
       if (!_isChecked) {
         _medication.notificationTime = null;
@@ -354,6 +353,11 @@ class _RegisterMedState extends State<RegisterMed> {
                     color: bright_gray,
                     borderRadius: BorderRadius.circular(12)),
                 child: TextField(
+                  onChanged: (text) {
+                          setState(() {
+                            _medication.description = text;
+                          });
+                        },
                   controller: _descriptionController,
                   scrollPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   keyboardType: TextInputType.multiline,
