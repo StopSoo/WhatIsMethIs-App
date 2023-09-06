@@ -1,6 +1,7 @@
 // 애플리케이션 메인 화면 : 로그인 후
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/components/textstyle.dart';
 import 'package:flutter_application/constants/colors.dart';
 import 'package:flutter_application/controller/medicine_controller.dart';
 import 'package:flutter_application/model/medication.dart';
@@ -117,36 +118,46 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.fromLTRB(0, 24, 0, 0),
               child: Row(
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: const BoxDecoration(shape: BoxShape.circle, color: main_color_green),
+                  Container(
+                    child: CircleAvatar(
+                      backgroundColor: main_color_green,
+                      radius: 40,
+                      child: medicineInfoListRes?[0].medicineImage == null
+                      ? const Text("💊")
+                      : CircleAvatar(
+                        backgroundImage: NetworkImage(medicineInfoListRes![0].medicineImage!),
+                        radius: 38,
                       ),
-                      Container(margin: const EdgeInsets.fromLTRB(29, 26, 28, 29), child: const Text('💊', style: TextStyle(fontSize: 24)))
-                    ],
+                    ),
                   ),
                   const SizedBox(height: 80, width: 18),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '점심 직후',
-                        style: TextStyle(fontSize: 15),
+                        medicineInfoListRes?[0].takeMealTime == null ? '' :
+                        '${mealTime[medicineInfoListRes![0].takeMealTime] ?? ''} ${beforeAfterTime[medicineInfoListRes![0].takeBeforeAfter] ?? ''}',
+                        style: darkGrayTextStyle(15),
                       ),
-                      SizedBox(height: 6),
-                      Row(children: <Widget>[
-                        Text(
-                          '타이레놀8시간이알서방정',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        SizedBox(width: 17),
-                        Text(
-                          '1정',
-                          style: TextStyle(fontSize: 15),
-                        )
-                      ]),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            medicineInfoListRes?[0].medicineName == null ? '' :
+                              (medicineInfoListRes![0].medicineName!.length > 15
+                              ? '${medicineInfoListRes![0].medicineName!.substring(0, 15)}...'
+                              : medicineInfoListRes![0].medicineName!), // Row 오버플로우 방지
+                            style: darkGrayTextStyle(15),
+                            softWrap: true,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            medicineInfoListRes?[0].takeCapacity == null ? '' :
+                            '${medicineInfoListRes![0].takeCapacity.toString()} 정',
+                            style: darkGrayTextStyle(15),
+                          )
+                        ],
+                      ),
                     ],
                   )
                 ],
@@ -157,36 +168,46 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Row(
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: const BoxDecoration(shape: BoxShape.circle, color: main_color_green),
+                  Container(
+                    child: CircleAvatar(
+                      backgroundColor: main_color_green,
+                      radius: 40,
+                      child: medicineInfoListRes?[1].medicineImage == null
+                      ? const Text("💊")
+                      : CircleAvatar(
+                        backgroundImage: NetworkImage(medicineInfoListRes![1].medicineImage!),
+                        radius: 38,
                       ),
-                      Container(margin: const EdgeInsets.fromLTRB(29, 26, 28, 29), child: const Text('💊', style: TextStyle(fontSize: 24)))
-                    ],
+                    ),
                   ),
                   const SizedBox(height: 80, width: 18),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        '저녁 식후',
-                        style: TextStyle(fontSize: 15),
+                        medicineInfoListRes?[1].takeMealTime == null ? '' :
+                        '${mealTime[medicineInfoListRes![1].takeMealTime] ?? ''} ${beforeAfterTime[medicineInfoListRes![1].takeBeforeAfter] ?? ''}',
+                        style: darkGrayTextStyle(15),
                       ),
-                      SizedBox(height: 6),
-                      Row(children: <Widget>[
-                        Text(
-                          '타이레놀8시간이알서방정',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        SizedBox(width: 17),
-                        Text(
-                          '1정',
-                          style: TextStyle(fontSize: 15),
-                        )
-                      ]),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            medicineInfoListRes?[1].medicineName == null ? '' :
+                              (medicineInfoListRes![1].medicineName!.length > 15
+                              ? '${medicineInfoListRes![1].medicineName!.substring(0, 15)}...'
+                              : medicineInfoListRes![1].medicineName!), // Row 오버플로우 방지
+                            style: darkGrayTextStyle(15),
+                            softWrap: true,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            medicineInfoListRes?[1].takeCapacity == null ? '' :
+                            '${medicineInfoListRes![1].takeCapacity.toString()} 정',
+                            style: darkGrayTextStyle(15),
+                          )
+                        ],
+                      ),
                     ],
                   )
                 ],

@@ -329,9 +329,8 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                   decoration: BoxDecoration(
                       color: bright_gray,
                       borderRadius: BorderRadius.circular(12)),
-                  child: TextField(
-                    controller: _descriptionController,
-                    scrollPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: const TextField(
+                    scrollPadding: EdgeInsets.only(bottom: 40),
                     keyboardType: TextInputType.multiline,
                     maxLines: null, // 자동 줄바꿈
                     decoration: InputDecoration(

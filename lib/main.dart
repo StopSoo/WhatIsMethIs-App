@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/screen/edit_med_info_index_auto.dart';
 import 'package:flutter_application/screen/mainScreenAfterLogin.dart';
 import 'package:flutter_application/provider/user_provider.dart';
 import 'package:flutter_application/screen/mainScreenBeforeLogin.dart';
@@ -12,12 +13,14 @@ import 'package:provider/provider.dart';
 void main() async {
   await dotenv.load();
   KakaoSdk.init(nativeAppKey: '177ec17efa9ed10f54f86aaa8923b68e');
-   runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => UserProvider())
-    ],
-    child: const MyApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserProvider())
+      ],
+      child: const MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -45,14 +48,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: MyHomePage_after(),
-
-      initialRoute: '/MyHomePage_after',  // 개발용 initRoute, 추후에 변경해야 함
-      routes: {
-        '/MyHomePage_before': (context) => MyHomePage_before(),
-        '/MyHomePage_after': (context) => MyHomePage_after(),
-        '/MedicationInfo': (context) => MedicationInfo(),
-      },
+      home: MyHomePage_before(),
     );
   }
 }

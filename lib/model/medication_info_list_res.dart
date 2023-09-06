@@ -12,7 +12,7 @@ class MedicationInfoListRes{
     this.medicationShortInfos,
     this.totalPages
   );
-
+  
   factory MedicationInfoListRes.fromJson(Map<String, dynamic> json) =>
       _$MedicationInfoListResFromJson(json);
   Map<String, dynamic> toJson() => _$MedicationInfoListResToJson(this);

@@ -61,7 +61,8 @@ class _EditMedState extends State<EditMed> {
 
   late bool _isChecked; // 복약 알림 - switch
   Medication _medication = Medication(
-      null, null, null, null, null, null, null, null, null, null, null, null);
+      null, null, null, null, null, null, null, null, null, null, null, null
+    );
   @override
   void initState() {
     super.initState();
@@ -112,7 +113,6 @@ class _EditMedState extends State<EditMed> {
                           // 수정 API 호출
                           await _editMedicationInfo(
                               widget.medicationId, _medication);
-
                           //GetMedInfo로 되돌아가기
                           Navigator.pop(context, true);
                         },
@@ -319,7 +319,7 @@ class _EditMedState extends State<EditMed> {
                       child: TextField(
                         controller: _descriptionController,
                         style: const TextStyle(color: dark_gray, fontSize: 16),
-                        scrollPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        scrollPadding: EdgeInsets.only(bottom: 40),
                         keyboardType: TextInputType.multiline,
                         maxLines: null, // 자동 줄바꿈
                         decoration: const InputDecoration(
