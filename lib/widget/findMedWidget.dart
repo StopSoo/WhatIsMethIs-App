@@ -42,7 +42,9 @@ class _FindMedWidgetState extends State<FindMedWidget> {
                 CupertinoButton(
                   onPressed: () async {
                     // TODO: 알약 찾기 카메라 페이지
-                    Tuple2<XFile?, Medicine?> res = await getImageFromCamera(width);
+                    // Tuple2<XFile?, Medicine?> res = await getImageFromCamera(width);
+                    Tuple2<XFile?, Medicine?> res = await getImageFromGallery(width);
+
                     XFile? imageRes = res.item1;
                     Medicine? medicineRes = res.item2;
 

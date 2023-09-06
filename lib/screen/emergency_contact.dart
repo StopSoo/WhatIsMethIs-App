@@ -24,12 +24,11 @@ class _EmergencyContactState extends State<EmergencyContact> {
   bool _deleteBox = false;
   int contactCount = 100;
 
-  UserController _userController = UserController();
+  final UserController _userController = UserController();
   late UserProvider _userProvider;
-  User _user = User(null, "email", null, "name", null, "age", "phoneNumber",
-      "loginCode", null, null, null, null, null);
-  List<User> _contactList = [];
-  List<bool> _isContactList = [];
+  User _user = User(null, "email", null, "name", null, "age", "phoneNumber", "loginCode", null, null, null, null, null);
+  final List<User> _contactList = [];
+  final List<bool> _isContactList = [];
 
   //비상연락망 등록 및 수정 API request용
   EmergencyContactReq contactReq = EmergencyContactReq(null, null, null);
@@ -55,8 +54,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
       return;
     }
 
-    User? user =
-        await _userController.fetchUserInfoWithPhoneNumber(phoneNumber);
+    User? user = await _userController.fetchUserInfoWithPhoneNumber(phoneNumber);
     if (user != null) {
       setState(() {
         _contactList.add(user);
@@ -97,16 +95,13 @@ class _EmergencyContactState extends State<EmergencyContact> {
 
   //해당하는 연락처 삭제
   void deleteEmergencyContact(int index) {
-    if (_contactList[index].phoneNumber ==
-        _userProvider.getUserData().emergencyContact1) {
+    if (_contactList[index].phoneNumber == _userProvider.getUserData().emergencyContact1) {
       contactReq.contact1 = null;
       _userProvider.getUserData().emergencyContact1 = null;
-    } else if (_contactList[index].phoneNumber ==
-        _userProvider.getUserData().emergencyContact2) {
+    } else if (_contactList[index].phoneNumber == _userProvider.getUserData().emergencyContact2) {
       contactReq.contact2 = null;
       _userProvider.getUserData().emergencyContact2 = null;
-    } else if (_contactList[index].phoneNumber ==
-        _userProvider.getUserData().emergencyContact3) {
+    } else if (_contactList[index].phoneNumber == _userProvider.getUserData().emergencyContact3) {
       contactReq.contact3 = null;
       _userProvider.getUserData().emergencyContact3 = null;
     }
@@ -117,28 +112,28 @@ class _EmergencyContactState extends State<EmergencyContact> {
     if (_userProvider.getUserData().emergencyContact1 == null) {
       contactReq.contact1 = phoneNumber;
       _userProvider.getUserData().emergencyContact1 = phoneNumber;
-    } else if(_userProvider.getUserData().emergencyContact2 == null){
+    } else if (_userProvider.getUserData().emergencyContact2 == null) {
       contactReq.contact2 = phoneNumber;
       _userProvider.getUserData().emergencyContact2 = phoneNumber;
-    } else if(_userProvider.getUserData().emergencyContact3 == null){
+    } else if (_userProvider.getUserData().emergencyContact3 == null) {
       contactReq.contact3 = phoneNumber;
       _userProvider.getUserData().emergencyContact3 = phoneNumber;
-    } else{
+    } else {
       await _fullContact();
     }
   }
 
   String maskPhoneNumber(String phoneNumber) {
-  if (phoneNumber.length == 13) { 
-    //010-0000-0000
-    String firstPart = phoneNumber.substring(0, 4); // "010-"
-    String lastPart = phoneNumber.substring(8); // "0000"
-    
-    return '$firstPart****$lastPart';
-  } else {
-    return phoneNumber;
+    if (phoneNumber.length == 13) {
+      //010-0000-0000
+      String firstPart = phoneNumber.substring(0, 4); // "010-"
+      String lastPart = phoneNumber.substring(8); // "0000"
+
+      return '$firstPart****$lastPart';
+    } else {
+      return phoneNumber;
+    }
   }
-}
 
   Future<void> _fullContact() async {
     await showCupertinoDialog<void>(
@@ -146,8 +141,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text('더 이상 비상연락망에 유저를 등록할 수 없어요😥'),
-          content: Text(
-              '비상연락망은 3명까지만 추가할 수 있어요.\n이미 등록된 유저를 왼쪽으로 밀어 삭제한 후 다시 시도해주세요!'),
+          content: Text('비상연락망은 3명까지만 추가할 수 있어요.\n이미 등록된 유저를 왼쪽으로 밀어 삭제한 후 다시 시도해주세요!'),
           actions: <Widget>[
             CupertinoDialogAction(
               onPressed: () {
@@ -172,8 +166,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
       _userProvider.getUserData().emergencyContact3,
     ];
 
-    contactCount =
-        emergencyContacts.where((phoneNumber) => phoneNumber != null).length;
+    contactCount = emergencyContacts.where((phoneNumber) => phoneNumber != null).length;
     setRequest();
 
     for (final phoneNumber in emergencyContacts) {
@@ -188,13 +181,10 @@ class _EmergencyContactState extends State<EmergencyContact> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          defaultHeader(
-              "비상 연락망", context, const Center(child: SizedBox(width: 28))),
+          defaultHeader("비상 연락망", context, const Center(child: SizedBox(width: 28))),
           searchField(),
           if (!_deleteBox) descriptionBox(),
-          contactCount == 100
-              ? const Center(child: CupertinoActivityIndicator())
-              : contactListView(),
+          contactCount == 100 ? const Center(child: CupertinoActivityIndicator()) : contactListView(),
         ],
       ),
     );
@@ -207,10 +197,9 @@ class _EmergencyContactState extends State<EmergencyContact> {
         itemBuilder: (context, index) {
           final image = _contactList[index].image;
           final name = _contactList[index].name;
-          final phoneNumber = maskPhoneNumber(_contactList[index].phoneNumber);
+          final phoneNumber = _contactList[index].phoneNumber;
           print("mask");
           print(phoneNumber);
-
 
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
@@ -225,12 +214,10 @@ class _EmergencyContactState extends State<EmergencyContact> {
                       ),
                       alignment: Alignment.centerRight,
                       padding: const EdgeInsets.only(right: 26),
-                      child:
-                          const Icon(CupertinoIcons.trash, color: Colors.white),
+                      child: const Icon(CupertinoIcons.trash, color: Colors.white),
                     ),
                     onDismissed: (direction) async {
-                      if (direction == DismissDirection.endToStart &&
-                          _isContactList[index]) {
+                      if (direction == DismissDirection.endToStart && _isContactList[index]) {
                         //삭제
                         if (index == 0) {
                           deleteEmergencyContact(index);
@@ -247,15 +234,11 @@ class _EmergencyContactState extends State<EmergencyContact> {
                         //** TODO 새로고침
                         Navigator.pop(context);
 
-                        Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => EmergencyContact()));
+                        Navigator.push(context, CupertinoPageRoute(builder: (context) => EmergencyContact()));
                         //------------------**
                       }
                     },
-                    child: contactBox(
-                        image, name, phoneNumber, _isContactList[index]),
+                    child: contactBox(image, name, phoneNumber, _isContactList[index]),
                   )
                 : contactBox(image, name, phoneNumber, _isContactList[index]),
           );
@@ -264,8 +247,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
     );
   }
 
-  Container contactBox(
-      String? image, String name, String phoneNumber, bool isContact) {
+  Container contactBox(String? image, String name, String phoneNumber, bool isContact) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 11),
       decoration: BoxDecoration(
@@ -294,7 +276,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
               children: [
                 Text(name, style: darkGrayTextStyle(15)),
                 const SizedBox(height: 5),
-                Text(phoneNumber, style: greenTextStyle(13)),
+                Text(maskPhoneNumber(phoneNumber), style: greenTextStyle(13)),
               ],
             ),
           ),
@@ -303,7 +285,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
               minSize: 0,
               padding: const EdgeInsets.all(0),
               onPressed: () async {
-                if (contactCount<=3) {
+                if (contactCount <= 3) {
                   await addEmergencyContact(phoneNumber);
                 } else {
                   //비상연락망 지우라고 팝업 띄우기
@@ -316,10 +298,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
                 //** TODO 새로고침
                 Navigator.pop(context);
 
-                Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (context) => EmergencyContact()));
+                Navigator.push(context, CupertinoPageRoute(builder: (context) => EmergencyContact()));
                 //------------------**
               },
               child: const Icon(
@@ -355,8 +334,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
                   },
                   minSize: 0,
                   padding: const EdgeInsets.fromLTRB(0, 10, 16, 0),
-                  child: const Icon(CupertinoIcons.xmark_circle_fill,
-                      color: CupertinoColors.secondaryLabel),
+                  child: const Icon(CupertinoIcons.xmark_circle_fill, color: CupertinoColors.secondaryLabel),
                 ),
               ],
             ),
@@ -400,10 +378,8 @@ class _EmergencyContactState extends State<EmergencyContact> {
                     });
                   },
                   onSubmitted: (value) async {
-                    final user = await _userController
-                        .fetchUserInfoWithPhoneNumber(value);
-                    final isContact =
-                        isPhoneNumberInMyEmergencyContactList(value);
+                    final user = await _userController.fetchUserInfoWithPhoneNumber(value);
+                    final isContact = isPhoneNumberInMyEmergencyContactList(value);
 
                     while (_contactList.length > contactCount) {
                       _contactList.removeLast();
