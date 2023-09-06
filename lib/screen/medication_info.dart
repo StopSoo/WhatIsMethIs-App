@@ -99,53 +99,57 @@ class _MedicationInfoState extends State<MedicationInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return safeAreaPage(
-      Colors.white,
-      Colors.white,
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          defaultHeader(
-            "복약 정보 조회하기",
-            context,
-            CupertinoButton(
-              minSize: 0,
-              padding: const EdgeInsets.all(0),
-              onPressed: () {
-                _showActionSheet(context);
-              },
-              child: Icon(
-                CupertinoIcons.ellipsis,
-                color: Colors.black.withOpacity(0.9),
-                size: 28,
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: safeAreaPage(
+          Colors.white,
+          Colors.white,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              defaultHeader(
+                "복약 정보 조회하기",
+                context,
+                CupertinoButton(
+                  minSize: 0,
+                  padding: const EdgeInsets.all(0),
+                  onPressed: () {
+                    _showActionSheet(context);
+                  },
+                  child: Icon(
+                    CupertinoIcons.ellipsis,
+                    color: Colors.black.withOpacity(0.9),
+                    size: 28,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              shrinkWrap: true,
-              itemCount: _medInfoList.length,
-              itemBuilder: (BuildContext context, int index) =>
-                medicationShortInfoBox(
-                  _medInfoList[index].medicineId!,
-                  _medInfoList[index].medicationId!,
-                    _medInfoList[index].medicineImage,
-                    mealTime[_medInfoList[index].takeMealTime]!,
-                    beforeAfterTime[_medInfoList[index].takeBeforeAfter]!,
-                    _medInfoList[index].medicineName  ?? '',
-                    _medInfoList[index].takeCapacity  ?? 0
-              )
-            ),
-          ),
-          if (_isLoadMoreRunning == true)
-            Container(
-              padding: const EdgeInsets.all(30),
-              child: const Center(
-                child: CupertinoActivityIndicator(),
+              Expanded(
+                child: ListView.builder(
+                  controller: _scrollController,
+                  shrinkWrap: true,
+                  itemCount: _medInfoList.length,
+                  itemBuilder: (BuildContext context, int index) =>
+                    medicationShortInfoBox(
+                      _medInfoList[index].medicineId!,
+                      _medInfoList[index].medicationId!,
+                        _medInfoList[index].medicineImage,
+                        mealTime[_medInfoList[index].takeMealTime]!,
+                        beforeAfterTime[_medInfoList[index].takeBeforeAfter]!,
+                        _medInfoList[index].medicineName  ?? '',
+                        _medInfoList[index].takeCapacity  ?? 0
+                  )
+                ),
               ),
-            ),
-        ],
+              if (_isLoadMoreRunning == true)
+                Container(
+                  padding: const EdgeInsets.all(30),
+                  child: const Center(
+                    child: CupertinoActivityIndicator(),
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

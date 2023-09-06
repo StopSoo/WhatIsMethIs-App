@@ -187,26 +187,27 @@ class _RegisterMedState extends State<RegisterMed> {
                   ))),
           const SizedBox(height: 10),
           Container(
-              padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                width: 324,
-                height: 219,
-                decoration: BoxDecoration(
-                    color: bright_gray,
-                    borderRadius: BorderRadius.circular(12)),
-                child: const TextField(
-                  scrollPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null, // 자동 줄바꿈
-                  decoration: InputDecoration(
-                      hintText: '약에 대한 설명을 입력하세요.',
-                      border: InputBorder.none, // 텍스트 박스 아래 줄 제거
-                      labelStyle: TextStyle(color: dark_gray),
-                      focusedBorder:
-                          OutlineInputBorder(borderSide: BorderSide.none)),
-                ),
-              )),
+            padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
+              width: 324,
+              height: 219,
+              decoration: BoxDecoration(
+                  color: bright_gray,
+                  borderRadius: BorderRadius.circular(12)),
+              child: const TextField(
+                scrollPadding: EdgeInsets.only(bottom: 40),
+                keyboardType: TextInputType.multiline,
+                maxLines: null, // 자동 줄바꿈
+                decoration: InputDecoration(
+                    hintText: '약에 대한 설명을 입력하세요.',
+                    border: InputBorder.none, // 텍스트 박스 아래 줄 제거
+                    labelStyle: TextStyle(color: dark_gray),
+                    focusedBorder:
+                        OutlineInputBorder(borderSide: BorderSide.none)),
+              ),
+            )
+          ),
         ],
       ),
     );

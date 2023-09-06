@@ -49,13 +49,6 @@ class MyApp extends StatelessWidget {
       ),
 
       home: MyHomePage_before(),
-
-      // initialRoute: '/MyHomePage_before',  // 초기 화면 설정
-      // routes: {
-      //   '/MyHomePage_before': (context) => MyHomePage_before(),
-      //   '/MyHomePage_after': (context) => MyHomePage_after(),
-      //   '/MedicationInfo': (context) => MedicationInfo(),
-      // },
     );
   }
 }

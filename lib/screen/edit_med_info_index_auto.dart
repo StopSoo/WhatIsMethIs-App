@@ -328,7 +328,7 @@ class _EditMedState extends State<EditMed> {
                       child: TextField(
                         controller: _descriptionController,
                         style: const TextStyle(color: dark_gray, fontSize: 16),
-                        scrollPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        scrollPadding: EdgeInsets.only(bottom: 40),
                         keyboardType: TextInputType.multiline,
                         maxLines: null, // 자동 줄바꿈
                         decoration: const InputDecoration(

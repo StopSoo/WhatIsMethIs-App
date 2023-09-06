@@ -16,7 +16,11 @@ class MyHomePage_before extends StatefulWidget {
 class _MyHomePage_beforeState extends State<MyHomePage_before> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: PleaseLogin());
+    return const Scaffold(
+      body: SingleChildScrollView(
+        child: PleaseLogin()
+      )
+    );
   }
 }
 
