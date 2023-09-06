@@ -207,7 +207,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
         itemBuilder: (context, index) {
           final image = _contactList[index].image;
           final name = _contactList[index].name;
-          final phoneNumber = maskPhoneNumber(_contactList[index].phoneNumber);
+          final phoneNumber = _contactList[index].phoneNumber;
           print("mask");
           print(phoneNumber);
 
@@ -294,7 +294,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
               children: [
                 Text(name, style: darkGrayTextStyle(15)),
                 const SizedBox(height: 5),
-                Text(phoneNumber, style: greenTextStyle(13)),
+                Text(maskPhoneNumber(phoneNumber), style: greenTextStyle(13)),
               ],
             ),
           ),
