@@ -17,6 +17,7 @@ class _MyHomePage_beforeState extends State<MyHomePage_before> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: PleaseLogin()
       )

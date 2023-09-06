@@ -23,25 +23,27 @@ class MedCyclePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoApp(
       theme: CupertinoThemeData(brightness: Brightness.light),
-      home: MedCyclePickerWidget(selectedCycle: 0,),
+      home: MedCyclePickerWidget(
+        selectedCycle: 0,
+      ),
     );
   }
 }
-typedef MedCycleChangedCallback = void Function(int newCycle);
 
+typedef MedCycleChangedCallback = void Function(int newCycle);
 
 class MedCyclePickerWidget extends StatefulWidget {
   int selectedCycle;
   MedCycleChangedCallback? onMedCycleChanged; // Define the callback function.
 
-  MedCyclePickerWidget({super.key, required this.selectedCycle, this.onMedCycleChanged});
+  MedCyclePickerWidget(
+      {super.key, required this.selectedCycle, this.onMedCycleChanged});
 
   @override
   State<MedCyclePickerWidget> createState() => _MedCyclePickerWidgetState();
 }
 
 class _MedCyclePickerWidgetState extends State<MedCyclePickerWidget> {
-
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
       context: context,
@@ -57,20 +59,24 @@ class _MedCyclePickerWidgetState extends State<MedCyclePickerWidget> {
             child: Column(children: [
               Expanded(
                 flex: 6,
-                child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  CupertinoButton(
-                    child: const Text('취소', style: TextStyle(color: Colors.red)),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoButton(
-                    child: const Text('완료'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ]),
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CupertinoButton(
+                        child: const Text('취소',
+                            style: TextStyle(color: Colors.red)),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      CupertinoButton(
+                        child: const Text('완료'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ]),
               ),
               Expanded(flex: 20, child: child),
             ])),
@@ -88,49 +94,46 @@ class _MedCyclePickerWidgetState extends State<MedCyclePickerWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CupertinoButton(
-            minSize: 0.0,
-            padding: EdgeInsets.fromLTRB(13, 9, 8, 9),
-            color: bright_gray,
-            onPressed: () => _showDialog(
-              CupertinoPicker(
-                magnification: 1.22,
-                squeeze: 1.2,
-                useMagnifier: true,
-                itemExtent: _kItemExtent,
-                scrollController: FixedExtentScrollController(
-                  initialItem: widget.selectedCycle,
-                ),
-                onSelectedItemChanged: (int selectedItem) {
-                  setState(() {
-                    widget.selectedCycle = selectedItem;
-                  widget.onMedCycleChanged?.call(widget.selectedCycle);
-
-                  });
-                },
-                children:
-                    List<Widget>.generate(_medCounts.length, (int index) {
-                  return Center(child: Text(_medCounts[index]));
-                }),
-              ),
-            ),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 140
-                ),
-                Text(
-                  _medCounts[widget.selectedCycle],
-                  style: const TextStyle(fontSize: 15.0, color: dark_gray),
-                ),
-                SizedBox(width: 120),
-                Icon(
-                  CupertinoIcons.chevron_down,
-                  size: 15,
-                  color: black,
-                ),
-              ],
-            )
-          ),
+              minSize: 0.0,
+              padding: EdgeInsets.fromLTRB(13, 9, 8, 9),
+              color: bright_gray,
+              onPressed: () => _showDialog(
+                    CupertinoPicker(
+                      magnification: 1.22,
+                      squeeze: 1.2,
+                      useMagnifier: true,
+                      itemExtent: _kItemExtent,
+                      scrollController: FixedExtentScrollController(
+                        initialItem: widget.selectedCycle,
+                      ),
+                      onSelectedItemChanged: (int selectedItem) {
+                        setState(() {
+                          widget.selectedCycle = selectedItem;
+                          widget.onMedCycleChanged?.call(widget.selectedCycle);
+                        });
+                      },
+                      children:
+                          List<Widget>.generate(_medCounts.length, (int index) {
+                        return Center(child: Text(_medCounts[index]));
+                      }),
+                    ),
+                  ),
+              child: Row(
+                children: [
+                  SizedBox(width: 140),
+                  Text(
+                    _medCounts[widget.selectedCycle],
+                    style: const TextStyle(
+                        fontSize: 15.0, color: CupertinoColors.black),
+                  ),
+                  SizedBox(width: 120),
+                  Icon(
+                    CupertinoIcons.chevron_down,
+                    size: 15,
+                    color: black,
+                  ),
+                ],
+              )),
         ],
       ),
     );

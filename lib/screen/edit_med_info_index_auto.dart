@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application/components/functions.dart';
 import 'package:flutter_application/controller/medication_controller.dart';
 import 'package:flutter_application/model/medication.dart';
 import 'package:flutter_application/screen/get_med_info_index_auto.dart';
@@ -13,8 +14,6 @@ import 'package:flutter_application/widget/datePickerWidget.dart';
 import 'package:flutter_application/widget/timePickerWidget.dart';
 import 'package:flutter_application/widget/medCountWidget.dart';
 import 'package:flutter_application/widget/medCycleWidget.dart';
-
-import 'package:intl/intl.dart';
 
 class EditMedInfoIndexAuto extends StatefulWidget {
   final int medicationId;
@@ -36,7 +35,7 @@ class _EditMedInfoIndexAutoState extends State<EditMedInfoIndexAuto> {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             body: SingleChildScrollView(
               child: Column(children: <Widget>[
                 EditMed(medicationId: widget.medicationId),
@@ -106,20 +105,16 @@ class _EditMedState extends State<EditMed> {
                           setState(() {
                             _medication.description =
                                 _descriptionController.text;
+
+                            if (_isChecked == false) {
+                              _medication.notificationTime = null;
+                            }
                           });
                           // 수정 API 호출
                           await _editMedicationInfo(
                               widget.medicationId, _medication);
-                          // pushAndRemoveUntil 수정
-                          Navigator.of(context).pushAndRemoveUntil(
-                            CupertinoPageRoute(
-                              builder: (context) => GetMedInfoIndexAuto(
-                                medicationId: widget.medicationId,
-                              )
-                            ),
-                            // 스택에 남아 있던 페이지들 삭제 후 MedicationInfo로 넘어감
-                            (route) => route.settings.name == '/MedicationInfo',
-                          );
+                          //GetMedInfo로 되돌아가기
+                          Navigator.pop(context, true);
                         },
                         child: Center(
                           child: Text(
@@ -142,11 +137,7 @@ class _EditMedState extends State<EditMed> {
                       backgroundColor: main_color_green,
                       radius: 40,
                       child: _medication.medicineImage == null
-                          ? const Icon(
-                              CupertinoIcons.photo_on_rectangle,
-                              size: 28,
-                              color: dark_green,
-                            )
+                          ? const Text("💊")
                           : CircleAvatar(
                               backgroundImage:
                                   NetworkImage(_medication.medicineImage!),
@@ -267,7 +258,7 @@ class _EditMedState extends State<EditMed> {
                   selectedCycle: _medication.takeCycle! - 1,
                   onMedCycleChanged: (newCycle) {
                     setState(() {
-                      _medication.takeCycle = newCycle;
+                      _medication.takeCycle = newCycle + 1;
                     });
                   },
                 ),
@@ -304,7 +295,7 @@ class _EditMedState extends State<EditMed> {
                       _medication.notificationTime = time2String(newTime);
                       print(newTime);
                     });
-                  },
+                  }, isChecked: _isChecked,
                 ),
                 const SizedBox(height: 13),
                 Container(
@@ -342,31 +333,5 @@ class _EditMedState extends State<EditMed> {
               ],
             ),
           );
-  }
-
-  DateTime string2Date(String inputDate) {
-    DateTime dateTime = DateTime.parse(inputDate);
-
-    return dateTime;
-  }
-
-  String date2String(DateTime dateTime) {
-    String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
-
-    return formattedDate;
-  }
-
-  String time2String(DateTime dateTime) {
-    String formattedTime = DateFormat("HH:mm:ss").format(dateTime);
-
-    return formattedTime;
-  }
-
-  DateTime string2Time(String inputTime) {
-    //더미 날짜
-    String dummyDate = "2023-09-03";
-    DateTime dateTime = DateTime.parse("$dummyDate $inputTime");
-
-    return dateTime;
   }
 }
