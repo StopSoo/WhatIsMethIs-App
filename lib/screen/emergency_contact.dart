@@ -22,7 +22,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
   TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
   bool _deleteBox = false;
-  late int contactCount;
+  int contactCount = 100;
 
   UserController _userController = UserController();
   late UserProvider _userProvider;
@@ -95,6 +95,72 @@ class _EmergencyContactState extends State<EmergencyContact> {
     super.dispose();
   }
 
+  //해당하는 연락처 삭제
+  void deleteEmergencyContact(int index) {
+    if (_contactList[index].phoneNumber ==
+        _userProvider.getUserData().emergencyContact1) {
+      contactReq.contact1 = null;
+      _userProvider.getUserData().emergencyContact1 = null;
+    } else if (_contactList[index].phoneNumber ==
+        _userProvider.getUserData().emergencyContact2) {
+      contactReq.contact2 = null;
+      _userProvider.getUserData().emergencyContact2 = null;
+    } else if (_contactList[index].phoneNumber ==
+        _userProvider.getUserData().emergencyContact3) {
+      contactReq.contact3 = null;
+      _userProvider.getUserData().emergencyContact3 = null;
+    }
+  }
+
+  //비어있는 비상연락망 인덱스에 추가
+  Future<void> addEmergencyContact(String phoneNumber) async {
+    if (_userProvider.getUserData().emergencyContact1 == null) {
+      contactReq.contact1 = phoneNumber;
+      _userProvider.getUserData().emergencyContact1 = phoneNumber;
+    } else if(_userProvider.getUserData().emergencyContact2 == null){
+      contactReq.contact2 = phoneNumber;
+      _userProvider.getUserData().emergencyContact2 = phoneNumber;
+    } else if(_userProvider.getUserData().emergencyContact3 == null){
+      contactReq.contact3 = phoneNumber;
+      _userProvider.getUserData().emergencyContact3 = phoneNumber;
+    } else{
+      await _fullContact();
+    }
+  }
+
+  String maskPhoneNumber(String phoneNumber) {
+  if (phoneNumber.length == 13) { 
+    //010-0000-0000
+    String firstPart = phoneNumber.substring(0, 4); // "010-"
+    String lastPart = phoneNumber.substring(8); // "0000"
+    
+    return '$firstPart****$lastPart';
+  } else {
+    return phoneNumber;
+  }
+}
+
+  Future<void> _fullContact() async {
+    await showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text('더 이상 비상연락망에 유저를 등록할 수 없어요😥'),
+          content: Text(
+              '비상연락망은 3명까지만 추가할 수 있어요.\n이미 등록된 유저를 왼쪽으로 밀어 삭제한 후 다시 시도해주세요!'),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('확인'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     //로그인 구현시 사라질 예정..
@@ -126,7 +192,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
               "비상 연락망", context, const Center(child: SizedBox(width: 28))),
           searchField(),
           if (!_deleteBox) descriptionBox(),
-          _user.id == null
+          contactCount == 100
               ? const Center(child: CupertinoActivityIndicator())
               : contactListView(),
         ],
@@ -141,7 +207,10 @@ class _EmergencyContactState extends State<EmergencyContact> {
         itemBuilder: (context, index) {
           final image = _contactList[index].image;
           final name = _contactList[index].name;
-          final phoneNumber = _contactList[index].phoneNumber;
+          final phoneNumber = maskPhoneNumber(_contactList[index].phoneNumber);
+          print("mask");
+          print(phoneNumber);
+
 
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
@@ -164,14 +233,11 @@ class _EmergencyContactState extends State<EmergencyContact> {
                           _isContactList[index]) {
                         //삭제
                         if (index == 0) {
-                          contactReq.contact1 = null;
-                          _userProvider.getUserData().emergencyContact1 = null;
+                          deleteEmergencyContact(index);
                         } else if (index == 1) {
-                          contactReq.contact2 = null;
-                          _userProvider.getUserData().emergencyContact2 = null;
+                          deleteEmergencyContact(index);
                         } else if (index == 2) {
-                          contactReq.contact3 = null;
-                          _userProvider.getUserData().emergencyContact3 = null;
+                          deleteEmergencyContact(index);
                         } else {
                           //예외처리
                         }
@@ -237,17 +303,12 @@ class _EmergencyContactState extends State<EmergencyContact> {
               minSize: 0,
               padding: const EdgeInsets.all(0),
               onPressed: () async {
-                if (contactCount == 0) {
-                  contactReq.contact1 = phoneNumber;
-                  _userProvider.getUserData().emergencyContact1 = phoneNumber;
-                } else if (contactCount == 1) {
-                  contactReq.contact2 = phoneNumber;
-                  _userProvider.getUserData().emergencyContact2 = phoneNumber;
-                } else if (contactCount == 2) {
-                  contactReq.contact3 = phoneNumber;
-                  _userProvider.getUserData().emergencyContact3 = phoneNumber;
+                if (contactCount<=3) {
+                  await addEmergencyContact(phoneNumber);
                 } else {
                   //비상연락망 지우라고 팝업 띄우기
+                  await _fullContact();
+                  return;
                 }
 
                 await _userController.patchEmergencyContact(contactReq);
@@ -329,7 +390,7 @@ class _EmergencyContactState extends State<EmergencyContact> {
               child: Center(
                 child: CupertinoSearchTextField(
                   backgroundColor: bright_gray,
-                  placeholder: "유저 아이디를 검색하세요",
+                  placeholder: "유저 핸드폰 번호를 검색하세요",
                   focusNode: focusNode,
                   controller: controller,
                   style: darkGrayTextStyle(15),
