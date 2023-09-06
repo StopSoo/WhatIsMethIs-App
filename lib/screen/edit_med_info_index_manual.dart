@@ -122,30 +122,6 @@ class _EditMedManualState extends State<EditMedManual> {
                             "완료",
                             style: greenTextStyle(15.0),
                           ),
-                        )),
-                    //** 약 이미지
-                    CupertinoButton(
-                      minSize: 0,
-                      padding: const EdgeInsets.all(0),
-                      onPressed: () {
-                        //TODO: 클릭하면 이미지 수정할 수 있게 변경
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.only(top: 18.0),
-                        child: CircleAvatar(
-                          backgroundColor: main_color_green,
-                          radius: 40,
-                          child: _medication.medicineImage == null
-                              ? const Icon(
-                                  CupertinoIcons.photo_on_rectangle,
-                                  size: 28,
-                                  color: dark_green,
-                                )
-                              : CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(_medication.medicineImage!),
-                                  radius: 38,
-                                ),
                         ),
                       ),
                     )),
@@ -168,126 +144,40 @@ class _EditMedManualState extends State<EditMedManual> {
                                   NetworkImage(_medication.medicineImage!),
                               radius: 38,
                             ),
-                            const SizedBox(width: 12),
-                            MedCountPickerWidget(
-                              selectedCount: (_medication.takeCapacity! - 1),
-                              onCountChanged: (index) {
-                                //사용자가 수정한 인덱스 값이라 +1
-                                setState(() {
-                                  _medication.takeCapacity = index + 1;
-                                });
-                              },
-                            )
-                          ],
-                        )),
-                    // 복용 기간
-                    Container(
-                        padding: const EdgeInsets.fromLTRB(45, 27, 0, 0),
-                        alignment: Alignment.centerLeft,
-                        child: const Text('복용 기간',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ))),
-                    Container(
-                      alignment: Alignment.center,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            DatePickerWidget(
-                                selectedDate:
-                                    string2Date(_medication.takeStartDate!),
-                                onDateChanged: (newDate) {
-                                  setState(() {
-                                    _medication.takeStartDate =
-                                        date2String(newDate);
-                                  });
-                                }),
-                            const SizedBox(width: 2),
-                            const Text('~',
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.w700)),
-                            const SizedBox(width: 2),
-                            DatePickerWidget(
-                                selectedDate: string2Date(_medication.takeEndDate!),
-                                onDateChanged: (newDate) {
-                                  setState(() {
-                                    _medication.takeEndDate = date2String(newDate);
-                                  });
-                                }),
-                          ]),
                     ),
-                    const SizedBox(height: 15),
-                    // 복약 시간
-                    Container(
-                        padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
-                        alignment: Alignment.centerLeft,
-                        child: const Text('복약 시간',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ))),
-                    const SizedBox(height: 7),
-                    Container(
-                      alignment: Alignment.center,
-                      child: MedTimeNotChangedWidget(
-                        selectedSegment: _medication.takeMealTime!,
-                        onMedTimeChanged: (newMedtime) {
-                          setState(() {
-                            _medication.takeMealTime = newMedtime;
-                          });
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 7),
-                    Container(
-                      alignment: Alignment.center,
-                      child: MedTimeBeAfNotChangedWidget(
-                        selectedSegment: _medication.takeBeforeAfter!,
-                        onMedTimeChanged: (newMedtime) {
-                          setState(() {
-                            _medication.takeBeforeAfter = newMedtime;
-                          });
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    // 복약 주기
-                    Container(
-                        padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
-                        alignment: Alignment.centerLeft,
-                        child: const Text('복약 주기',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ))),
-                    const SizedBox(height: 10),
-                    MedCyclePickerWidget(
-                      selectedCycle: _medication.takeCycle! - 1,
-                      onMedCycleChanged: (newCycle) {
-                        setState(() {
-                          _medication.takeCycle = newCycle;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    // 복약 알림
-                    Row(
+                  ),
+                ),
+                Container(
+                    padding: const EdgeInsets.fromLTRB(0, 18, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                            padding: const EdgeInsets.fromLTRB(45, 0, 10, 0),
-                            alignment: Alignment.centerLeft,
-                            child: const Text('복약 알림',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ))),
-                        CupertinoSwitch(
-                          value: _isChecked,
-                          activeColor: CupertinoColors.activeGreen,
-                          onChanged: (bool? value) {
+                          width: 168,
+                          height: 40,
+                          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          decoration: medInfoIndexDecoration(),
+                          child: TextField(
+                            controller: _nameController,
+                            style:
+                                const TextStyle(color: dark_gray, fontSize: 16),
+                            keyboardType: TextInputType.multiline,
+                            decoration: const InputDecoration(
+                                hintText: '약 이름',
+                                hintStyle:
+                                    TextStyle(color: dark_gray, fontSize: 16),
+                                border: InputBorder.none, // 텍스트 박스 아래 줄 제거
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none)),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        MedCountPickerWidget(
+                          selectedCount: (_medication.takeCapacity! - 1),
+                          onCountChanged: (index) {
+                            //사용자가 수정한 인덱스 값이라 +1
                             setState(() {
-                              _isChecked = !_isChecked;
+                              _medication.takeCapacity = index + 1;
                             });
                           },
                         )
@@ -388,37 +278,22 @@ class _EditMedManualState extends State<EditMedManual> {
                 Row(
                   children: [
                     Container(
-                        padding: const EdgeInsets.fromLTRB(45, 0, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(45, 0, 10, 0),
                         alignment: Alignment.centerLeft,
-                        child: const Text('설명',
+                        child: const Text('복약 알림',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ))),
-                    const SizedBox(height: 10),
-                    Container(
-                        padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
-                        child: Container(
-                          padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
-                          width: 324,
-                          height: 219,
-                          decoration: BoxDecoration(
-                              color: bright_gray,
-                              borderRadius: BorderRadius.circular(12)),
-                          child: TextField(
-                            controller: _descriptionController,
-                            style: const TextStyle(color: dark_gray, fontSize: 16),
-                            scrollPadding: EdgeInsets.only(bottom: 40),
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null, // 자동 줄바꿈
-                            decoration: const InputDecoration(
-                                hintText: '약에 대한 설명을 입력하세요.',
-                                border: InputBorder.none, // 텍스트 박스 아래 줄 제거
-                                labelStyle: TextStyle(color: dark_gray),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide.none)),
-                          ),
-                        )),
+                    CupertinoSwitch(
+                      value: _isChecked,
+                      activeColor: CupertinoColors.activeGreen,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isChecked = !_isChecked;
+                        });
+                      },
+                    )
                   ],
                 ),
                 const SizedBox(height: 8),

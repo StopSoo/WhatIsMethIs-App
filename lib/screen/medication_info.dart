@@ -135,12 +135,14 @@ class _MedicationInfoState extends State<MedicationInfo> {
                 color: Colors.black.withOpacity(0.9),
                 size: 28,
               ),
-              Expanded(
-                child: ListView.builder(
-                  controller: _scrollController,
-                  shrinkWrap: true,
-                  itemCount: _medInfoList.length,
-                  itemBuilder: (BuildContext context, int index) =>
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+                controller: _scrollController,
+                shrinkWrap: true,
+                itemCount: _medInfoList.length,
+                itemBuilder: (BuildContext context, int index) =>
                     medicationShortInfoBox(
                         _medInfoList[index].medicineId!,
                         _medInfoList[index].medicationId!,
@@ -156,16 +158,8 @@ class _MedicationInfoState extends State<MedicationInfo> {
               child: const Center(
                 child: CupertinoActivityIndicator(),
               ),
-              if (_isLoadMoreRunning == true)
-                Container(
-                  padding: const EdgeInsets.all(30),
-                  child: const Center(
-                    child: CupertinoActivityIndicator(),
-                  ),
-                ),
-            ],
-          ),
-        ),
+            ),
+        ],
       ),
     );
   }
