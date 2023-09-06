@@ -61,8 +61,7 @@ class _EditMedState extends State<EditMed> {
 
   late bool _isChecked; // 복약 알림 - switch
   Medication _medication = Medication(
-      null, null, null, null, null, null, null, null, null, null, null, null
-    );
+      null, null, null, null, null, null, null, null, null, null, null, null);
   @override
   void initState() {
     super.initState();
@@ -103,9 +102,6 @@ class _EditMedState extends State<EditMed> {
                         padding: const EdgeInsets.all(0),
                         onPressed: () async {
                           setState(() {
-                            _medication.description =
-                                _descriptionController.text;
-
                             if (_isChecked == false) {
                               _medication.notificationTime = null;
                             }
@@ -295,7 +291,8 @@ class _EditMedState extends State<EditMed> {
                       _medication.notificationTime = time2String(newTime);
                       print(newTime);
                     });
-                  }, isChecked: _isChecked,
+                  },
+                  isChecked: _isChecked,
                 ),
                 const SizedBox(height: 13),
                 Container(
@@ -317,6 +314,11 @@ class _EditMedState extends State<EditMed> {
                           color: bright_gray,
                           borderRadius: BorderRadius.circular(12)),
                       child: TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            _medication.description = text;
+                          });
+                        },
                         controller: _descriptionController,
                         style: const TextStyle(color: dark_gray, fontSize: 16),
                         scrollPadding: EdgeInsets.only(bottom: 40),

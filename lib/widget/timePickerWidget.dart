@@ -92,7 +92,7 @@ class _DatePickerExampleState extends State<DatePickerExample> {
   Widget build(BuildContext context) {
     return SizedBox(
         width: 330,
-        height: 50,
+        height: 55,
         child: CupertinoPageScaffold(
           child: DefaultTextStyle(
             style: const TextStyle(

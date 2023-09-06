@@ -52,10 +52,19 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
   MedicationController _medicationController = MedicationController();
 
 //기본값 적용
-  Medication _medication = Medication(null, "0", null, null, 1,
-      date2String(DateTime.now()), date2String(DateTime.now()),
-      "BREAKFAST", "BEFORE",
-      1, null, null);
+  Medication _medication = Medication(
+      null,
+      "0",
+      null,
+      null,
+      1,
+      date2String(DateTime.now()),
+      date2String(DateTime.now()),
+      "BREAKFAST",
+      "BEFORE",
+      1,
+      null,
+      null);
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -71,11 +80,9 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
   Future<void> _onCompleteButtonPressed() async {
     setState(() {
       // _medication 설정
-      if (_nameController.text != "") {
-        _medication.medicineName = _nameController.text;
+      if (_nameController.text == "") {
+        _medication.medicineName = null;
       }
-
-      _medication.description = _descriptionController.text;
 
       if (!_isChecked) {
         _medication.notificationTime = null;
@@ -160,6 +167,11 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                           color: bright_gray,
                           borderRadius: BorderRadius.circular(12)),
                       child: TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            _medication.medicineName = text;
+                          });
+                        },
                         controller: _nameController,
                         keyboardType: TextInputType.multiline,
                         decoration: InputDecoration(
@@ -308,7 +320,8 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                   _medication.notificationTime = time2String(newTime);
                   print(time2String(newTime));
                 });
-              }, isChecked: _isChecked,
+              },
+              isChecked: _isChecked,
             ),
             const SizedBox(height: 13),
             Container(
@@ -329,7 +342,12 @@ class _RegisterMedManualState extends State<RegisterMedManual> {
                   decoration: BoxDecoration(
                       color: bright_gray,
                       borderRadius: BorderRadius.circular(12)),
-                  child: const TextField(
+                  child: TextField(
+                     onChanged: (text) {
+                    setState(() {
+                      _medication.description = text;
+                    });
+                  },
                     scrollPadding: EdgeInsets.only(bottom: 40),
                     keyboardType: TextInputType.multiline,
                     maxLines: null, // 자동 줄바꿈
